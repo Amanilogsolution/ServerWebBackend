@@ -21,7 +21,7 @@ const addoperatingsystemmaster = async (req,res) => {
     console.log('OperatingSystem',operatingsystemid,operatingsystem,remark,username)
     try{
         await sql.connect(sqlConfig)
-        const duplicate = await sql.query(`select * from IPERISCOPE.dbo.tbl_device_type where operatingsystem='${operatingsystem}'`)
+        const duplicate = await sql.query(`select * from IPERISCOPE.dbo.tbl_operating_system where operating_system='${operatingsystem}'`)
         if (!duplicate.recordset.length) {
         const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_operating_system  (id,operating_system,remark,add_date_time,add_user_name,add_system_name,add_ip_address,status)
         values('${operatingsystemid}','${operatingsystem}','${remark}',getdate(),'${username}','${os.hostname()}','${req.ip}','Active')`)

@@ -22,7 +22,7 @@ const adddevicetask = async (req,res) => {
     console.log(devicetaskid,device_tasks,device_tasks_frequency,remark,username)
     try{
         await sql.connect(sqlConfig)
-        const duplicate = await sql.query(`select * from IPERISCOPE.dbo.tbl_device_type where device_tasks='${device_tasks}'`)
+        const duplicate = await sql.query(`select * from IPERISCOPE.dbo.tbl_device_tasks where device_tasks='${device_tasks}'`)
         if (!duplicate.recordset.length) {
         const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_device_tasks  
         (id,device_tasks,device_tasks_frequency,remark ,add_date_time,add_user_name,add_system_name,add_ip_address,status)

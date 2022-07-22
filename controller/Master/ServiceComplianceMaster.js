@@ -22,7 +22,7 @@ const addservicecompliance = async (req,res) => {
     console.log(servicecomplianceid,device_service,services_compliance,remark,username)
     try{
         await sql.connect(sqlConfig)
-        const duplicate = await sql.query(`select * from IPERISCOPE.dbo.tbl_device_type where services_compliance='${services_compliance}'`)
+        const duplicate = await sql.query(`select * from IPERISCOPE.dbo.tbl_service_compliance where services_compliance='${services_compliance}'`)
         if (!duplicate.recordset.length) {
         const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_service_compliance (id,device_services,services_compliance,remark,add_date_time,add_user_name,add_system_name,add_ip_address,status)
         values('${servicecomplianceid}','${device_service}','${services_compliance}','${remark}',getdate(),'${username}','${os.hostname()}','${req.ip}','Active')`)
