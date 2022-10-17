@@ -18,6 +18,26 @@ const MasterDeviceTaskControler = require('../controller/Master/DeviceTask')
 const SeriesController = require('../controller/Master/SeriesMaster')
 const countController = require('../controller/Master/Count')
 
+const OrganizationController = require('../controller/Drizzle/Master/organizationmaster')
+const LocationMasterController = require('../controller/Drizzle/Master/locationmaster')
+const EmployeeMasterController = require('../controller/Drizzle/Master/employeemaster')
+const AssetTypeMasterController = require('../controller/Drizzle/Master/AssetTypeMaster')
+const AssetStatusMasterController = require('../controller/Drizzle/Master/AssetStatusMaster')
+const ManufacturerMasterController = require('../controller/Drizzle/Master/ManufacturerMaster')
+const SoftwareMasterController = require('../controller/Drizzle/Master/SoftwareMaster')
+const IssueTypeMasterController = require('../controller/Drizzle/Master/IssueTypeMaster')
+const PurchaseTypeMasterController = require('../controller/Drizzle/Master/PurchaseTypeMaster')
+const ContractTypeMasterController = require('../controller/Drizzle/Master/ContracttypeMaster')
+const PriorityMasterController = require('../controller/Drizzle/Master/PriorityMaster')
+const TicketStatusMasterController = require('../controller/Drizzle/Master/TicketStatusMaster')
+const BillingFrequencyMasterController = require('../controller/Drizzle/Master/BillingFrequencyMaster')
+const VendorCategoryMasterController = require('../controller/Drizzle/Master/VendorCategoryMaster')
+const VendorSubCategoryMasterController = require('../controller/Drizzle/Master/VendorSubCategorMaster')
+const ServiceActionTypeMaster = require('../controller/Drizzle/Master/ServiceActionTpyeMaster')
+const ServiceGroupMasterController = require('../controller/Drizzle/Master/ServiceGroupMaster')
+const VendorCodeMasterController = require('../controller/Drizzle/Master/VendorCodeMaster')
+const VendorContractMasterController = require('../controller/Drizzle/Master/VendorContractMaster')
+
 
 router.post('/login',LoginController.UserLogin)
 
@@ -100,6 +120,133 @@ router.post('/adddevicetaskes',DevicesTaskesController.adddevicetaskes)
 router.post('/Getdevicestask',DevicesTaskesController.Getdevicetaskes)
 router.post('/updatedevicetaskes',DevicesTaskesController.updatedevicetaskes)
 router.post('/updatedevicetaskastatus',DevicesTaskesController.updatedevicetaskastatus)
+
+
+
+
+
+
+
+router.post('/totalorganization',OrganizationController.totalOrganization)
+router.post('/insertorganization',OrganizationController.insertOrganization)
+router.post('/getorganization',OrganizationController.getOrganization)
+router.post('/deleteorganization',OrganizationController.deleteOrganization)
+router.post('/updateorganization',OrganizationController.updateOrganization)
+
+router.post('/totalLocation',LocationMasterController.totalLocation)
+router.post('/insertLocation',LocationMasterController.insertLocation)
+router.post('/getLocation',LocationMasterController.getLocation)
+router.post('/deleteLocation',LocationMasterController.deleteLocation)
+router.post('/updateLocation',LocationMasterController.updateOrganization)
+
+
+router.post('/totalEmployee',EmployeeMasterController.totalEmployee)
+router.post('/insertEmployee',EmployeeMasterController.insertEmployee)
+router.post('/getEmployee',EmployeeMasterController.getEmployee)
+router.post('/deleteEmployee',EmployeeMasterController.deleteEmployee)
+router.post('/updateEmployee',EmployeeMasterController.updateEmployee)
+
+router.post('/totalAssetType',AssetTypeMasterController.totalAssetType)
+router.post('/insertAssetType',AssetTypeMasterController.insertAssetType)
+router.post('/getAssetType',AssetTypeMasterController.getAssetType)
+router.post('/deleteAssetType',AssetTypeMasterController.deleteAssetType)
+router.post('/updateAssetType',AssetTypeMasterController.updateAssetType)
+
+router.post('/totalAssetStatus',AssetStatusMasterController.totalAssetStatus)
+router.post('/insertAssetStatus',AssetStatusMasterController.insertAssetStatus)
+router.post('/getAssetStatus',AssetStatusMasterController.getAssetStatus)
+router.post('/deleteAssetStatus',AssetStatusMasterController.deleteAssetStatus)
+router.post('/updateAssetStatus',AssetStatusMasterController.updateAssetStatus)
+
+router.post('/totalManufacturer',ManufacturerMasterController.totalManufacturer)
+router.post('/insertManufacturer',ManufacturerMasterController.insertManufacturer)
+router.post('/getManufacturer',ManufacturerMasterController.getManufacturer)
+router.post('/deleteManufacturer',ManufacturerMasterController.deleteManufacturer)
+router.post('/updateManufacturer',ManufacturerMasterController.updateManufacturer)
+
+router.post('/totalSoftware',SoftwareMasterController.totalSoftware)
+router.post('/insertSoftware',SoftwareMasterController.insertSoftware)
+router.post('/getSoftware',SoftwareMasterController.getSoftware)
+router.post('/deleteSoftware',SoftwareMasterController.deleteSoftware)
+router.post('/updateSoftware',SoftwareMasterController.updateSoftware)
+
+router.post('/totalIssueType',IssueTypeMasterController.totalIssueType)
+router.post('/insertIssueType',IssueTypeMasterController.insertIssueType)
+router.post('/getIssueType',IssueTypeMasterController.getIssueType)
+router.post('/deleteIssueType',IssueTypeMasterController.deleteIssueType)
+router.post('/updateIssueType',IssueTypeMasterController.updateIssueType)
+
+router.post('/totalPurchasetype',PurchaseTypeMasterController.totalPurchasetype)
+router.post('/insertPurchasetype',PurchaseTypeMasterController.insertPurchasetype)
+router.post('/getPurchasetype',PurchaseTypeMasterController.getPurchasetype)
+router.post('/deletePurchasetype',PurchaseTypeMasterController.deletePurchasetype)
+router.post('/updatePurchasetype',PurchaseTypeMasterController.updatePurchasetype)
+
+router.post('/totalContracttype',ContractTypeMasterController.totalContracttype)
+router.post('/insertContracttype',ContractTypeMasterController.insertContracttype)
+router.post('/getContracttype',ContractTypeMasterController.getContracttype)
+router.post('/deleteContracttype',ContractTypeMasterController.deleteContracttype)
+router.post('/updateContracttype',ContractTypeMasterController.updateContracttype)
+
+router.post('/totalPriority',PriorityMasterController.totalPriorityMaster)
+router.post('/insertPriority',PriorityMasterController.insertPriorityMaster)
+router.post('/getPriority',PriorityMasterController.getPriorityMaster)
+router.post('/deletePriority',PriorityMasterController.deletePriorityMaster)
+router.post('/updatePriority',PriorityMasterController.updatePriorityMaster)
+
+router.post('/totalTicketStatus',TicketStatusMasterController.totalTicketStatus)
+router.post('/insertTicketStatus',TicketStatusMasterController.insertTicketStatus)
+router.post('/getTicketStatus',TicketStatusMasterController.getTicketStatus)
+router.post('/deleteTicketStatus',TicketStatusMasterController.deleteTicketStatus)
+router.post('/updateTicketStatus',TicketStatusMasterController.updateTicketStatus)
+
+router.post('/totalBillingFrequency',BillingFrequencyMasterController.totalBillingFrequency)
+router.post('/insertBillingFrequency',BillingFrequencyMasterController.insertBillingFrequency)
+router.post('/getBillingFrequency',BillingFrequencyMasterController.getBillingFrequency)
+router.post('/deleteBillingFrequency',BillingFrequencyMasterController.deleteBillingFrequency)
+router.post('/updateBillingFrequency',BillingFrequencyMasterController.updateBillingFrequency)
+
+router.post('/totalVendorCategory',VendorCategoryMasterController.totalVendorCategory)
+router.post('/insertVendorCategory',VendorCategoryMasterController.insertVendorCategory)
+router.post('/getVendorCategory',VendorCategoryMasterController.getVendorCategory)
+router.post('/deleteVendorCategory',VendorCategoryMasterController.deleteVendorCategory)
+router.post('/updateVendorCategory',VendorCategoryMasterController.updateVendorCategory)
+
+router.post('/totalVendorSubCategory',VendorSubCategoryMasterController.totalVendorSubCategory)
+router.post('/insertVendorSubCategory',VendorSubCategoryMasterController.insertVendorSubCategory)
+router.post('/getVendorSubCategory',VendorSubCategoryMasterController.getVendorSubCategory)
+router.post('/deleteVendorSubCategory',VendorSubCategoryMasterController.deleteVendorSubCategory)
+router.post('/updateVendorSubCategory',VendorSubCategoryMasterController.updateVendorSubCategory)
+
+router.post('/totalServiceAction',ServiceActionTypeMaster.totalServiceAction)
+router.post('/insertServiceAction',ServiceActionTypeMaster.insertServiceAction)
+router.post('/getServiceAction',ServiceActionTypeMaster.getServiceAction)
+router.post('/deleteServiceAction',ServiceActionTypeMaster.deleteServiceAction)
+router.post('/updateServiceAction',ServiceActionTypeMaster.updateServiceAction)
+
+router.post('/totalServiceGroup',ServiceGroupMasterController.totalServiceGroup)
+router.post('/insertServiceGroup',ServiceGroupMasterController.insertServiceGroup)
+router.post('/getServiceGroup',ServiceGroupMasterController.getServiceGroup)
+router.post('/deleteServiceGroup',ServiceGroupMasterController.deleteServiceGroup)
+router.post('/updateServiceGroup',ServiceGroupMasterController.updateServiceGroup)
+
+router.post('/totalVendorCode',VendorCodeMasterController.totalVendorCode)
+router.post('/insertVendorCode',VendorCodeMasterController.insertVendorCode)
+router.post('/getVendorCode',VendorCodeMasterController.getVendorCode)
+router.post('/deleteVendorCode',VendorCodeMasterController.deleteVendorCode)
+router.post('/updateVendorCode',VendorCodeMasterController.updateVendorCode)
+
+
+router.post('/totalVendorContract',VendorContractMasterController.totalVendorContract)
+router.post('/insertVendorContract',VendorContractMasterController.insertVendorContract)
+router.post('/getVendorContract',VendorContractMasterController.getVendorContract)
+router.post('/deleteVendorContract',VendorContractMasterController.deleteVendorContract)
+router.post('/updateVendorContract',VendorContractMasterController.updateVendorContract)
+
+
+
+
+
 
 
 
