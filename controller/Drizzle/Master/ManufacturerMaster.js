@@ -21,7 +21,7 @@ const insertManufacturer = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_manufacturer_master (manufacturer_id  ,manufacturer_name  ,manufacturer_description  ,Status,add_user_name,add_system_name,add_system_ip,add_date_time)
+        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_manufacturer_master (manufacturer_id  ,manufacturer_name  ,manufacturer_description  ,Status,add_user_name,add_system_name,add_ip_address,add_date_time)
         values('${manufacturer_id}','${manufacturer_name}','${manufacturer_description}','Active','${user_id}','${os.hostname}','${req.ip}',getdate())`)
         res.status(200).send("Added")
     }
@@ -60,12 +60,11 @@ const updateManufacturer  = async (req,res) =>{
     const manufacturer_name= req.body.manufacturer_name;
     const manufacturer_description = req.body.manufacturer_description;
     const user_id = req.body.user_id;
-    console.log(sno,manufacturer_name,manufacturer_description,user_id)
 
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update IPERISCOPE.dbo.tbl_manufacturer_master set manufacturer_name='${manufacturer_name}',manufacturer_description='${manufacturer_description}'
-        ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_system_ip='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
+        ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_ip_address='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
         console.log(result)
         if(result){
             res.status(200).send("Updated")
@@ -78,5 +77,6 @@ const updateManufacturer  = async (req,res) =>{
         console.log(err)
     }
 }
+
 
 module.exports={totalManufacturer,insertManufacturer,getManufacturer,deleteManufacturer,updateManufacturer}

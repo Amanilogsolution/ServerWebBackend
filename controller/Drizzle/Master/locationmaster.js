@@ -70,7 +70,7 @@ const deleteLocation= async (req,res) =>{
     }
 }
 
-const updateOrganization = async (req,res) =>{
+const updateLocation = async (req,res) =>{
     const sno = req.body.sno;
     const company_name= req.body.company_name;
     const location_code = req.body.location_code;
@@ -99,5 +99,16 @@ const updateOrganization = async (req,res) =>{
     }
 }
 
+const getAllLocation = async (req,res) =>{
+    try{
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_location_master WHERE status ='Active'  `)
+        res.status(200).send(result.recordset)
+    }
+    catch(err){
+        console.log(err)
+    }
+}
 
-module.exports = {totalLocation,insertLocation,getLocation,deleteLocation,updateOrganization}
+
+module.exports = {totalLocation,insertLocation,getLocation,deleteLocation,updateLocation,getAllLocation}

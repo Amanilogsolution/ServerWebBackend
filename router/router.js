@@ -123,10 +123,6 @@ router.post('/updatedevicetaskastatus',DevicesTaskesController.updatedevicetaska
 
 
 
-
-
-
-
 router.post('/totalorganization',OrganizationController.totalOrganization)
 router.post('/insertorganization',OrganizationController.insertOrganization)
 router.post('/getorganization',OrganizationController.getOrganization)
@@ -137,7 +133,9 @@ router.post('/totalLocation',LocationMasterController.totalLocation)
 router.post('/insertLocation',LocationMasterController.insertLocation)
 router.post('/getLocation',LocationMasterController.getLocation)
 router.post('/deleteLocation',LocationMasterController.deleteLocation)
-router.post('/updateLocation',LocationMasterController.updateOrganization)
+router.post('/updateLocation',LocationMasterController.updateLocation)
+router.post('/getalllocation',LocationMasterController.getAllLocation)
+
 
 
 router.post('/totalEmployee',EmployeeMasterController.totalEmployee)
@@ -187,6 +185,8 @@ router.post('/insertContracttype',ContractTypeMasterController.insertContracttyp
 router.post('/getContracttype',ContractTypeMasterController.getContracttype)
 router.post('/deleteContracttype',ContractTypeMasterController.deleteContracttype)
 router.post('/updateContracttype',ContractTypeMasterController.updateContracttype)
+router.post('/getallcontracttype',ContractTypeMasterController.getAllContracttype)
+
 
 router.post('/totalPriority',PriorityMasterController.totalPriorityMaster)
 router.post('/insertPriority',PriorityMasterController.insertPriorityMaster)
@@ -211,12 +211,16 @@ router.post('/insertVendorCategory',VendorCategoryMasterController.insertVendorC
 router.post('/getVendorCategory',VendorCategoryMasterController.getVendorCategory)
 router.post('/deleteVendorCategory',VendorCategoryMasterController.deleteVendorCategory)
 router.post('/updateVendorCategory',VendorCategoryMasterController.updateVendorCategory)
+router.post('/getallvendorcategory',VendorCategoryMasterController.getAllVendorCategory)
+
 
 router.post('/totalVendorSubCategory',VendorSubCategoryMasterController.totalVendorSubCategory)
 router.post('/insertVendorSubCategory',VendorSubCategoryMasterController.insertVendorSubCategory)
 router.post('/getVendorSubCategory',VendorSubCategoryMasterController.getVendorSubCategory)
 router.post('/deleteVendorSubCategory',VendorSubCategoryMasterController.deleteVendorSubCategory)
 router.post('/updateVendorSubCategory',VendorSubCategoryMasterController.updateVendorSubCategory)
+router.post('/getvendorsubcategorybyvend',VendorSubCategoryMasterController.getVendorSubCategoryby)
+
 
 router.post('/totalServiceAction',ServiceActionTypeMaster.totalServiceAction)
 router.post('/insertServiceAction',ServiceActionTypeMaster.insertServiceAction)
@@ -235,6 +239,10 @@ router.post('/insertVendorCode',VendorCodeMasterController.insertVendorCode)
 router.post('/getVendorCode',VendorCodeMasterController.getVendorCode)
 router.post('/deleteVendorCode',VendorCodeMasterController.deleteVendorCode)
 router.post('/updateVendorCode',VendorCodeMasterController.updateVendorCode)
+router.post('/getallvendor',VendorCodeMasterController.GetAllVendor)
+router.post('/getvendordetails',VendorCodeMasterController.GetVendorDetails)
+
+
 
 
 router.post('/totalVendorContract',VendorContractMasterController.totalVendorContract)

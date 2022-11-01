@@ -21,7 +21,7 @@ const insertIssueType = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_issue_master (issue_id  ,issue_type ,issue_description  ,Status,add_user_name,add_system_name,add_system_ip,add_date_time)
+        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_issue_master (issue_id  ,issue_type ,issue_description  ,Status,add_user_name,add_system_name,add_ip_address,add_date_time)
         values('${issue_id}','${issue_type}','${issue_description}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
         res.status(200).send("Added")
     }
@@ -61,10 +61,11 @@ const updateIssueType = async (req,res) =>{
     const issue_description = req.body.issue_description;
     const user_id = req.body.user_id;
 
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update IPERISCOPE.dbo.tbl_issue_master set issue_type='${issue_type}',issue_description='${issue_description}'
-        ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_system_ip='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
+        ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_ip_address='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
         res.status(200).send("Updated")
     }
     catch(err){

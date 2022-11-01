@@ -24,7 +24,7 @@ const insertEmployee = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_employee_master (employee_id,employee_name,location ,employee_email,employee_number  ,company ,Status,add_user_name,add_system_name,add_system_ip,add_date_time)
+        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_employee_master (employee_id,employee_name,location ,employee_email,employee_number  ,company ,status,add_user_name,add_system_name,add_system_ip,add_date_time)
         values('${employee_id}','${employee_name}','${location}','${employee_email}',${employee_number},'${company}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
         res.status(200).send("Added")
     }
@@ -48,9 +48,10 @@ const getEmployee= async (req,res) =>{
 const deleteEmployee= async (req,res) =>{
     const status = req.body.status;
     const sno = req.body.sno;
+    console.log(status,sno)
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update IPERISCOPE.dbo.tbl_employee_master set status='${status}' where sno =${sno}`)
+        const result = await sql.query(`update IPERISCOPE.dbo.tbl_employee_master set status='${status}' where sno=${sno}`)
         res.status(200).send("updated")
     }
     catch(err){

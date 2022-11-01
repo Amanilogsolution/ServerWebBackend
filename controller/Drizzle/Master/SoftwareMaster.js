@@ -21,8 +21,10 @@ const insertSoftware = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_software_master (software_id  ,software_name  ,software_description  ,Status,add_user_name,add_system_name,add_system_ip,add_date_time)
+        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_software_master (software_id  ,software_name  ,software_description  ,Status,add_user_name,add_system_name,add_ip_address,add_date_time)
         values('${software_id}','${software_name}','${software_description}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
+        console.log(result);
+
         res.status(200).send("Added")
     }
     catch(err){
@@ -64,7 +66,7 @@ const updateSoftware = async (req,res) =>{
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update IPERISCOPE.dbo.tbl_software_master set software_name='${software_name}',software_description='${software_description}'
-        ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_system_ip='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
+        ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_ip_address='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
         res.status(200).send("Updated")
     }
     catch(err){

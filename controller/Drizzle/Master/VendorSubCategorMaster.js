@@ -22,7 +22,7 @@ const insertVendorSubCategory = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_vendor_sub_category_master (vendor_sub_category_id ,vendor_category ,vendor_sub_category  ,vendor_sub_category_description  ,Status,add_user_name,add_system_name,add_system_ip,add_date_time)
+        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_vendor_sub_category_master (vendor_sub_category_id ,vendor_category ,vendor_sub_category  ,vendor_sub_category_description  ,Status,add_user_name,add_system_name,add_ip_address,add_date_time)
         values('${vendor_sub_category_id}','${vendor_category}','${vendor_sub_category}','${vendor_sub_category_description}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
         res.status(200).send("Added")
     }
@@ -66,14 +66,27 @@ const updateVendorSubCategory  = async (req,res) =>{
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update IPERISCOPE.dbo.tbl_vendor_sub_category_master set vendor_category='${vendor_category}',vendor_sub_category='${vendor_sub_category}',vendor_sub_category_description='${vendor_sub_category_description}'
-        ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_system_ip='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
+        ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_ip_address='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
         res.status(200).send("Updated")
     }
     catch(err){
         console.log(err)
     }
 }
+const getVendorSubCategoryby = async (req,res) =>{
+    const vendor_category = req.body.vendor_category
 
-module.exports = {totalVendorSubCategory,insertVendorSubCategory,getVendorSubCategory,deleteVendorSubCategory,updateVendorSubCategory}
+    try{
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_sub_category_master where vendor_category = '${vendor_category}'`)
+        res.status(200).send(result.recordset)
+    }
+    catch(err){
+        console.log(err)
+    }
+
+}
+
+module.exports = {totalVendorSubCategory,insertVendorSubCategory,getVendorSubCategory,deleteVendorSubCategory,updateVendorSubCategory,getVendorSubCategoryby}
 
 

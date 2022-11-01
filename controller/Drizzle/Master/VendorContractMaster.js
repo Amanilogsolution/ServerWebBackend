@@ -42,12 +42,13 @@ const insertVendorContract = async (req,res) =>{
     const link_id_no = req.body.link_id_no;
     const help_desk_no = req.body.help_desk_no;
     const user_id = req.body.user_id;
+   
 
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_vendor_contract_master (vendor_contract_id ,vendor,company_address_line1 ,company_address_line2,company_city ,company_state ,company_pin_code ,company_gst ,company_website,company_email,type_of_contract ,major_category,sub_category,location ,company,customer_account_no ,reference_no,contatct_plain_details ,rate_per_month ,contract_start_date,invoice_generation_date ,billling_freq,payee_name ,tds,link_id_no 
-            ,help_desk_no ,status,add_user_name,add_system_name,add_system_ip,add_date_time)
-            values('${vendor_contract_id}','${vendor}','${company_address_line1}','${company_address_line2}','${company_city}','${company_state}',${company_pin_code},'${company_gst}','${company_website}','${company_email}','${type_of_contract}','${major_category}','${sub_category}','${location}','${company}',${customer_account_no},${reference_no},'${contact_plain_details}','${rate_per_month}','${contract_start_date}','${invoice_generation_date}','${billling_freq}','${payee_name}','${tds}','${link_id_no}','${help_desk_no}',
+            ,help_desk_no ,status,add_user_name,add_system_name,add_ip_address,add_date_time)
+            values('${vendor_contract_id}','${vendor}','${company_address_line1}','${company_address_line2}','${company_city}','${company_state}',${company_pin_code},'${company_gst}','${company_website}','${company_email}','${type_of_contract}','${major_category}','${sub_category}','${location}','${company}',${customer_account_no},'${reference_no}','${contact_plain_details}','${rate_per_month}','${contract_start_date}','${invoice_generation_date}','${billling_freq}','${payee_name}','${tds}','${link_id_no}','${help_desk_no}',
             'Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
         res.status(200).send("Added")
     }
@@ -113,8 +114,8 @@ const updateVendorContract = async (req,res) =>{
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update IPERISCOPE.dbo.tbl_vendor_contract_master set vendor='${vendor}',company_address_line1='${company_address_line1}',company_address_line2='${company_address_line2}',company_city='${company_city}',company_state='${company_state}',company_pin_code=${company_pin_code},company_gst='${company_gst}',company_website='${company_website}',company_email='${company_email}',type_of_contract='${type_of_contract}',major_category='${major_category}',sub_category='${sub_category}',
-        location='${location}',company='${company}',customer_account_no=${customer_account_no},reference_no=${reference_no},contatct_plain_details='${contact_plain_details}',rate_per_month='${rate_per_month}',contract_start_date='${contract_start_date}',invoice_generation_date='${invoice_generation_date}',billling_freq='${billling_freq}',payee_name='${payee_name}',tds='${tds}',link_id_no='${link_id_no}'
-        ,help_desk_no='${help_desk_no}',update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_system_ip='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
+        location='${location}',company='${company}',customer_account_no=${customer_account_no},reference_no='${reference_no}',contatct_plain_details='${contact_plain_details}',rate_per_month='${rate_per_month}',contract_start_date='${contract_start_date}',invoice_generation_date='${invoice_generation_date}',billling_freq='${billling_freq}',payee_name='${payee_name}',tds='${tds}',link_id_no='${link_id_no}'
+        ,help_desk_no='${help_desk_no}',update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_ip_address='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
         res.status(200).send("Updated")
     }
     catch(err){

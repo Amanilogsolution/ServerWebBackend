@@ -21,7 +21,7 @@ const insertPurchasetype = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_purchase_type_master (purchase_id  ,purchase_type ,purchase_description  ,Status,add_user_name,add_system_name,add_system_ip,add_date_time)
+        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_purchase_type_master (purchase_id  ,purchase_type ,purchase_description  ,Status,add_user_name,add_system_name,add_ip_address,add_date_time)
         values('${purchase_id}','${purchase_type}','${purchase_description}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
         res.status(200).send("Added")
     }
@@ -60,11 +60,12 @@ const updatePurchasetype = async (req,res) =>{
     const purchase_type= req.body.purchase_type;
     const purchase_description = req.body.purchase_description;
     const user_id = req.body.user_id;
+    console.log(sno,purchase_type,purchase_description,user_id)
 
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update IPERISCOPE.dbo.tbl_purchase_type_master set purchase_type='${purchase_type}',purchase_description='${purchase_description}'
-        ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_system_ip='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
+        ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_ip_address='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
         res.status(200).send("Updated")
     }
     catch(err){

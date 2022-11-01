@@ -21,7 +21,7 @@ const insertAssetType = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_asset_type_master (asset_type_id ,asset_type ,asset_description,Status,add_user_name,add_system_name,add_system_ip,add_date_time)
+        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_asset_type_master (asset_type_id ,asset_type ,asset_description,Status,add_user_name,add_system_name,add_ip_address,add_date_time)
         values('${asset_type_id}','${asset_type}','${asset_description}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
         res.status(200).send("Added")
     }
@@ -60,11 +60,11 @@ const updateAssetType = async (req,res) =>{
     const asset_type= req.body.asset_type;
     const asset_description = req.body.asset_description;
     const user_id = req.body.user_id;
-
+   
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update IPERISCOPE.dbo.tbl_asset_type_master set asset_type='${asset_type}',asset_description='${asset_description}'
-        ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_system_ip='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
+        ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_ip_address='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
         res.status(200).send("Updated")
     }
     catch(err){
