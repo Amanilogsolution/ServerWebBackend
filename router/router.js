@@ -3,6 +3,10 @@ const router = express.Router();
 
 const LoginController = require('../controller/Login/Login')
 
+const AddressController = require('../controller/AddressMaster/AddressMaster')
+
+
+
 const MasterDeviceTypeController = require('../controller/Master/DeviceTypeMaster')
 const MasterDeviceGroupController = require('../controller/Master/DeviceGroupMaster')
 const MasterDeviceServiceController = require('../controller/Master/DeviceServicesMaster')
@@ -38,8 +42,25 @@ const ServiceGroupMasterController = require('../controller/Drizzle/Master/Servi
 const VendorCodeMasterController = require('../controller/Drizzle/Master/VendorCodeMaster')
 const VendorContractMasterController = require('../controller/Drizzle/Master/VendorContractMaster')
 
+const VendorInvoiceController = require('../controller/Drizzle/Main/VendorInvoice')
+const NewAssetsController = require('../controller/Drizzle/Main/NewAssets')
+const TicketsController = require('../controller/Drizzle/Main/Tickets')
+
+
+
+
 
 router.post('/login',LoginController.UserLogin)
+
+
+router.get('/totalcountry',AddressController.totalcountry)
+router.post('/totalstate',AddressController.totalstate)
+router.post('/totalcity',AddressController.totalcity)
+// router.post('/UploadCountry',AddressController.UploadCountry)
+// router.post('/UploadState',AddressController.UploadState)
+// router.post('/UploadCity',AddressController.UploadCity)
+
+
 
 router.get('/totaldevicetypemaster',MasterDeviceTypeController.totaldevicetype)
 router.post('/adddevicetypemaster',MasterDeviceTypeController.adddevicetype)
@@ -143,42 +164,54 @@ router.post('/insertEmployee',EmployeeMasterController.insertEmployee)
 router.post('/getEmployee',EmployeeMasterController.getEmployee)
 router.post('/deleteEmployee',EmployeeMasterController.deleteEmployee)
 router.post('/updateEmployee',EmployeeMasterController.updateEmployee)
+router.get('/ActiveEmployee',EmployeeMasterController.ActiveEmployee)
+router.post('/EmployeeDetail',EmployeeMasterController.EmployeeDetail)
+
 
 router.post('/totalAssetType',AssetTypeMasterController.totalAssetType)
 router.post('/insertAssetType',AssetTypeMasterController.insertAssetType)
 router.post('/getAssetType',AssetTypeMasterController.getAssetType)
 router.post('/deleteAssetType',AssetTypeMasterController.deleteAssetType)
 router.post('/updateAssetType',AssetTypeMasterController.updateAssetType)
+router.get('/ActiveAssetesType',AssetTypeMasterController.ActiveAssetesType)
 
 router.post('/totalAssetStatus',AssetStatusMasterController.totalAssetStatus)
 router.post('/insertAssetStatus',AssetStatusMasterController.insertAssetStatus)
 router.post('/getAssetStatus',AssetStatusMasterController.getAssetStatus)
 router.post('/deleteAssetStatus',AssetStatusMasterController.deleteAssetStatus)
 router.post('/updateAssetStatus',AssetStatusMasterController.updateAssetStatus)
+router.get('/ActiveAssetesStatus',AssetStatusMasterController.ActiveAssetesStatus)
+
 
 router.post('/totalManufacturer',ManufacturerMasterController.totalManufacturer)
 router.post('/insertManufacturer',ManufacturerMasterController.insertManufacturer)
 router.post('/getManufacturer',ManufacturerMasterController.getManufacturer)
 router.post('/deleteManufacturer',ManufacturerMasterController.deleteManufacturer)
 router.post('/updateManufacturer',ManufacturerMasterController.updateManufacturer)
+router.get('/ActiveManufacturer',ManufacturerMasterController.ActiveManufacturer)
+
 
 router.post('/totalSoftware',SoftwareMasterController.totalSoftware)
 router.post('/insertSoftware',SoftwareMasterController.insertSoftware)
 router.post('/getSoftware',SoftwareMasterController.getSoftware)
 router.post('/deleteSoftware',SoftwareMasterController.deleteSoftware)
 router.post('/updateSoftware',SoftwareMasterController.updateSoftware)
+router.get('/ActiveSoftware',SoftwareMasterController.ActiveSoftware)
 
 router.post('/totalIssueType',IssueTypeMasterController.totalIssueType)
 router.post('/insertIssueType',IssueTypeMasterController.insertIssueType)
 router.post('/getIssueType',IssueTypeMasterController.getIssueType)
 router.post('/deleteIssueType',IssueTypeMasterController.deleteIssueType)
 router.post('/updateIssueType',IssueTypeMasterController.updateIssueType)
+router.get('/ActiveIssue',IssueTypeMasterController.ActiveIssue)
+
 
 router.post('/totalPurchasetype',PurchaseTypeMasterController.totalPurchasetype)
 router.post('/insertPurchasetype',PurchaseTypeMasterController.insertPurchasetype)
 router.post('/getPurchasetype',PurchaseTypeMasterController.getPurchasetype)
 router.post('/deletePurchasetype',PurchaseTypeMasterController.deletePurchasetype)
 router.post('/updatePurchasetype',PurchaseTypeMasterController.updatePurchasetype)
+router.get('/ActivePurchasetype',PurchaseTypeMasterController.ActivePurchasetype)
 
 router.post('/totalContracttype',ContractTypeMasterController.totalContracttype)
 router.post('/insertContracttype',ContractTypeMasterController.insertContracttype)
@@ -193,18 +226,21 @@ router.post('/insertPriority',PriorityMasterController.insertPriorityMaster)
 router.post('/getPriority',PriorityMasterController.getPriorityMaster)
 router.post('/deletePriority',PriorityMasterController.deletePriorityMaster)
 router.post('/updatePriority',PriorityMasterController.updatePriorityMaster)
+router.get('/ActivePriority',PriorityMasterController.ActivePriority)
 
 router.post('/totalTicketStatus',TicketStatusMasterController.totalTicketStatus)
 router.post('/insertTicketStatus',TicketStatusMasterController.insertTicketStatus)
 router.post('/getTicketStatus',TicketStatusMasterController.getTicketStatus)
 router.post('/deleteTicketStatus',TicketStatusMasterController.deleteTicketStatus)
 router.post('/updateTicketStatus',TicketStatusMasterController.updateTicketStatus)
+router.get('/ActiveTicketStatus',TicketStatusMasterController.ActiveTicketStatus)
 
 router.post('/totalBillingFrequency',BillingFrequencyMasterController.totalBillingFrequency)
 router.post('/insertBillingFrequency',BillingFrequencyMasterController.insertBillingFrequency)
 router.post('/getBillingFrequency',BillingFrequencyMasterController.getBillingFrequency)
 router.post('/deleteBillingFrequency',BillingFrequencyMasterController.deleteBillingFrequency)
 router.post('/updateBillingFrequency',BillingFrequencyMasterController.updateBillingFrequency)
+router.get('/ActiveBillingFreq',BillingFrequencyMasterController.ActiveBillingFreq)
 
 router.post('/totalVendorCategory',VendorCategoryMasterController.totalVendorCategory)
 router.post('/insertVendorCategory',VendorCategoryMasterController.insertVendorCategory)
@@ -250,9 +286,35 @@ router.post('/insertVendorContract',VendorContractMasterController.insertVendorC
 router.post('/getVendorContract',VendorContractMasterController.getVendorContract)
 router.post('/deleteVendorContract',VendorContractMasterController.deleteVendorContract)
 router.post('/updateVendorContract',VendorContractMasterController.updateVendorContract)
+router.get('/ActiveVendorContract',VendorContractMasterController.ActiveVendorContract)
+router.post('/VendorContractDetail',VendorContractMasterController.VendorContractDetail)
 
 
+router.post('/InsertVendorInvoice',VendorInvoiceController.InsertVendorInvoice)
+router.get('/PendingVendorInvoice',VendorInvoiceController.PendingVendorInvoice)
+router.post('/GetVendorInvoice',VendorInvoiceController.GetVendorInvoice)
+router.post('/UpdatePendingVendorInvoice',VendorInvoiceController.UpdatePendingVendorInvoice)
+router.post('/UpdateVendorInvoice',VendorInvoiceController.UpdateVendorInvoice)
+router.post('/TotalVendorPayment',VendorInvoiceController.TotalVendorPayment)
+router.post('/GetVendorPayment',VendorInvoiceController.GetVendorPayment)
+router.post('/UpdateVendorPayment',VendorInvoiceController.UpdateVendorPayment)
 
+
+router.get('/TotalNewAssets',NewAssetsController.TotalNewAssets)
+router.post('/InsertNewAssets',NewAssetsController.InsertNewAssets)
+router.post('/DeleteNewAssets',NewAssetsController.DeleteNewAssets)
+router.post('/GetNewAssets',NewAssetsController.GetNewAssets)
+router.post('/CountNewAssets',NewAssetsController.CountNewAssets)
+router.post('/GetNewAssetAssign',NewAssetsController.GetNewAssetAssign)
+router.post('/UpdateNewAssets',NewAssetsController.UpdateNewAssets)
+
+
+router.post('/InsertTicket',TicketsController.InsertTicket)
+router.get('/CountTickets',TicketsController.CountTickets)
+router.get('/TotalTicket',TicketsController.TotalTicket)
+router.post('/DeleteTickets',TicketsController.DeleteTickets)
+router.post('/getTickets',TicketsController.getTickets)
+router.post('/UpdateTicket',TicketsController.UpdateTicket)
 
 
 

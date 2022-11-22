@@ -9,7 +9,7 @@ const totalAssetType = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -26,7 +26,7 @@ const insertAssetType = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -38,7 +38,7 @@ const getAssetType = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -51,7 +51,7 @@ const deleteAssetType = async (req,res) =>{
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -68,8 +68,20 @@ const updateAssetType = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
-module.exports = {totalAssetType,insertAssetType,getAssetType,deleteAssetType,updateAssetType}
+const ActiveAssetesType = async (req,res) =>{
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`SELECT  sno,asset_type_id,asset_type from IPERISCOPE.dbo.tbl_asset_type_master tatm  WHERE status ='Active'`)
+        res.status(200).send(result.recordset)
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
+
+
+module.exports = {totalAssetType,insertAssetType,getAssetType,deleteAssetType,updateAssetType,ActiveAssetesType}

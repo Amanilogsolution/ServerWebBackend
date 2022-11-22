@@ -9,7 +9,7 @@ const totalBillingFrequency = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -18,7 +18,6 @@ const insertBillingFrequency = async (req,res) =>{
     const billing_freq= req.body.billing_freq;
     const billing_freq_description = req.body.billing_freq_description;
     const user_id = req.body.user_id;
-    console.log(billing_freq_id,billing_freq,billing_freq_description,user_id)
 
     try{
         await sql.connect(sqlConfig)
@@ -27,7 +26,7 @@ const insertBillingFrequency = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -39,7 +38,7 @@ const getBillingFrequency  = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -52,7 +51,7 @@ const deleteBillingFrequency   = async (req,res) =>{
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -69,10 +68,22 @@ const updateBillingFrequency  = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
-module.exports = {totalBillingFrequency,insertBillingFrequency,getBillingFrequency,deleteBillingFrequency,updateBillingFrequency}
+
+const ActiveBillingFreq   = async (req,res) =>{
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`select sno,billing_freq_id,billing_freq from IPERISCOPE.dbo.tbl_billing_freq_master tbfm   with (nolock)  WHERE status ='Active'`)
+        res.status(200).send(result.recordset)
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
+
+module.exports = {totalBillingFrequency,insertBillingFrequency,getBillingFrequency,deleteBillingFrequency,updateBillingFrequency,ActiveBillingFreq}
 
 

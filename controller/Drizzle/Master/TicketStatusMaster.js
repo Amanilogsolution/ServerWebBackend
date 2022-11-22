@@ -72,6 +72,19 @@ const updateTicketStatus  = async (req,res) =>{
     }
 }
 
-module.exports = {totalTicketStatus,insertTicketStatus,getTicketStatus,deleteTicketStatus,updateTicketStatus}
+
+const ActiveTicketStatus   = async (req,res) =>{
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`SELECT  ticket_id,ticket_status from IPERISCOPE.dbo.tbl_ticket_status_master ttsm  with (nolock)  WHERE status ='Active'`)
+        res.status(200).send(result.recordset)
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
+
+
+module.exports = {totalTicketStatus,insertTicketStatus,getTicketStatus,deleteTicketStatus,updateTicketStatus,ActiveTicketStatus}
 
 

@@ -9,7 +9,7 @@ const totalPriorityMaster = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -26,7 +26,7 @@ const insertPriorityMaster = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -38,7 +38,7 @@ const getPriorityMaster  = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -51,7 +51,7 @@ const deletePriorityMaster  = async (req,res) =>{
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -68,10 +68,22 @@ const updatePriorityMaster = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
-module.exports = {totalPriorityMaster,insertPriorityMaster,getPriorityMaster,deletePriorityMaster,updatePriorityMaster}
+
+const ActivePriority  = async (req,res) =>{
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`SELECT  priority_id,priority_type from IPERISCOPE.dbo.tbl_priority_master tpm  with (nolock)  WHERE status ='Active'`)
+        res.status(200).send(result.recordset)
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
+
+module.exports = {totalPriorityMaster,insertPriorityMaster,getPriorityMaster,deletePriorityMaster,updatePriorityMaster,ActivePriority}
 
 

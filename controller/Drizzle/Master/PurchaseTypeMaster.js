@@ -9,7 +9,7 @@ const totalPurchasetype = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -26,7 +26,7 @@ const insertPurchasetype = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -38,7 +38,7 @@ const getPurchasetype = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -51,7 +51,7 @@ const deletePurchasetype = async (req,res) =>{
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -69,10 +69,22 @@ const updatePurchasetype = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
-module.exports = {totalPurchasetype,insertPurchasetype,getPurchasetype,deletePurchasetype,updatePurchasetype}
+const ActivePurchasetype = async (req,res) =>{
+    try{
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_purchase_type_master with (nolock) WHERE status ='Active' `)
+        res.status(200).send(result.recordset)
+    }
+    catch(err){
+        res.send(err)
+    }
+}
+
+
+module.exports = {totalPurchasetype,insertPurchasetype,getPurchasetype,deletePurchasetype,updatePurchasetype,ActivePurchasetype}
 
 

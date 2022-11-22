@@ -73,6 +73,19 @@ const updateIssueType = async (req,res) =>{
     }
 }
 
-module.exports = {totalIssueType,insertIssueType,getIssueType,deleteIssueType,updateIssueType}
+
+const ActiveIssue = async (req,res) =>{
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`SELECT  issue_id,issue_type from IPERISCOPE.dbo.tbl_issue_master tim with (nolock)  WHERE status ='Active'`)
+        res.status(200).send(result.recordset)
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
+
+
+module.exports = {totalIssueType,insertIssueType,getIssueType,deleteIssueType,updateIssueType,ActiveIssue}
 
 

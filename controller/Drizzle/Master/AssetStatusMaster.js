@@ -9,7 +9,7 @@ const totalAssetStatus = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -26,20 +26,20 @@ const insertAssetStatus = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
 const getAssetStatus = async (req,res) =>{
     const sno = req.body.sno;
-    console.log(sno)
+  
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_asset_status_master  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -53,7 +53,7 @@ const deleteAssetStatus = async (req,res) =>{
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -70,8 +70,24 @@ const updateAssetStatus = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
-module.exports = {totalAssetStatus,insertAssetStatus,getAssetStatus,deleteAssetStatus,updateAssetStatus}
+
+const ActiveAssetesStatus = async (req,res) =>{
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_asset_status_master tasm with (nolock)  WHERE status ='Active'`)
+        res.status(200).send(result.recordset)
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
+
+
+
+
+
+module.exports = {totalAssetStatus,insertAssetStatus,getAssetStatus,deleteAssetStatus,updateAssetStatus,ActiveAssetesStatus}

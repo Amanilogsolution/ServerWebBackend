@@ -74,4 +74,19 @@ const updateSoftware = async (req,res) =>{
     }
 }
 
-module.exports={totalSoftware,insertSoftware,getSoftware,deleteSoftware,updateSoftware}
+
+const ActiveSoftware = async (req,res) =>{
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_software_master tsm  with (nolock)  WHERE status ='Active'`)
+        res.status(200).send(result.recordset)
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
+
+
+
+
+module.exports={totalSoftware,insertSoftware,getSoftware,deleteSoftware,updateSoftware,ActiveSoftware}

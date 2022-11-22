@@ -65,7 +65,6 @@ const updateManufacturer  = async (req,res) =>{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update IPERISCOPE.dbo.tbl_manufacturer_master set manufacturer_name='${manufacturer_name}',manufacturer_description='${manufacturer_description}'
         ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_ip_address='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
-        console.log(result)
         if(result){
             res.status(200).send("Updated")
 
@@ -78,5 +77,22 @@ const updateManufacturer  = async (req,res) =>{
     }
 }
 
+const ActiveManufacturer = async (req,res) =>{
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_manufacturer_master tmm WHERE status ='Active'`)
+        
+        if(result){
+            res.send(result.recordset)
 
-module.exports={totalManufacturer,insertManufacturer,getManufacturer,deleteManufacturer,updateManufacturer}
+        }else{
+            res.send("Error")
+        }
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
+
+
+module.exports={totalManufacturer,insertManufacturer,getManufacturer,deleteManufacturer,updateManufacturer,ActiveManufacturer}

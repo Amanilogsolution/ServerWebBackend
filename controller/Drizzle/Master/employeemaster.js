@@ -80,4 +80,33 @@ const updateEmployee = async (req,res) =>{
     }
 }
 
-module.exports={totalEmployee,insertEmployee,getEmployee,deleteEmployee,updateEmployee}
+
+const ActiveEmployee= async (req,res) =>{
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`SELECT  * from IPERISCOPE.dbo.tbl_employee_master tem  with (nolock)  WHERE status ='Active'`)
+        res.status(200).send(result.recordset)
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
+
+const EmployeeDetail= async (req,res) =>{
+    const empid = req.body.empid;
+
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`SELECT  * from IPERISCOPE.dbo.tbl_employee_master tem WHERE employee_id ='${empid}'
+        `)
+        res.send(result.recordset[0])
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
+
+
+
+
+module.exports={totalEmployee,insertEmployee,getEmployee,deleteEmployee,updateEmployee,ActiveEmployee,EmployeeDetail}
