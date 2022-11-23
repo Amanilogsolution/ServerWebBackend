@@ -45,15 +45,17 @@ async function ChangePassword(req,res){
     const user_id = req.body.user_id;
     const password = req.body.password;
     const CurrentPassword = req.body.CurrentPassword;
+    console.log(`select * from IPERISCOPE.dbo.tbl_iperiscope_login with (nolock) where user_id = '${user_id}' and user_password = '${CurrentPassword}' `)
     try{
         await sql.connect(sqlConfig)
         const checkpass = await sql.query(`select * from IPERISCOPE.dbo.tbl_iperiscope_login with (nolock) where user_id = '${user_id}' and user_password = '${CurrentPassword}' `)
-        if ((checkpass.recordset).length === 0) {
+        console.log(checkpass)
+        if (checkpass.rowsAffected[0] === 0) {
             res.send('Incorrect Current Password')
         }
         else {
             const UserChange = await sql.query(`update IPERISCOPE.dbo.tbl_iperiscope_login set user_password='${password}' where user_id ='${user_id}' and user_password='${CurrentPassword}'`)
-            res.send(UserChange)
+            res.send('Password Changed')
         }
     }
     catch (err){
