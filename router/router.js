@@ -5,8 +5,6 @@ const LoginController = require('../controller/Login/Login')
 
 const AddressController = require('../controller/AddressMaster/AddressMaster')
 
-
-
 const MasterDeviceTypeController = require('../controller/Master/DeviceTypeMaster')
 const MasterDeviceGroupController = require('../controller/Master/DeviceGroupMaster')
 const MasterDeviceServiceController = require('../controller/Master/DeviceServicesMaster')
@@ -51,6 +49,7 @@ const TicketsController = require('../controller/Drizzle/Main/Tickets')
 
 
 router.post('/login',LoginController.UserLogin)
+router.post('/ChangePassword',LoginController.ChangePassword)
 
 
 router.get('/totalcountry',AddressController.totalcountry)
