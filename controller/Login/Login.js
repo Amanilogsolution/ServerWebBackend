@@ -17,6 +17,7 @@ const UserLogin = async (req,res) =>{
                 name: result.recordset[0].user_name,
                 user_id: result.recordset[0].user_id,
                 user_password: result.recordset[0].user_password,
+                database:result.recordset[0].DBname,
                 permission :result.recordset[0].permission
             })
             console.log({   
@@ -25,6 +26,7 @@ const UserLogin = async (req,res) =>{
             name: result.recordset[0].user_name,
             user_id: result.recordset[0].user_id,
             user_password: result.recordset[0].user_password,
+            database:result.recordset[0].DBname,
             permission :result.recordset[0].permission})
         }
 
