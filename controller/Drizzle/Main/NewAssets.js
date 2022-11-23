@@ -3,9 +3,11 @@ const sqlConfig = require('../../../Database/Config')
 const os = require('os')
 
 const TotalNewAssets = async (req, res) => {
+    const org = req.body.org;
+
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_new_assets with (nolock) `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_new_assets with (nolock) `)
         res.status(200).send(result.recordset)
     }
     catch (err) {
@@ -14,6 +16,7 @@ const TotalNewAssets = async (req, res) => {
 }
 
 const InsertNewAssets = async (req, res) => {
+    const org = req.body.org;
     const new_asset_type_id = req.body.new_asset_type_id;
     const asset_type = req.body.asset_type;
     const asset_tag = req.body.asset_tag;
@@ -39,14 +42,12 @@ const InsertNewAssets = async (req, res) => {
     const asset_assign = req.body.asset_assign;
     const asset_assign_empid = req.body.asset_assign_empid;
     const remarks = req.body.remarks;
-
-
     const userid = req.body.userid;
 
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_new_assets (new_asset_type_id,asset_type,asset_tag,serial_no,location,manufacture,
+        const result = await sql.query(`insert into ${org}.dbo.tbl_new_assets (new_asset_type_id,asset_type,asset_tag,serial_no,location,manufacture,
             software,model,asset_status,description,purchase_type,purchase_date,company,vendor,invoice_no,
             rent_per_month,purchases_price,latest_inventory,asset_name,asset_assign,asset_assign_empid,remarks,add_user_name,
             add_system_name,add_ip_address,add_date_time,status,new_assets_uuid)
@@ -68,11 +69,13 @@ const InsertNewAssets = async (req, res) => {
 }
 
 const DeleteNewAssets = async (req, res) => {
+    const org = req.body.org;
+
     const status = req.body.status;
     const sno = req.body.sno;
     try {
         await sql.connect(sqlConfig)
-        await sql.query(`update IPERISCOPE.dbo.tbl_new_assets set status='${status}' where sno =${sno}`)
+        await sql.query(`update ${org}.dbo.tbl_new_assets set status='${status}' where sno =${sno}`)
         res.status(200).send("updated")
     }
     catch (err) {
@@ -82,9 +85,11 @@ const DeleteNewAssets = async (req, res) => {
 
 const GetNewAssets = async (req, res) => {
     const sno = req.body.sno;
+    const org = req.body.org;
+
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select *,convert(varchar(15),purchase_date,121) as Assetdate from IPERISCOPE.dbo.tbl_new_assets  where sno='${sno}'`)
+        const result = await sql.query(`select *,convert(varchar(15),purchase_date,121) as Assetdate from ${org}.dbo.tbl_new_assets  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch (err) {
@@ -94,10 +99,12 @@ const GetNewAssets = async (req, res) => {
 
 const CountNewAssets = async (req, res) => {
     const asset_type = req.body.asset_type;
+    const org = req.body.org;
+
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`SELECT COUNT(sno) as count FROM IPERISCOPE.dbo.tbl_new_assets
+        const result = await sql.query(`SELECT COUNT(sno) as count FROM ${org}.dbo.tbl_new_assets
         WHERE asset_type='${asset_type}'`)
 
         if (result.rowsAffected[0] > 0) {
@@ -116,10 +123,12 @@ const CountNewAssets = async (req, res) => {
 
 const GetNewAssetAssign = async (req, res) => {
     const asset_assign_empid = req.body.asset_assign_empid;
+    const org = req.body.org;
+
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select asset_type,serial_no from IPERISCOPE.dbo.tbl_new_assets with (nolock) where
+        const result = await sql.query(`select asset_type,serial_no from ${org}.dbo.tbl_new_assets with (nolock) where
         asset_assign_empid= '${asset_assign_empid}'
         `)
 
@@ -137,6 +146,7 @@ const GetNewAssetAssign = async (req, res) => {
 
 
 const UpdateNewAssets = async (req, res) => {
+    const org = req.body.org;
 
     const asset_type = req.body.asset_type;
     const asset_tag = req.body.assetetag;
@@ -179,7 +189,7 @@ const UpdateNewAssets = async (req, res) => {
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`
-        update IPERISCOPE.dbo.tbl_new_assets set 
+        update ${org}.dbo.tbl_new_assets set 
         asset_type='${asset_type}',asset_tag='${asset_tag}',serial_no='${serial_no}',location='${location}',manufacture='${manufacture}',
              software='${software}',model='${model}',asset_status='${asset_status}',description='${description}',purchase_type='${purchase_type}',
                 purchase_date='${purchase_date}',company='${company}',vendor='${vendor}',invoice_no='${invoice_no}',

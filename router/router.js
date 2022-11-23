@@ -300,7 +300,7 @@ router.post('/GetVendorPayment',VendorInvoiceController.GetVendorPayment)
 router.post('/UpdateVendorPayment',VendorInvoiceController.UpdateVendorPayment)
 
 
-router.get('/TotalNewAssets',NewAssetsController.TotalNewAssets)
+router.post('/TotalNewAssets',NewAssetsController.TotalNewAssets)
 router.post('/InsertNewAssets',NewAssetsController.InsertNewAssets)
 router.post('/DeleteNewAssets',NewAssetsController.DeleteNewAssets)
 router.post('/GetNewAssets',NewAssetsController.GetNewAssets)
