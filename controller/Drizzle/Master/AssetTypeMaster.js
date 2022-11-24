@@ -21,9 +21,14 @@ const insertAssetType = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
+        const duplicate = await sql.query(`select * from IPERISCOPE.dbo.tbl_asset_type_master where asset_type='${asset_type}'`)
+        if (duplicate.recordset.length > 0) {
+            res.send("Already")
+        }else{
         const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_asset_type_master (asset_type_id ,asset_type ,asset_description,Status,add_user_name,add_system_name,add_ip_address,add_date_time)
         values('${asset_type_id}','${asset_type}','${asset_description}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
         res.status(200).send("Added")
+        }
     }
     catch(err){
         res.send(err)
