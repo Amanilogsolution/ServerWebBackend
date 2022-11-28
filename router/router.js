@@ -309,8 +309,8 @@ router.post('/UpdateNewAssets',NewAssetsController.UpdateNewAssets)
 
 
 router.post('/InsertTicket',TicketsController.InsertTicket)
-router.get('/CountTickets',TicketsController.CountTickets)
-router.get('/TotalTicket',TicketsController.TotalTicket)
+router.post('/CountTickets',TicketsController.CountTickets)
+router.post('/TotalTicket',TicketsController.TotalTicket)
 router.post('/DeleteTickets',TicketsController.DeleteTickets)
 router.post('/getTickets',TicketsController.getTickets)
 router.post('/UpdateTicket',TicketsController.UpdateTicket)
