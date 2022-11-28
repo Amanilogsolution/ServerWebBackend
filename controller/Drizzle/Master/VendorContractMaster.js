@@ -3,9 +3,11 @@ const sqlConfig = require('../../../Database/Config')
 const os = require('os')
 
 const totalVendorContract = async (req, res) => {
+    const org = req.body.org;
+
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_contract_master tvcm 
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_contract_master tvcm 
         `)
         res.status(200).send(result.recordset)
     }
@@ -15,6 +17,8 @@ const totalVendorContract = async (req, res) => {
 }
 
 const insertVendorContract = async (req, res) => {
+    const org = req.body.org;
+
     const vendor_contract_id = req.body.vendor_contract_id;
     const vendor = req.body.vendor;
     const type_of_contract = req.body.type_of_contract;
@@ -40,7 +44,7 @@ const insertVendorContract = async (req, res) => {
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`
-             insert into IPERISCOPE.dbo.tbl_vendor_contract_master
+             insert into ${org}.dbo.tbl_vendor_contract_master
      (vendor_contract_id,vendor,
      type_of_contract,major_category,sub_category,
      location,company,customer_account_no,reference_no,contatct_plain_details,rate_per_month,
@@ -66,10 +70,12 @@ const insertVendorContract = async (req, res) => {
 }
 
 const getVendorContract = async (req, res) => {
+    const org = req.body.org;
+
     const sno = req.body.sno;
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_contract_master  where sno='${sno}'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_contract_master  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch (err) {
@@ -78,11 +84,13 @@ const getVendorContract = async (req, res) => {
 }
 
 const deleteVendorContract = async (req, res) => {
+    const org = req.body.org;
+
     const status = req.body.status;
     const sno = req.body.sno;
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update IPERISCOPE.dbo.tbl_vendor_contract_master set status='${status}' where sno =${sno}`)
+        const result = await sql.query(`update ${org}.dbo.tbl_vendor_contract_master set status='${status}' where sno =${sno}`)
         res.status(200).send("updated")
     }
     catch (err) {
@@ -91,6 +99,8 @@ const deleteVendorContract = async (req, res) => {
 }
 
 const updateVendorContract = async (req, res) => {
+    const org = req.body.org;
+
     const sno = req.body.sno;
     const vendor = req.body.vendor;
     const type_of_contract = req.body.type_of_contract;
@@ -114,7 +124,7 @@ const updateVendorContract = async (req, res) => {
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update IPERISCOPE.dbo.tbl_vendor_contract_master set vendor='${vendor}',type_of_contract='${type_of_contract}',major_category='${major_category}',
+        const result = await sql.query(`update ${org}.dbo.tbl_vendor_contract_master set vendor='${vendor}',type_of_contract='${type_of_contract}',major_category='${major_category}',
         sub_category='${sub_category}',location='${location}',company='${company}',customer_account_no='${customer_account_no}',reference_no='${reference_no}',
         contatct_plain_details='${contact_plain_details}',rate_per_month='${rate_per_month}',
         contract_start_date='${contract_start_date}',invoice_generation_date='${invoice_generation_date}',billling_freq='${billing_freq}',
@@ -136,10 +146,12 @@ const updateVendorContract = async (req, res) => {
 
 
 const ActiveVendorContract = async (req, res) => {
+    const org = req.body.org;
+
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`SELECT  sno,vendor_contract_id,vendor,reference_no  from 
-        IPERISCOPE.dbo.tbl_vendor_contract_master tvcm   with (nolock)  WHERE status ='Active'`)
+        ${org}.dbo.tbl_vendor_contract_master tvcm   with (nolock)  WHERE status ='Active'`)
         res.status(200).send(result.recordset)
     }
     catch (err) {
@@ -148,12 +160,14 @@ const ActiveVendorContract = async (req, res) => {
 }
 
 const VendorContractDetail = async (req, res) => {
+    const org = req.body.org;
+
     const sno = req.body.sno;
 
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`SELECT  vendor_contract_id,vendor,reference_no,customer_account_no  from 
-        IPERISCOPE.dbo.tbl_vendor_contract_master tvcm with (nolock) WHERE sno ='${sno}' `)
+        ${org}.dbo.tbl_vendor_contract_master tvcm with (nolock) WHERE sno ='${sno}' `)
         res.status(200).send(result.recordset[0])
     }
     catch (err) {

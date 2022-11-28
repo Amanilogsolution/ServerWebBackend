@@ -3,9 +3,11 @@ const sqlConfig = require('../../../Database/Config')
 const os = require('os')
 
 const totalVendorCode = async (req,res) =>{
+    const org = req.body.org;
+
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_code_master  `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_code_master  `)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -14,6 +16,8 @@ const totalVendorCode = async (req,res) =>{
 }
 
 const insertVendorCode = async (req,res) =>{
+    const org = req.body.org;
+
     const vendor_code_id = req.body.vendor_code_id;
     const vendor_code= req.body.vendor_code;
     const vendor_name = req.body.vendor_name;
@@ -39,7 +43,7 @@ const insertVendorCode = async (req,res) =>{
    
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_vendor_code_master (vendor_code_id,vendor_code,vendor_name,company_email,company_website,
+        const result = await sql.query(`insert into ${org}.dbo.tbl_vendor_code_master (vendor_code_id,vendor_code,vendor_name,company_email,company_website,
             company_gst,company_phone,company_country_id,company_country,company_state_id,company_state,company_city,company_pin_code,company_address_line1,
             company_address_line2,venodr_portal,contact_person_name,contact_person_phone,contact_person_email,add_user_name,
             add_system_name,add_ip_address,add_date_time,status)
@@ -56,10 +60,12 @@ const insertVendorCode = async (req,res) =>{
 }
 
 const getVendorCode  = async (req,res) =>{
+    const org = req.body.org;
+
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_code_master  where sno='${sno}'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_code_master  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -68,11 +74,13 @@ const getVendorCode  = async (req,res) =>{
 }
 
 const deleteVendorCode   = async (req,res) =>{
+    const org = req.body.org;
+
     const status = req.body.status;
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update IPERISCOPE.dbo.tbl_vendor_code_master set status='${status}' where sno =${sno}`)
+        const result = await sql.query(`update ${org}.dbo.tbl_vendor_code_master set status='${status}' where sno =${sno}`)
         res.status(200).send("updated")
     }
     catch(err){
@@ -81,6 +89,7 @@ const deleteVendorCode   = async (req,res) =>{
 }
 
 const updateVendorCode = async (req,res) =>{
+    const org = req.body.org;
 
     const sno = req.body.sno;
     const vendor_code= req.body.vendor_code;
@@ -106,7 +115,7 @@ const updateVendorCode = async (req,res) =>{
  
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update IPERISCOPE.dbo.tbl_vendor_code_master set 
+        const result = await sql.query(`update ${org}.dbo.tbl_vendor_code_master set 
         vendor_code='${vendor_code}',vendor_name='${vendor_name}',company_email='${company_email}',company_website='${company_website}',
             company_gst='${company_gst}',company_phone='${comp_phone}',company_country_id='${comp_country_id}',company_country='${comp_country}',
             company_state_id='${comp_state_id}',company_state='${company_state}',company_city='${company_city}',company_pin_code='${company_pin_code}',
@@ -121,9 +130,11 @@ const updateVendorCode = async (req,res) =>{
 }
 
 const GetAllVendor = async (req,res) =>{
+    const org = req.body.org;
+
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_code_master WHERE status ='Active'  `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_code_master WHERE status ='Active'  `)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -132,10 +143,12 @@ const GetAllVendor = async (req,res) =>{
 }
 
 const GetVendorDetails = async (req,res) =>{
+    const org = req.body.org;
+
     const vendor_name = req.body.vendor_name
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_code_master WHERE vendor_name = '${vendor_name}'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_code_master WHERE vendor_name = '${vendor_name}'`)
         res.status(200).send(result.recordset)
     }
     catch(err){

@@ -3,9 +3,10 @@ const sqlConfig = require('../../../Database/Config')
 const os = require('os')
 
 const totalLocation= async (req,res) =>{
+    const org = req.body.org;
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_location_master`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_location_master`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -14,6 +15,8 @@ const totalLocation= async (req,res) =>{
 }
 
 const insertLocation = async (req,res) =>{
+    const org = req.body.org;
+
     const location_id = req.body.location_id;
     const company_name= req.body.company_name;
     const location_code = req.body.location_code;
@@ -36,7 +39,7 @@ const insertLocation = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_location_master (location_id ,company_name ,location_code ,location_name ,location_address_line1 ,location_address_line2,location_city ,location_state ,location_pin_code,location_gst,contact_person,contact_person_email,contact_person_number ,location_latitude ,location_longitude ,Status,add_username,add_system_name,add_ip,add_date_time)
+        const result = await sql.query(`insert into ${org}.dbo.tbl_location_master (location_id ,company_name ,location_code ,location_name ,location_address_line1 ,location_address_line2,location_city ,location_state ,location_pin_code,location_gst,contact_person,contact_person_email,contact_person_number ,location_latitude ,location_longitude ,Status,add_username,add_system_name,add_ip,add_date_time)
         values('${location_id}','${company_name}','${location_code}','${location_name}','${location_address_line1}','${location_address_line2}','${location_city}','${location_state}',${location_pin_code},'${location_gst}','${contact_person}','${contact_person_email}',${contact_person_number},'${location_latitude}','${location_longitude}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
         res.status(200).send("Added")
     }
@@ -46,10 +49,11 @@ const insertLocation = async (req,res) =>{
 }
 
 const getLocation= async (req,res) =>{
+    const org = req.body.org;
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_location_master tom where sno='${sno}'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_location_master tom where sno='${sno}'`)
         res.status(200).send(result.recordset[0])
     }
     catch(err){
@@ -60,9 +64,11 @@ const getLocation= async (req,res) =>{
 const deleteLocation= async (req,res) =>{
     const status = req.body.status;
     const sno = req.body.sno;
+    const org = req.body.org;
+
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update IPERISCOPE.dbo.tbl_location_master set status='${status}' where sno =${sno}`)
+        const result = await sql.query(`update ${org}.dbo.tbl_location_master set status='${status}' where sno =${sno}`)
         res.status(200).send("updated")
     }
     catch(err){
@@ -71,6 +77,8 @@ const deleteLocation= async (req,res) =>{
 }
 
 const updateLocation = async (req,res) =>{
+    const org = req.body.org;
+
     const sno = req.body.sno;
     const company_name= req.body.company_name;
     const location_code = req.body.location_code;
@@ -90,7 +98,7 @@ const updateLocation = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update IPERISCOPE.dbo.tbl_location_master set company_name='${company_name}',location_code='${location_code}',location_name='${location_name}',location_address_line1='${location_address_line1}',location_address_line2='${location_address_line2}',location_city='${location_city}'
+        const result = await sql.query(`update ${org}.dbo.tbl_location_master set company_name='${company_name}',location_code='${location_code}',location_name='${location_name}',location_address_line1='${location_address_line1}',location_address_line2='${location_address_line2}',location_city='${location_city}'
         ,location_state='${location_state}',location_pin_code=${location_pin_code},location_gst='${location_gst}',contact_person='${contact_person}',contact_person_email='${contact_person_email}',contact_person_number=${contact_person_number},location_latitude='${location_latitude}',location_longitude='${location_longitude}',update_username='${user_id}',update_system_name='${os.hostname()}',update_system_ip='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
         res.status(200).send("Updated")
     }
@@ -100,9 +108,11 @@ const updateLocation = async (req,res) =>{
 }
 
 const getAllLocation = async (req,res) =>{
+    const org = req.body.org;
+
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_location_master WHERE status ='Active'  `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_location_master WHERE status ='Active'  `)
         res.status(200).send(result.recordset)
     }
     catch(err){

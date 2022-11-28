@@ -5,9 +5,11 @@ const os = require('os')
 
 
 const TotalTicket = async (req, res) => {
+    const org = req.body.org;
+
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_ticket with (nolock) `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_ticket with (nolock) `)
         res.status(200).send(result.recordset)
     }
     catch (err) {
@@ -15,6 +17,8 @@ const TotalTicket = async (req, res) => {
     }
 }
 const InsertTicket = async (req, res) => {
+    const org = req.body.org;
+
     const emp_id = req.body.emp_id;
     const emp_name = req.body.emp_name;
     const asset_type = req.body.asset_type;
@@ -35,7 +39,7 @@ const InsertTicket = async (req, res) => {
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`
-        insert into IPERISCOPE.dbo.tbl_ticket(emp_id,emp_name,asset_type,asset_serial,location,assign_ticket,
+        insert into ${org}.dbo.tbl_ticket(emp_id,emp_name,asset_type,asset_serial,location,assign_ticket,
             type_of_issue,email_id,ticket_date,ticket_status,ticket_subject,priority,issue_discription,remarks,
             status,add_user_name,add_system_name,add_ip_address,add_date_time)
             values ('${emp_id}','${emp_name}','${asset_type}','${asset_serial}','${location}','${assign_ticket}','${type_of_issue}',
@@ -57,9 +61,11 @@ const InsertTicket = async (req, res) => {
 
 
 const CountTickets = async (req, res) => {
+    const org = req.body.org;
+
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`SELECT COUNT(sno) as count FROM IPERISCOPE.dbo.tbl_ticket with (nolock) `)
+        const result = await sql.query(`SELECT COUNT(sno) as count FROM ${org}.dbo.tbl_ticket with (nolock) `)
 
         if (result) {
             res.status(200).send(result.recordset)
@@ -75,11 +81,13 @@ const CountTickets = async (req, res) => {
 
 
 const DeleteTickets = async (req, res) => {
+    const org = req.body.org;
+
     const status = req.body.status;
     const sno = req.body.sno;
     try {
         await sql.connect(sqlConfig)
-        await sql.query(`update IPERISCOPE.dbo.tbl_ticket set status='${status}' where sno =${sno}`)
+        await sql.query(`update ${org}.dbo.tbl_ticket set status='${status}' where sno =${sno}`)
         res.status(200).send("updated")
     }
     catch (err) {
@@ -89,10 +97,12 @@ const DeleteTickets = async (req, res) => {
 
 
 const getTickets = async (req, res) => {
+    const org = req.body.org;
+
     const sno = req.body.sno;
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select *,convert(varchar(15),ticket_date,121) as Joindate from IPERISCOPE.dbo.tbl_ticket  where sno='${sno}'`)
+        const result = await sql.query(`select *,convert(varchar(15),ticket_date,121) as Joindate from ${org}.dbo.tbl_ticket  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch (err) {
@@ -102,6 +112,8 @@ const getTickets = async (req, res) => {
 
 
 const UpdateTicket = async (req, res) => {
+    const org = req.body.org;
+
     const emp_id = req.body.emp_id;
     const emp_name = req.body.emp_name;
     const asset_type = req.body.asset_type;
@@ -123,7 +135,7 @@ const UpdateTicket = async (req, res) => {
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`
-update IPERISCOPE.dbo.tbl_ticket set emp_id='${emp_id}',emp_name='${emp_name}',asset_type='${asset_type}',asset_serial='${asset_serial}',
+update ${org}.dbo.tbl_ticket set emp_id='${emp_id}',emp_name='${emp_name}',asset_type='${asset_type}',asset_serial='${asset_serial}',
 location='${location}',assign_ticket='${assign_ticket}',
 type_of_issue='${type_of_issue}',
 email_id='${email_id}',ticket_date='${ticket_date}',ticket_status='${ticket_status}',ticket_subject='${ticket_subject}',priority='${priority}',

@@ -3,9 +3,11 @@ const sqlConfig = require('../../../Database/Config')
 const os = require('os')
 
 const totalEmployee = async (req,res) =>{
+    const org = req.body.org;
+
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_employee_master`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_employee_master`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -14,6 +16,8 @@ const totalEmployee = async (req,res) =>{
 }
 
 const insertEmployee = async (req,res) =>{
+    const org = req.body.org;
+
     const employee_id = req.body.employee_id;
     const employee_name= req.body.employee_name;
     const location = req.body.location;
@@ -24,7 +28,7 @@ const insertEmployee = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_employee_master (employee_id,employee_name,location ,employee_email,employee_number  ,company ,status,add_user_name,add_system_name,add_system_ip,add_date_time)
+        const result = await sql.query(`insert into ${org}.dbo.tbl_employee_master (employee_id,employee_name,location ,employee_email,employee_number  ,company ,status,add_user_name,add_system_name,add_system_ip,add_date_time)
         values('${employee_id}','${employee_name}','${location}','${employee_email}',${employee_number},'${company}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
         res.status(200).send("Added")
     }
@@ -34,10 +38,12 @@ const insertEmployee = async (req,res) =>{
 }
 
 const getEmployee= async (req,res) =>{
+    const org = req.body.org;
+
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_employee_master  where sno='${sno}'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_employee_master  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -46,12 +52,14 @@ const getEmployee= async (req,res) =>{
 }
 
 const deleteEmployee= async (req,res) =>{
+    const org = req.body.org;
+
     const status = req.body.status;
     const sno = req.body.sno;
     console.log(status,sno)
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update IPERISCOPE.dbo.tbl_employee_master set status='${status}' where sno=${sno}`)
+        const result = await sql.query(`update ${org}.dbo.tbl_employee_master set status='${status}' where sno=${sno}`)
         res.status(200).send("updated")
     }
     catch(err){
@@ -60,6 +68,8 @@ const deleteEmployee= async (req,res) =>{
 }
 
 const updateEmployee = async (req,res) =>{
+    const org = req.body.org;
+
     const sno = req.body.sno;
     // const employee_id = req.body.employee_id;
     const employee_name= req.body.employee_name;
@@ -71,7 +81,7 @@ const updateEmployee = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update IPERISCOPE.dbo.tbl_employee_master set employee_name='${employee_name}',location='${location}',employee_email='${employee_email}',employee_number= ${employee_number},company='${company}'
+        const result = await sql.query(`update ${org}.dbo.tbl_employee_master set employee_name='${employee_name}',location='${location}',employee_email='${employee_email}',employee_number= ${employee_number},company='${company}'
         ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_system_ip='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
         res.status(200).send("Updated")
     }
@@ -82,9 +92,11 @@ const updateEmployee = async (req,res) =>{
 
 
 const ActiveEmployee= async (req,res) =>{
+    const org = req.body.org;
+
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`SELECT  * from IPERISCOPE.dbo.tbl_employee_master tem  with (nolock)  WHERE status ='Active'`)
+        const result = await sql.query(`SELECT  * from ${org}.dbo.tbl_employee_master tem  with (nolock)  WHERE status ='Active'`)
         res.status(200).send(result.recordset)
     }
     catch (err) {
@@ -93,11 +105,13 @@ const ActiveEmployee= async (req,res) =>{
 }
 
 const EmployeeDetail= async (req,res) =>{
+    const org = req.body.org;
+
     const empid = req.body.empid;
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`SELECT  * from IPERISCOPE.dbo.tbl_employee_master tem WHERE employee_id ='${empid}'
+        const result = await sql.query(`SELECT  * from ${org}.dbo.tbl_employee_master tem WHERE employee_id ='${empid}'
         `)
         res.send(result.recordset[0])
     }

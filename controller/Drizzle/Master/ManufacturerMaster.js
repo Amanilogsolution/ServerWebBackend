@@ -3,9 +3,11 @@ const sqlConfig = require('../../../Database/Config')
 const os = require('os')
 
 const totalManufacturer = async (req,res) =>{
+    const org = req.body.org;
+
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_manufacturer_master`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_manufacturer_master`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -14,6 +16,7 @@ const totalManufacturer = async (req,res) =>{
 }
 
 const insertManufacturer = async (req,res) =>{
+    const org = req.body.org;
     const manufacturer_id = req.body.manufacturer_id;
     const manufacturer_name= req.body.manufacturer_name;
     const manufacturer_description = req.body.manufacturer_description;
@@ -21,7 +24,7 @@ const insertManufacturer = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_manufacturer_master (manufacturer_id  ,manufacturer_name  ,manufacturer_description  ,Status,add_user_name,add_system_name,add_ip_address,add_date_time)
+        const result = await sql.query(`insert into ${org}.dbo.tbl_manufacturer_master (manufacturer_id  ,manufacturer_name  ,manufacturer_description  ,Status,add_user_name,add_system_name,add_ip_address,add_date_time)
         values('${manufacturer_id}','${manufacturer_name}','${manufacturer_description}','Active','${user_id}','${os.hostname}','${req.ip}',getdate())`)
         res.status(200).send("Added")
     }
@@ -31,10 +34,12 @@ const insertManufacturer = async (req,res) =>{
 }
 
 const getManufacturer = async (req,res) =>{
+    const org = req.body.org;
+
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_manufacturer_master  where sno='${sno}'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_manufacturer_master  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -43,11 +48,13 @@ const getManufacturer = async (req,res) =>{
 }
 
 const deleteManufacturer = async (req,res) =>{
+    const org = req.body.org;
+
     const status = req.body.status;
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update IPERISCOPE.dbo.tbl_manufacturer_master set status='${status}' where sno =${sno}`)
+        const result = await sql.query(`update ${org}.dbo.tbl_manufacturer_master set status='${status}' where sno =${sno}`)
         res.status(200).send("updated")
     }
     catch(err){
@@ -56,6 +63,8 @@ const deleteManufacturer = async (req,res) =>{
 }
 
 const updateManufacturer  = async (req,res) =>{
+    const org = req.body.org;
+
     const sno = req.body.sno;
     const manufacturer_name= req.body.manufacturer_name;
     const manufacturer_description = req.body.manufacturer_description;
@@ -63,7 +72,7 @@ const updateManufacturer  = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update IPERISCOPE.dbo.tbl_manufacturer_master set manufacturer_name='${manufacturer_name}',manufacturer_description='${manufacturer_description}'
+        const result = await sql.query(`update ${org}.dbo.tbl_manufacturer_master set manufacturer_name='${manufacturer_name}',manufacturer_description='${manufacturer_description}'
         ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_ip_address='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
         if(result){
             res.status(200).send("Updated")
@@ -78,9 +87,11 @@ const updateManufacturer  = async (req,res) =>{
 }
 
 const ActiveManufacturer = async (req,res) =>{
+    const org = req.body.org;
+
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_manufacturer_master tmm WHERE status ='Active'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_manufacturer_master tmm WHERE status ='Active'`)
         
         if(result){
             res.send(result.recordset)

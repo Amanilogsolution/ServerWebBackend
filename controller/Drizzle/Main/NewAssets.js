@@ -4,7 +4,6 @@ const os = require('os')
 
 const TotalNewAssets = async (req, res) => {
     const org = req.body.org;
-
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from ${org}.dbo.tbl_new_assets with (nolock) `)
@@ -23,21 +22,18 @@ const InsertNewAssets = async (req, res) => {
     const serial_no = req.body.serial_no;
     const location = req.body.location;
     const manufacture = req.body.manufacture;
-
     const software = req.body.software;
     const model = req.body.model;
     const asset_status = req.body.asset_status;
     const description = req.body.description;
     const purchase_type = req.body.purchase_type;
     const purchase_date = req.body.purchase_date;
-
     const company = req.body.company;
     const vendor = req.body.vendor;
     const invoice_no = req.body.invoice_no;
     const rent_per_month = req.body.rent_per_month;
     const purchases_price = req.body.purchases_price;
     const latest_inventory = req.body.latest_inventory;
-
     const asset_name = req.body.asset_name;
     const asset_assign = req.body.asset_assign;
     const asset_assign_empid = req.body.asset_assign_empid;
@@ -104,8 +100,7 @@ const CountNewAssets = async (req, res) => {
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`SELECT COUNT(sno) as count FROM ${org}.dbo.tbl_new_assets
-        WHERE asset_type='${asset_type}'`)
+        const result = await sql.query(`SELECT COUNT(sno) as count FROM ${org}.dbo.tbl_new_assets WHERE asset_type='${asset_type}'`)
 
         if (result.rowsAffected[0] > 0) {
             res.status(200).send(result.recordset[0])

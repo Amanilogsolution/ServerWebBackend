@@ -3,13 +3,14 @@ const sqlConfig = require('../../../Database/Config')
 const os = require('os')
 
 const InsertVendorInvoice = async (req, res) => {
+    const org = req.body.org;
     const data = req.body.data;
     const userid = req.body.userid;
     let successcount = 0;
     try {
         await sql.connect(sqlConfig)
         for (let i = 0; i < data.length; i++) {
-            const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_vendor_invoice(vendor,account_no,invoice_no,invoice_amt,invoice_date,
+            const result = await sql.query(`insert into ${org}.dbo.tbl_vendor_invoice(vendor,account_no,invoice_no,invoice_amt,invoice_date,
                 invoice_duedate,invoice_subdate,remark,reference_no,printer_counter,invoice_status,add_user_name,add_system_name,
                 add_ip_address,add_date_time,status,vend_inv_uuid)
                 values ('${data[i].vendor}','${data[i].accountno}','${data[i].invno}',${data[i].invamt},'${data[i].invdate}',
@@ -36,9 +37,11 @@ const InsertVendorInvoice = async (req, res) => {
 
 
 const PendingVendorInvoice = async (req, res) => {
+    const org = req.body.org;
+
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select  * from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true' `)
+        const result = await sql.query(`select  * from ${org}.dbo.tbl_vendor_invoice  WHERE invoice_status ='true' `)
         res.status(200).send(result.recordset)
     }
     catch (err) {
@@ -52,7 +55,7 @@ const GetVendorInvoice = async (req, res) => {
         await sql.connect(sqlConfig)
         const result = await sql.query(`select *,convert(varchar(15),invoice_date,121) as Invoicedat,convert(varchar(15),invoice_subdate,121) as InvoiceSubdate,
         convert(varchar(15),invoice_duedate,121) as InvoiceDuedate
-        from IPERISCOPE.dbo.tbl_vendor_invoice  where sno='${sno}'`)
+        from ${org}.dbo.tbl_vendor_invoice  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch (err) {
@@ -62,6 +65,8 @@ const GetVendorInvoice = async (req, res) => {
 
 
 const UpdateVendorInvoice = async (req, res) => {
+    const org = req.body.org;
+
     const data = req.body.data;
     const userid = req.body.userid;
     let successcount = 0;
@@ -69,7 +74,7 @@ const UpdateVendorInvoice = async (req, res) => {
     try {
         await sql.connect(sqlConfig)
         for (let i = 0; i < data.length; i++) {
-            const result = await sql.query(`UPDATE IPERISCOPE.dbo.tbl_vendor_invoice set invoice_status='false',payment_detail='${data[i].paymentDetail}',payment_amt='${data[i].PaymentAmt}',
+            const result = await sql.query(`UPDATE ${org}.dbo.tbl_vendor_invoice set invoice_status='false',payment_detail='${data[i].paymentDetail}',payment_amt='${data[i].PaymentAmt}',
             payment_date='${data[i].Paymentdate}',payment_remark='${data[i].Remark}',update_user_name='${userid}',update_system_name ='${os.hostname()}',
             update_ip_address ='${req.ip}',update_date_time=GETDATE() 
             where sno='${data[i].sno}'`)
@@ -91,6 +96,8 @@ const UpdateVendorInvoice = async (req, res) => {
 }
 
 const UpdatePendingVendorInvoice = async (req, res) => {
+    const org = req.body.org;
+
 
     const vendor = req.body.vendor;
     const account_no = req.body.accountno;
@@ -107,7 +114,7 @@ const UpdatePendingVendorInvoice = async (req, res) => {
     try {
         await sql.connect(sqlConfig)
 
-        const result = await sql.query(`UPDATE IPERISCOPE.dbo.tbl_vendor_invoice set 
+        const result = await sql.query(`UPDATE ${org}.dbo.tbl_vendor_invoice set 
             vendor='${vendor}',account_no='${account_no}',invoice_no='${invoice_no}',invoice_amt='${invoice_amt}',invoice_date='${invoice_date}',
                 invoice_duedate='${invoice_duedate}',invoice_subdate='${invoice_subdate}',remark='${remark}',reference_no='${reference_no}',
                 printer_counter='${printer_counter}' where sno='${sno}'`)
@@ -125,9 +132,11 @@ const UpdatePendingVendorInvoice = async (req, res) => {
 }
 
 const TotalVendorPayment = async (req, res) => {
+    const org = req.body.org;
+
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select  * from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='false' `)
+        const result = await sql.query(`select  * from ${org}.dbo.tbl_vendor_invoice  WHERE invoice_status ='false' `)
         res.status(200).send(result.recordset)
     }
     catch (err) {
@@ -137,10 +146,12 @@ const TotalVendorPayment = async (req, res) => {
 
 
 const GetVendorPayment = async (req, res) => {
+    const org = req.body.org;
+
     const sno = req.body.sno;
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select *,convert(varchar(15),payment_date,121) as PaymentDate from IPERISCOPE.dbo.tbl_vendor_invoice  where sno='${sno}'`)
+        const result = await sql.query(`select *,convert(varchar(15),payment_date,121) as PaymentDate from ${org}.dbo.tbl_vendor_invoice  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch (err) {
@@ -149,6 +160,8 @@ const GetVendorPayment = async (req, res) => {
 }
 
 const UpdateVendorPayment = async (req, res) => {
+    const org = req.body.org;
+
 
     const paymentdetail = req.body.paymentdetail;
     const paymentamt = req.body.paymentamt;
@@ -158,7 +171,7 @@ const UpdateVendorPayment = async (req, res) => {
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`UPDATE IPERISCOPE.dbo.tbl_vendor_invoice set payment_detail='${paymentdetail}',payment_amt='${paymentamt}',
+        const result = await sql.query(`UPDATE ${org}.dbo.tbl_vendor_invoice set payment_detail='${paymentdetail}',payment_amt='${paymentamt}',
         payment_date='${paymentdate}',payment_remark='${remark}' where sno='${sno}' `)
 
         if (result.rowsAffected[0] > 0) {

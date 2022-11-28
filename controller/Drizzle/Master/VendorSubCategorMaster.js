@@ -3,9 +3,11 @@ const sqlConfig = require('../../../Database/Config')
 const os = require('os')
 
 const totalVendorSubCategory = async (req,res) =>{
+    const org = req.body.org;
+
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_sub_category_master tvscm  `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_sub_category_master tvscm  `)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -14,6 +16,8 @@ const totalVendorSubCategory = async (req,res) =>{
 }
 
 const insertVendorSubCategory = async (req,res) =>{
+    const org = req.body.org;
+
     const vendor_sub_category_id = req.body.vendor_sub_category_id;
     const vendor_category= req.body.vendor_category;
     const vendor_sub_category = req.body.vendor_sub_category;
@@ -22,7 +26,7 @@ const insertVendorSubCategory = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_vendor_sub_category_master (vendor_sub_category_id ,vendor_category ,vendor_sub_category  ,vendor_sub_category_description  ,Status,add_user_name,add_system_name,add_ip_address,add_date_time)
+        const result = await sql.query(`insert into ${org}.dbo.tbl_vendor_sub_category_master (vendor_sub_category_id ,vendor_category ,vendor_sub_category  ,vendor_sub_category_description  ,Status,add_user_name,add_system_name,add_ip_address,add_date_time)
         values('${vendor_sub_category_id}','${vendor_category}','${vendor_sub_category}','${vendor_sub_category_description}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
         res.status(200).send("Added")
     }
@@ -32,10 +36,12 @@ const insertVendorSubCategory = async (req,res) =>{
 }
 
 const getVendorSubCategory  = async (req,res) =>{
+    const org = req.body.org;
+
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_sub_category_master  where sno='${sno}'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_sub_category_master  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -44,11 +50,13 @@ const getVendorSubCategory  = async (req,res) =>{
 }
 
 const deleteVendorSubCategory   = async (req,res) =>{
+    const org = req.body.org;
+
     const status = req.body.status;
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update IPERISCOPE.dbo.tbl_vendor_sub_category_master set status='${status}' where sno =${sno}`)
+        const result = await sql.query(`update ${org}.dbo.tbl_vendor_sub_category_master set status='${status}' where sno =${sno}`)
         res.status(200).send("updated")
     }
     catch(err){
@@ -57,6 +65,8 @@ const deleteVendorSubCategory   = async (req,res) =>{
 }
 
 const updateVendorSubCategory  = async (req,res) =>{
+    const org = req.body.org;
+
     const sno = req.body.sno;
     const vendor_category= req.body.vendor_category;
     const vendor_sub_category = req.body.vendor_sub_category;
@@ -65,7 +75,7 @@ const updateVendorSubCategory  = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update IPERISCOPE.dbo.tbl_vendor_sub_category_master set vendor_category='${vendor_category}',vendor_sub_category='${vendor_sub_category}',vendor_sub_category_description='${vendor_sub_category_description}'
+        const result = await sql.query(`update ${org}.dbo.tbl_vendor_sub_category_master set vendor_category='${vendor_category}',vendor_sub_category='${vendor_sub_category}',vendor_sub_category_description='${vendor_sub_category_description}'
         ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_ip_address='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
         res.status(200).send("Updated")
     }
@@ -74,11 +84,13 @@ const updateVendorSubCategory  = async (req,res) =>{
     }
 }
 const getVendorSubCategoryby = async (req,res) =>{
+    const org = req.body.org;
+
     const vendor_category = req.body.vendor_category
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_sub_category_master where vendor_category = '${vendor_category}'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_sub_category_master where vendor_category = '${vendor_category}'`)
         res.status(200).send(result.recordset)
     }
     catch(err){
