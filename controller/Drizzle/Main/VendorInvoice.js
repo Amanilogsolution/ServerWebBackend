@@ -51,6 +51,8 @@ const PendingVendorInvoice = async (req, res) => {
 
 const GetVendorInvoice = async (req, res) => {
     const sno = req.body.sno;
+    const org = req.body.org;
+
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`select *,convert(varchar(15),invoice_date,121) as Invoicedat,convert(varchar(15),invoice_subdate,121) as InvoiceSubdate,
@@ -147,7 +149,6 @@ const TotalVendorPayment = async (req, res) => {
 
 const GetVendorPayment = async (req, res) => {
     const org = req.body.org;
-
     const sno = req.body.sno;
     try {
         await sql.connect(sqlConfig)
