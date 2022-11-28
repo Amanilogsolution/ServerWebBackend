@@ -62,4 +62,23 @@ async function ChangePassword(req,res){
         res.send(err)
     }
 }
-module.exports = {UserLogin,ChangePassword}
+
+const insertUserLogin = async (req,res) =>{
+    const user_name = req.body.user_name;
+    const user_id = req.body.user_id;
+    const user_password = req.body.user_password;
+    const DBname = req.body.DBname;
+
+
+    try{
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`insert into IPERISCOPE.dbo.tbl_iperiscope_login  (user_name  ,user_id  ,user_password ,permission,DBname)
+        values('${user_name}','${user_id}','${user_password}','notallow','${DBname}')`)
+        res.status(200).send("Added")
+    }
+    catch(err){
+        res.send(err)
+    }
+}
+
+module.exports = {UserLogin,ChangePassword,insertUserLogin}

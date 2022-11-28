@@ -50,6 +50,8 @@ const TicketsController = require('../controller/Drizzle/Main/Tickets')
 
 router.post('/login',LoginController.UserLogin)
 router.post('/ChangePassword',LoginController.ChangePassword)
+router.post('/insertuserlogin',LoginController.insertUserLogin)
+
 
 
 router.get('/totalcountry',AddressController.totalcountry)
