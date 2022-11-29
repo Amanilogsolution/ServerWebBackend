@@ -7,7 +7,7 @@ const totalContracttype = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_contract_type_master tctm `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_contract_type_master tctm order by contract_type ASC `)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -86,7 +86,7 @@ const getAllContracttype = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_contract_type_master WHERE status ='Active'  `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_contract_type_master WHERE status ='Active' order by contract_type ASC `)
         res.status(200).send(result.recordset)
     }
     catch(err){

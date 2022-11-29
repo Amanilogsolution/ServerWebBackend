@@ -7,7 +7,7 @@ const totalPurchasetype = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_purchase_type_master tptm `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_purchase_type_master tptm order by purchase_type ASC `)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -88,7 +88,7 @@ const ActivePurchasetype = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_purchase_type_master with (nolock) WHERE status ='Active' `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_purchase_type_master with (nolock) WHERE status ='Active' order by purchase_type ASC  `)
         res.status(200).send(result.recordset)
     }
     catch(err){

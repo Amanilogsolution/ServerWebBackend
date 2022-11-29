@@ -6,7 +6,7 @@ const TotalNewAssets = async (req, res) => {
     const org = req.body.org;
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_new_assets with (nolock) `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_new_assets with (nolock) order by asset_type ASC `)
         res.status(200).send(result.recordset)
     }
     catch (err) {

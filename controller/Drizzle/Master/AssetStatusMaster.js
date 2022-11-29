@@ -6,7 +6,7 @@ const totalAssetStatus = async (req,res) =>{
     const org = req.body.org;
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_asset_status_master`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_asset_status_master order by asset_status ASC`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -84,7 +84,7 @@ const ActiveAssetesStatus = async (req,res) =>{
     const org = req.body.org;
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_asset_status_master tasm with (nolock)  WHERE status ='Active'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_asset_status_master tasm with (nolock)  WHERE status ='Active' order by asset_status ASC `)
         res.status(200).send(result.recordset)
     }
     catch (err) {

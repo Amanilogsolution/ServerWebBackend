@@ -7,7 +7,7 @@ const totalPriorityMaster = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_priority_master tpm `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_priority_master tpm order by priority_type ASC`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -88,7 +88,7 @@ const ActivePriority  = async (req,res) =>{
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`SELECT  priority_id,priority_type from ${org}.dbo.tbl_priority_master tpm  with (nolock)  WHERE status ='Active'`)
+        const result = await sql.query(`SELECT  priority_id,priority_type from ${org}.dbo.tbl_priority_master tpm  with (nolock)  WHERE status ='Active' order by priority_type ASC `)
         res.status(200).send(result.recordset)
     }
     catch (err) {

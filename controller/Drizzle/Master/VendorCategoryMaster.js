@@ -7,7 +7,7 @@ const totalVendorCategory = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_category_master tvcm `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_category_master tvcm order by vendor_category ASC `)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -87,7 +87,7 @@ const getAllVendorCategory = async (req,res) => {
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_category_master WHERE status ='Active'  `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_category_master WHERE status ='Active' order by vendor_category ASC  `)
         res.status(200).send(result.recordset)
     }
     catch(err){

@@ -7,7 +7,7 @@ const totalAssetType = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_asset_type_master`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_asset_type_master  order by asset_type ASC `)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -92,7 +92,7 @@ const ActiveAssetesType = async (req,res) =>{
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`SELECT  sno,asset_type_id,asset_type from ${org}.dbo.tbl_asset_type_master tatm  WHERE status ='Active'`)
+        const result = await sql.query(`SELECT  sno,asset_type_id,asset_type from ${org}.dbo.tbl_asset_type_master tatm  WHERE status ='Active' order by asset_type ASC `)
         res.status(200).send(result.recordset)
     }
     catch (err) {

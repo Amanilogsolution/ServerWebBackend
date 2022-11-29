@@ -7,7 +7,7 @@ const totalServiceGroup = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_service_group_master`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_service_group_master order by service_group_type ASC `)
         res.status(200).send(result.recordset)
     }
     catch(err){

@@ -6,7 +6,7 @@ const totalLocation= async (req,res) =>{
     const org = req.body.org;
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_location_master`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_location_master order by location_name ASC `)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -112,7 +112,7 @@ const getAllLocation = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_location_master WHERE status ='Active'  `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_location_master WHERE status ='Active' order by location_name ASC  `)
         res.status(200).send(result.recordset)
     }
     catch(err){

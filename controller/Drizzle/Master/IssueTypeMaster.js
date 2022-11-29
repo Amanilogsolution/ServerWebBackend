@@ -7,7 +7,7 @@ const totalIssueType = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_issue_master tim`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_issue_master tim order by issue_type ASC`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -89,7 +89,7 @@ const ActiveIssue = async (req,res) =>{
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`SELECT  issue_id,issue_type from ${org}.dbo.tbl_issue_master tim with (nolock)  WHERE status ='Active'`)
+        const result = await sql.query(`SELECT  issue_id,issue_type from ${org}.dbo.tbl_issue_master tim with (nolock)  WHERE status ='Active' order by issue_type ASC `)
         res.status(200).send(result.recordset)
     }
     catch (err) {

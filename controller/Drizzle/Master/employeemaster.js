@@ -7,7 +7,7 @@ const totalEmployee = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_employee_master`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_employee_master order by employee_name ASC`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -96,7 +96,7 @@ const ActiveEmployee= async (req,res) =>{
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`SELECT  * from ${org}.dbo.tbl_employee_master tem  with (nolock)  WHERE status ='Active'`)
+        const result = await sql.query(`SELECT  * from ${org}.dbo.tbl_employee_master tem  with (nolock)  WHERE status ='Active' order by employee_name ASC `)
         res.status(200).send(result.recordset)
     }
     catch (err) {

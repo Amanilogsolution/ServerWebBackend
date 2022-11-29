@@ -7,7 +7,7 @@ const totalTicketStatus = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_ticket_status_master ttsm  `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_ticket_status_master ttsm  order by ticket_status ASC`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -88,7 +88,7 @@ const ActiveTicketStatus   = async (req,res) =>{
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`SELECT  ticket_id,ticket_status from ${org}.dbo.tbl_ticket_status_master ttsm  with (nolock)  WHERE status ='Active'`)
+        const result = await sql.query(`SELECT  ticket_id,ticket_status from ${org}.dbo.tbl_ticket_status_master ttsm  with (nolock)  WHERE status ='Active' order by ticket_status ASC `)
         res.status(200).send(result.recordset)
     }
     catch (err) {

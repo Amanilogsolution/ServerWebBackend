@@ -7,7 +7,7 @@ const totalVendorCode = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_code_master  `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_code_master order by vendor_name ASC `)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -134,7 +134,7 @@ const GetAllVendor = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_code_master WHERE status ='Active'  `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_code_master WHERE status ='Active' order by vendor_name ASC `)
         res.status(200).send(result.recordset)
     }
     catch(err){

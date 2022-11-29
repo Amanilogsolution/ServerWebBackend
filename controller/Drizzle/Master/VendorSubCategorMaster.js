@@ -7,7 +7,7 @@ const totalVendorSubCategory = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_sub_category_master tvscm  `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_sub_category_master tvscm order by vendor_sub_category ASC  `)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -90,7 +90,7 @@ const getVendorSubCategoryby = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_sub_category_master where vendor_category = '${vendor_category}'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_sub_category_master where vendor_category = '${vendor_category}' order by vendor_sub_category ASC `)
         res.status(200).send(result.recordset)
     }
     catch(err){

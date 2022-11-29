@@ -7,7 +7,7 @@ const totalBillingFrequency = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_billing_freq_master tbfm `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_billing_freq_master tbfm order by billing_freq ASC`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -88,7 +88,7 @@ const ActiveBillingFreq   = async (req,res) =>{
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select sno,billing_freq_id,billing_freq from ${org}.dbo.tbl_billing_freq_master tbfm   with (nolock)  WHERE status ='Active'`)
+        const result = await sql.query(`select sno,billing_freq_id,billing_freq from ${org}.dbo.tbl_billing_freq_master tbfm   with (nolock)  WHERE status ='Active' order by billing_freq ASC `)
         res.status(200).send(result.recordset)
     }
     catch (err) {

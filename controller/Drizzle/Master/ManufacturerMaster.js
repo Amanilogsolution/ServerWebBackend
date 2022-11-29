@@ -7,7 +7,7 @@ const totalManufacturer = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_manufacturer_master`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_manufacturer_master order by manufacturer_name ASC`)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -91,7 +91,7 @@ const ActiveManufacturer = async (req,res) =>{
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_manufacturer_master tmm WHERE status ='Active'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_manufacturer_master tmm WHERE status ='Active' order by manufacturer_name ASC `)
         
         if(result){
             res.send(result.recordset)

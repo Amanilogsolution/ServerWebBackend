@@ -7,7 +7,7 @@ const totalSoftware = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_software_master tsm `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_software_master tsm order by software_name ASC `)
         res.status(200).send(result.recordset)
     }
     catch(err){
@@ -90,7 +90,7 @@ const ActiveSoftware = async (req,res) =>{
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_software_master tsm  with (nolock)  WHERE status ='Active'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_software_master tsm  with (nolock)  WHERE status ='Active' order by software_name ASC `)
         res.status(200).send(result.recordset)
     }
     catch (err) {
