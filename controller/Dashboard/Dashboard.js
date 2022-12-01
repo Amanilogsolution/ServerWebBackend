@@ -6,9 +6,9 @@ const dashboard_details = async (req, res) =>{
     const org = req.body.org;
     try{
         await sql.connect(sqlConfig)
-        const assets = await sql.query(`select count(asset_type) as asset from IPERISCOPE.dbo.tbl_new_assets `)
-        const vendor = await sql.query(`select count(vendor_code) as Vendor_code from IPERISCOPE.dbo.tbl_vendor_code_master `)
-        const ticket = await sql.query(`select count(emp_id) as ticket from IPERISCOPE.dbo.tbl_ticket `)
+        const assets = await sql.query(`select count(asset_type) as asset from ${org}.dbo.tbl_new_assets `)
+        const vendor = await sql.query(`select count(vendor_code) as Vendor_code from ${org}.dbo.tbl_vendor_code_master `)
+        const ticket = await sql.query(`select count(emp_id) as ticket from ${org}.dbo.tbl_ticket `)
         res.status(200).json({
             Assets:assets.recordset[0],
             Vendor:vendor.recordset[0],
