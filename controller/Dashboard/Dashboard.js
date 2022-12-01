@@ -20,4 +20,24 @@ const dashboard_details = async (req, res) =>{
     }
 }
 
-module.exports={dashboard_details}
+const dashboard_procedure = async(req,res) =>{
+    const type = req.body.type;
+
+    try{
+        const pool = new sql.ConnectionPool(sqlConfig);
+        await pool.connect();
+
+        const result = await pool.request()
+        .input('type',type)
+        .execute('IPERISCOPE.dbo.Drizzleproc')
+        res.send(result.recordsets)
+        
+
+    }
+    catch (err){
+        res.send(err)
+    }
+
+}
+
+module.exports={dashboard_details,dashboard_procedure}

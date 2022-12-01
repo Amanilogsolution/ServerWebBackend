@@ -320,6 +320,8 @@ router.post('/getTickets',TicketsController.getTickets)
 router.post('/UpdateTicket',TicketsController.UpdateTicket)
 
 router.post('/dashboard_details',DashboardController.dashboard_details)
+router.post('/dashboard_procedure',DashboardController.dashboard_procedure)
+
 
 
 
