@@ -44,6 +44,8 @@ const VendorInvoiceController = require('../controller/Drizzle/Main/VendorInvoic
 const NewAssetsController = require('../controller/Drizzle/Main/NewAssets')
 const TicketsController = require('../controller/Drizzle/Main/Tickets')
 
+const DashboardController = require('../controller/Dashboard/Dashboard')
+
 
 
 
@@ -317,7 +319,7 @@ router.post('/DeleteTickets',TicketsController.DeleteTickets)
 router.post('/getTickets',TicketsController.getTickets)
 router.post('/UpdateTicket',TicketsController.UpdateTicket)
 
-
+router.post('/dashboard_details',DashboardController.dashboard_details)
 
 
 
