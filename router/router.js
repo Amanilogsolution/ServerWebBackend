@@ -42,6 +42,8 @@ const VendorContractMasterController = require('../controller/Drizzle/Master/Ven
 
 const VendorInvoiceController = require('../controller/Drizzle/Main/VendorInvoice')
 const NewAssetsController = require('../controller/Drizzle/Main/NewAssets')
+const AssetSubController = require('../controller/Drizzle/Main/SubAssets')
+
 const TicketsController = require('../controller/Drizzle/Main/Tickets')
 
 const DashboardController = require('../controller/Dashboard/Dashboard')
@@ -310,6 +312,8 @@ router.post('/GetNewAssets',NewAssetsController.GetNewAssets)
 router.post('/CountNewAssets',NewAssetsController.CountNewAssets)
 router.post('/GetNewAssetAssign',NewAssetsController.GetNewAssetAssign)
 router.post('/UpdateNewAssets',NewAssetsController.UpdateNewAssets)
+
+router.post('/insertassetssoftware',AssetSubController.InsertAssetsSoftware)
 
 
 router.post('/InsertTicket',TicketsController.InsertTicket)

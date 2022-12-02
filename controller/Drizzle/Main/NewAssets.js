@@ -47,7 +47,7 @@ const InsertNewAssets = async (req, res) => {
             software,model,asset_status,description,purchase_type,purchase_date,company,vendor,invoice_no,
             rent_per_month,purchases_price,latest_inventory,asset_name,asset_assign,asset_assign_empid,remarks,add_user_name,
             add_system_name,add_ip_address,add_date_time,status,new_assets_uuid)
-            values ('${new_asset_type_id}','${asset_type}','${asset_tag}','${serial_no}','${location}','${manufacture}','${software}','${model}',
+            values ('${new_asset_type_id}','${asset_type}','${asset_tag}','${serial_no}','${location}','${manufacture}','','${model}',
             '${asset_status}','${description}','${purchase_type}','${purchase_date}','${company}','${vendor}','${invoice_no}','${rent_per_month}',
             '${purchases_price}','${latest_inventory}','${asset_name}','${asset_assign}','${asset_assign_empid}','${remarks}','${userid}',
             '${os.hostname()}','${req.ip}',getDate(),'Active','')`)
