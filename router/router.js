@@ -39,24 +39,16 @@ const ServiceActionTypeMaster = require('../controller/Drizzle/Master/ServiceAct
 const ServiceGroupMasterController = require('../controller/Drizzle/Master/ServiceGroupMaster')
 const VendorCodeMasterController = require('../controller/Drizzle/Master/VendorCodeMaster')
 const VendorContractMasterController = require('../controller/Drizzle/Master/VendorContractMaster')
-
 const VendorInvoiceController = require('../controller/Drizzle/Main/VendorInvoice')
 const NewAssetsController = require('../controller/Drizzle/Main/NewAssets')
 const AssetSubController = require('../controller/Drizzle/Main/SubAssets')
-
 const TicketsController = require('../controller/Drizzle/Main/Tickets')
-
 const DashboardController = require('../controller/Dashboard/Dashboard')
-
-
-
 
 
 router.post('/login',LoginController.UserLogin)
 router.post('/ChangePassword',LoginController.ChangePassword)
 router.post('/insertuserlogin',LoginController.insertUserLogin)
-
-
 
 router.get('/totalcountry',AddressController.totalcountry)
 router.post('/totalstate',AddressController.totalstate)
@@ -146,8 +138,6 @@ router.post('/adddevicetaskes',DevicesTaskesController.adddevicetaskes)
 router.post('/Getdevicestask',DevicesTaskesController.Getdevicetaskes)
 router.post('/updatedevicetaskes',DevicesTaskesController.updatedevicetaskes)
 router.post('/updatedevicetaskastatus',DevicesTaskesController.updatedevicetaskastatus)
-
-
 
 router.post('/totalorganization',OrganizationController.totalOrganization)
 router.post('/insertorganization',OrganizationController.insertOrganization)
@@ -284,8 +274,6 @@ router.post('/getallvendor',VendorCodeMasterController.GetAllVendor)
 router.post('/getvendordetails',VendorCodeMasterController.GetVendorDetails)
 
 
-
-
 router.post('/totalVendorContract',VendorContractMasterController.totalVendorContract)
 router.post('/insertVendorContract',VendorContractMasterController.insertVendorContract)
 router.post('/getVendorContract',VendorContractMasterController.getVendorContract)
@@ -314,6 +302,7 @@ router.post('/GetNewAssetAssign',NewAssetsController.GetNewAssetAssign)
 router.post('/UpdateNewAssets',NewAssetsController.UpdateNewAssets)
 
 router.post('/insertassetssoftware',AssetSubController.InsertAssetsSoftware)
+router.post('/getnewassetssoftware',AssetSubController.GetNewAssetsSoftware)
 
 
 router.post('/InsertTicket',TicketsController.InsertTicket)

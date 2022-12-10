@@ -35,6 +35,12 @@ const InsertTicket = async (req, res) => {
     const remarks = req.body.remarks;
 
     const user_id = req.body.user_id;
+    console.log(`insert into ${org}.dbo.tbl_ticket(emp_id,emp_name,asset_type,asset_serial,location,assign_ticket,
+        type_of_issue,email_id,ticket_date,ticket_status,ticket_subject,priority,issue_discription,remarks,
+        status,add_user_name,add_system_name,add_ip_address,add_date_time)
+        values ('${emp_id}','${emp_name}','${asset_type}','${asset_serial}','${location}','${assign_ticket}','${type_of_issue}',
+        '${email_id}','${ticket_date}','${ticket_status}','${ticket_subject}','${priority}','${issue_discription}','${remarks}',
+        'Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
 
     try {
         await sql.connect(sqlConfig)

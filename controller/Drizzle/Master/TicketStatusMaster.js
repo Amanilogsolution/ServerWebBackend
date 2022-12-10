@@ -22,6 +22,7 @@ const insertTicketStatus = async (req,res) =>{
     const ticket_status= req.body.ticket_status;
     const ticket_description = req.body.ticket_description;
     const user_id = req.body.user_id;
+    console.log(org,ticket_id)
 
     try{
         await sql.connect(sqlConfig)

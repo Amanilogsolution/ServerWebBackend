@@ -26,4 +26,18 @@ const InsertAssetsSoftware = async (req, res) => {
     }
 }
 
-module.exports={InsertAssetsSoftware}
+const GetNewAssetsSoftware = async (req, res) => {
+    const asset_id = req.body.asset_id;
+    const org = req.body.org;
+
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`select *  from ${org}.dbo.tbl_asset_subtable  where asset_id='${asset_id}'`)
+        res.status(200).send(result.recordset)
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
+
+module.exports={InsertAssetsSoftware,GetNewAssetsSoftware}

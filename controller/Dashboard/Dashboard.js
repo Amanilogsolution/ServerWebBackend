@@ -8,11 +8,13 @@ const dashboard_details = async (req, res) =>{
         await sql.connect(sqlConfig)
         const assets = await sql.query(`select count(asset_type) as asset from ${org}.dbo.tbl_new_assets `)
         const vendor = await sql.query(`select count(vendor_code) as Vendor_code from ${org}.dbo.tbl_vendor_code_master `)
+        const invoice = await sql.query(`select count(vendor) as vendor  from ${org}.dbo.tbl_vendor_invoice tvi `)
         const ticket = await sql.query(`select count(emp_id) as ticket from ${org}.dbo.tbl_ticket `)
         res.status(200).json({
             Assets:assets.recordset[0],
             Vendor:vendor.recordset[0],
-            Ticket:ticket.recordset[0]
+            Ticket:ticket.recordset[0],
+            Invoice:invoice.recordset[0]
         })
     }
     catch(err){
