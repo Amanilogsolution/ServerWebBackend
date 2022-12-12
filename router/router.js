@@ -45,6 +45,7 @@ const AssetSubController = require('../controller/Drizzle/Main/SubAssets')
 const TicketsController = require('../controller/Drizzle/Main/Tickets')
 const DashboardController = require('../controller/Dashboard/Dashboard')
 
+const UserprofileController = require('../controller/Profile/profile')
 
 router.post('/login',LoginController.UserLogin)
 router.post('/ChangePassword',LoginController.ChangePassword)
@@ -315,7 +316,7 @@ router.post('/UpdateTicket',TicketsController.UpdateTicket)
 router.post('/dashboard_details',DashboardController.dashboard_details)
 router.post('/dashboard_procedure',DashboardController.dashboard_procedure)
 
-
+router.post('/getuserdetails',UserprofileController.getUserdetails)
 
 
 module.exports = router
