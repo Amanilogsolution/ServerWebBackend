@@ -317,6 +317,7 @@ router.post('/dashboard_details',DashboardController.dashboard_details)
 router.post('/dashboard_procedure',DashboardController.dashboard_procedure)
 
 router.post('/getuserdetails',UserprofileController.getUserdetails)
+router.post('/updateuserdetails',UserprofileController.updateUserdetails)
 
 
 module.exports = router

@@ -71,7 +71,6 @@ const updateEmployee = async (req,res) =>{
     const org = req.body.org;
 
     const sno = req.body.sno;
-    // const employee_id = req.body.employee_id;
     const employee_name= req.body.employee_name;
     const location = req.body.location;
     const employee_email = req.body.employee_email;
