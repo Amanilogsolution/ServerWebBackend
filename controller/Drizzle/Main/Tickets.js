@@ -6,10 +6,11 @@ const os = require('os')
 
 const TotalTicket = async (req, res) => {
     const org = req.body.org;
+    console.log(org)
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_ticket with (nolock) `)
+        const result = await sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) `)
         res.status(200).send(result.recordset)
     }
     catch (err) {
