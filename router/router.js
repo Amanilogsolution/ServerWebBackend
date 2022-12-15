@@ -232,6 +232,7 @@ router.post('/deleteTicketStatus',TicketStatusMasterController.deleteTicketStatu
 router.post('/updateTicketStatus',TicketStatusMasterController.updateTicketStatus)
 router.post('/ActiveTicketStatus',TicketStatusMasterController.ActiveTicketStatus)
 
+
 router.post('/totalBillingFrequency',BillingFrequencyMasterController.totalBillingFrequency)
 router.post('/insertBillingFrequency',BillingFrequencyMasterController.insertBillingFrequency)
 router.post('/getBillingFrequency',BillingFrequencyMasterController.getBillingFrequency)
@@ -313,6 +314,8 @@ router.post('/TotalTicket',TicketsController.TotalTicket)
 router.post('/DeleteTickets',TicketsController.DeleteTickets)
 router.post('/getTickets',TicketsController.getTickets)
 router.post('/UpdateTicket',TicketsController.UpdateTicket)
+router.post('/OpenTotalTicket',TicketsController.OpenTotalTicket)
+
 
 router.post('/dashboard_details',DashboardController.dashboard_details)
 router.post('/dashboard_procedure',DashboardController.dashboard_procedure)

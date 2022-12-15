@@ -10,16 +10,29 @@ const TotalTicket = async (req, res) => {
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) `)
+        const result = await sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status = 'Closed'`)
         res.status(200).send(result.recordset)
     }
     catch (err) {
         res.send(err)
     }
 }
-const InsertTicket = async (req, res) => {
+
+const OpenTotalTicket = async (req, res) => {
     const org = req.body.org;
 
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status = 'Open'`)
+        res.status(200).send(result.recordset)
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
+
+const InsertTicket = async (req, res) => {
+    const org = req.body.org;
     const emp_id = req.body.emp_id;
     const emp_name = req.body.emp_name;
     const asset_type = req.body.asset_type;
@@ -34,14 +47,8 @@ const InsertTicket = async (req, res) => {
     const priority = req.body.priority;
     const issue_discription = req.body.issue_discription;
     const remarks = req.body.remarks;
-
     const user_id = req.body.user_id;
-    console.log(`insert into ${org}.dbo.tbl_ticket(emp_id,emp_name,asset_type,asset_serial,location,assign_ticket,
-        type_of_issue,email_id,ticket_date,ticket_status,ticket_subject,priority,issue_discription,remarks,
-        status,add_user_name,add_system_name,add_ip_address,add_date_time)
-        values ('${emp_id}','${emp_name}','${asset_type}','${asset_serial}','${location}','${assign_ticket}','${type_of_issue}',
-        '${email_id}','${ticket_date}','${ticket_status}','${ticket_subject}','${priority}','${issue_discription}','${remarks}',
-        'Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
+
 
     try {
         await sql.connect(sqlConfig)
@@ -120,7 +127,6 @@ const getTickets = async (req, res) => {
 
 const UpdateTicket = async (req, res) => {
     const org = req.body.org;
-
     const emp_id = req.body.emp_id;
     const emp_name = req.body.emp_name;
     const asset_type = req.body.asset_type;
@@ -135,7 +141,6 @@ const UpdateTicket = async (req, res) => {
     const priority = req.body.priority;
     const issue_discription = req.body.issue_discription;
     const remarks = req.body.remarks;
-
     const user_id = req.body.user_id;
     const sno = req.body.sno;
 
@@ -161,4 +166,4 @@ update_user_name='${user_id}',update_system_name='${os.hostname()}',update_ip_ad
     }
 }
 
-module.exports = { TotalTicket, InsertTicket, CountTickets, DeleteTickets, getTickets, UpdateTicket }
+module.exports = { TotalTicket, InsertTicket, CountTickets, DeleteTickets, getTickets, UpdateTicket,OpenTotalTicket }
