@@ -48,6 +48,9 @@ const InsertTicket = async (req, res) => {
     const issue_discription = req.body.issue_discription;
     const remarks = req.body.remarks;
     const user_id = req.body.user_id;
+    const AssetTag = req.body.AssetTag;
+    const AssetCondition= req.body.AssetCondition;
+    console.log(AssetTag,AssetCondition)
 
 
     try {
@@ -55,10 +58,10 @@ const InsertTicket = async (req, res) => {
         const result = await sql.query(`
         insert into ${org}.dbo.tbl_ticket(emp_id,emp_name,asset_type,asset_serial,location,assign_ticket,
             type_of_issue,email_id,ticket_date,ticket_status,ticket_subject,priority,issue_discription,remarks,
-            status,add_user_name,add_system_name,add_ip_address,add_date_time)
+            status,add_user_name,add_system_name,add_ip_address,add_date_time,asset_tag,asset_condition)
             values ('${emp_id}','${emp_name}','${asset_type}','${asset_serial}','${location}','${assign_ticket}','${type_of_issue}',
             '${email_id}','${ticket_date}','${ticket_status}','${ticket_subject}','${priority}','${issue_discription}','${remarks}',
-            'Active','${user_id}','${os.hostname()}','${req.ip}',getdate())
+            'Active','${user_id}','${os.hostname()}','${req.ip}',getdate(),'${AssetTag}','${AssetCondition}')
         `)
         if (result.rowsAffected[0] > 0) {
             res.status(200).send('Data Added')
