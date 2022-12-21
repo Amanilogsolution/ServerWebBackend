@@ -36,9 +36,7 @@ const insertLocation = async (req,res) =>{
     const location_country = req.body.location_country;
     console.log(location_id,company_name,location_code,location_name,location_address_line1,location_address_line2,location_city,location_state,location_pin_code
         ,location_gst,contact_person,contact_person_email,contact_person_number,location_latitude,location_longitude,user_id,location_country)
-        console.log(`insert into ${org}.dbo.tbl_location_master (location_id ,company_name ,location_code ,location_name ,location_address_line1 ,location_address_line2,location_city ,location_state ,location_pin_code,location_gst,contact_person,contact_person_email,contact_person_number ,location_latitude ,location_longitude ,Status,add_username,add_system_name,add_ip,add_date_time,location_country)
-        values('${location_id}','${company_name}','${location_code}','${location_name}','${location_address_line1}','${location_address_line2}','${location_city}','${location_state}',${location_pin_code},'${location_gst}','${contact_person}','${contact_person_email}',${contact_person_number},'${location_latitude}','${location_longitude}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate()),'${location_country}'`)
-
+      
 
     try{
         await sql.connect(sqlConfig)
@@ -56,7 +54,7 @@ const getLocation= async (req,res) =>{
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_location_master tom where sno='${sno}'`)
+        const result = await sql.query(`select tom.*,c.country_name  from ${org}.dbo.tbl_location_master as tom left JOIN ${org}.dbo.tbl_country_master  as c ON tom.location_country = c.country_id  where tom.sno='${sno}'`)
         res.status(200).send(result.recordset[0])
     }
     catch(err){
@@ -98,11 +96,13 @@ const updateLocation = async (req,res) =>{
     const location_latitude = req.body.location_latitude;
     const location_longitude = req.body.location_longitude;
     const user_id = req.body.user_id;
+    const location_country = req.body.location_country;
+
 
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update ${org}.dbo.tbl_location_master set company_name='${company_name}',location_code='${location_code}',location_name='${location_name}',location_address_line1='${location_address_line1}',location_address_line2='${location_address_line2}',location_city='${location_city}'
-        ,location_state='${location_state}',location_pin_code=${location_pin_code},location_gst='${location_gst}',contact_person='${contact_person}',contact_person_email='${contact_person_email}',contact_person_number=${contact_person_number},location_latitude='${location_latitude}',location_longitude='${location_longitude}',update_username='${user_id}',update_system_name='${os.hostname()}',update_system_ip='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
+        ,location_state='${location_state}',location_pin_code=${location_pin_code},location_gst='${location_gst}',contact_person='${contact_person}',contact_person_email='${contact_person_email}',contact_person_number=${contact_person_number},location_latitude='${location_latitude}',location_longitude='${location_longitude}',update_username='${user_id}',update_system_name='${os.hostname()}',update_system_ip='${req.ip}',update_date_time=getdate(),location_country='${location_country}' where sno = ${sno}`)
         res.status(200).send("Updated")
     }
     catch(err){
