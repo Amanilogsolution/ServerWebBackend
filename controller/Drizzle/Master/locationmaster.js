@@ -54,7 +54,8 @@ const getLocation= async (req,res) =>{
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select tom.*,c.country_name  from ${org}.dbo.tbl_location_master as tom left JOIN ${org}.dbo.tbl_country_master  as c ON tom.location_country = c.country_id  where tom.sno='${sno}'`)
+        const result = await sql.query(`select tom.*,c.country_name,s.state_name  from ${org}.dbo.tbl_location_master as tom left JOIN ${org}.dbo.tbl_country_master  as c ON tom.location_country = c.country_id left join ${org}.dbo.tbl_state_master as s ON tom.location_state = s.state_id  where tom.sno='${sno}'
+        `)
         res.status(200).send(result.recordset[0])
     }
     catch(err){
