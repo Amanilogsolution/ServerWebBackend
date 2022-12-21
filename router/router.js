@@ -324,6 +324,8 @@ router.post('/getuserdetails',UserprofileController.getUserdetails)
 router.post('/updateuserdetails',UserprofileController.updateUserdetails)
 
 router.post('/addorganisation',OrganisationController.AddOrganisation)
+router.post('/getorganisation',OrganisationController.getOrganisation)
+
 
 module.exports = router
 

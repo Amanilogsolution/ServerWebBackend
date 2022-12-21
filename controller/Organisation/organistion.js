@@ -25,4 +25,17 @@ const AddOrganisation = async (req,res) =>{
     }
 }
 
-module.exports={AddOrganisation}
+const getOrganisation = async (req,res) =>{
+    const comp_name = req.body.org;
+    try{
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_Organisation  where org_name = ${sno}`)
+
+
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
+module.exports={AddOrganisation,getOrganisation}

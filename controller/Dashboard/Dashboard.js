@@ -24,6 +24,7 @@ const dashboard_details = async (req, res) =>{
 
 const dashboard_procedure = async(req,res) =>{
     const type = req.body.type;
+    console.log(type)
 
     try{
         const pool = new sql.ConnectionPool(sqlConfig);
@@ -33,6 +34,7 @@ const dashboard_procedure = async(req,res) =>{
         .input('type',type)
         .execute('IPERISCOPE.dbo.Drizzleproc')
         res.send(result.recordsets)
+        console.log(result.recordsets)
         
 
     }
