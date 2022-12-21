@@ -33,14 +33,15 @@ const insertLocation = async (req,res) =>{
     const location_latitude = req.body.location_latitude;
     const location_longitude = req.body.location_longitude;
     const user_id = req.body.user_id;
+    const location_country = req.body.location_country;
     console.log(location_id,company_name,location_code,location_name,location_address_line1,location_address_line2,location_city,location_state,location_pin_code
         ,location_gst,contact_person,contact_person_email,contact_person_number,location_latitude,location_longitude,user_id)
 
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`insert into ${org}.dbo.tbl_location_master (location_id ,company_name ,location_code ,location_name ,location_address_line1 ,location_address_line2,location_city ,location_state ,location_pin_code,location_gst,contact_person,contact_person_email,contact_person_number ,location_latitude ,location_longitude ,Status,add_username,add_system_name,add_ip,add_date_time)
-        values('${location_id}','${company_name}','${location_code}','${location_name}','${location_address_line1}','${location_address_line2}','${location_city}','${location_state}',${location_pin_code},'${location_gst}','${contact_person}','${contact_person_email}',${contact_person_number},'${location_latitude}','${location_longitude}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
+        const result = await sql.query(`insert into ${org}.dbo.tbl_location_master (location_id ,company_name ,location_code ,location_name ,location_address_line1 ,location_address_line2,location_city ,location_state ,location_pin_code,location_gst,contact_person,contact_person_email,contact_person_number ,location_latitude ,location_longitude ,Status,add_username,add_system_name,add_ip,add_date_time,location_country)
+        values('${location_id}','${company_name}','${location_code}','${location_name}','${location_address_line1}','${location_address_line2}','${location_city}','${location_state}',${location_pin_code},'${location_gst}','${contact_person}','${contact_person_email}',${contact_person_number},'${location_latitude}','${location_longitude}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate()),'${location_country}'`)
         res.status(200).send("Added")
     }
     catch(err){
