@@ -47,6 +47,7 @@ const DashboardController = require('../controller/Dashboard/Dashboard')
 
 const OrganisationController = require('../controller/Organisation/organistion')
 const UserprofileController = require('../controller/Profile/profile')
+const RolesMasterController = require('../controller/Drizzle/Role/RoleMaster')
 
 router.post('/login',LoginController.UserLogin)
 router.post('/ChangePassword',LoginController.ChangePassword)
@@ -327,6 +328,12 @@ router.post('/addorganisation',OrganisationController.AddOrganisation)
 
 router.post('/getorganisation',OrganisationController.getOrganisation)
 router.post('/updateorganizationdetails',OrganisationController.updateOrganizationDetails)
+
+router.post('/totalroles',RolesMasterController.totalRoles)
+router.post('/insertroles',RolesMasterController.insertRoles)
+router.post('/getrole',RolesMasterController.getRole)
+router.post('/updaterole',RolesMasterController.updateRole)
+
 
 
 
