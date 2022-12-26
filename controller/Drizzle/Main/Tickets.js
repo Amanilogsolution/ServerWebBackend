@@ -10,7 +10,7 @@ const TotalTicket = async (req, res) => {
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status = 'Closed'`)
+        const result = await sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status = 'Closed' order by assign_ticket DESC`)
         res.status(200).send(result.recordset)
     }
     catch (err) {
