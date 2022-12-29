@@ -43,7 +43,9 @@ const VendorInvoiceController = require('../controller/Drizzle/Main/VendorInvoic
 const NewAssetsController = require('../controller/Drizzle/Main/NewAssets')
 const AssetSubController = require('../controller/Drizzle/Main/SubAssets')
 const TicketsController = require('../controller/Drizzle/Main/Tickets')
+
 const DashboardController = require('../controller/Dashboard/Dashboard')
+const TicketDashboarController = require('../controller/Dashboard/Ticket Dashboard/Ticket')
 
 const OrganisationController = require('../controller/Organisation/organistion')
 const UserprofileController = require('../controller/Profile/profile')
@@ -320,6 +322,10 @@ router.post('/OpenTotalTicket',TicketsController.OpenTotalTicket)
 
 router.post('/dashboard_details',DashboardController.dashboard_details)
 router.post('/dashboard_procedure',DashboardController.dashboard_procedure)
+router.post('/ticket_summary',TicketDashboarController.Ticket_Summary)
+router.post('/ticket_priority',TicketDashboarController.Ticket_Priority)
+router.post('/ticket_issue_type',TicketDashboarController.Ticket_issue_type)
+
 
 router.post('/getuserdetails',UserprofileController.getUserdetails)
 router.post('/updateuserdetails',UserprofileController.updateUserdetails)
