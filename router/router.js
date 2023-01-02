@@ -323,6 +323,10 @@ router.post('/OpenTotalTicket',TicketsController.OpenTotalTicket)
 router.post('/dashboard_details',DashboardController.dashboard_details)
 router.post('/dashboard_procedure',DashboardController.dashboard_procedure)
 router.post('/dashboard_location_name',DashboardController.dashboard_location_name)
+router.post('/dashboard_software',DashboardController.dashboard_software)
+router.post('/dashboard_manufacture',DashboardController.dashboard_manufacture)
+
+
 
 
 router.post('/ticket_summary',TicketDashboarController.Ticket_Summary)
