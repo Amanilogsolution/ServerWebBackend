@@ -92,7 +92,7 @@ const dashboard_software = async(req,res)=>{
 
 const dashboard_manufacture = async(req,res)=>{
     const org = req.body.org;
-    const data = []
+    let data = []
     try{
         await sql.connect(sqlConfig)
         let manulist = []
@@ -106,6 +106,8 @@ const dashboard_manufacture = async(req,res)=>{
                 data.push({name:manulist[i],value:manufacturevalue.recordset[0].value})
 
             }
+            data.sort((r1,r2) => r2.value - r1.value )
+            data = data.filter((data,id) => id<5)
 
         },1000)
         setTimeout(()=>{

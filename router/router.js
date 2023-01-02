@@ -46,6 +46,7 @@ const TicketsController = require('../controller/Drizzle/Main/Tickets')
 
 const DashboardController = require('../controller/Dashboard/Dashboard')
 const TicketDashboarController = require('../controller/Dashboard/Ticket Dashboard/Ticket')
+const VendorDashboardController = require('../controller/Dashboard/Vendor Dashboard/VendorDashboard')
 
 const OrganisationController = require('../controller/Organisation/organistion')
 const UserprofileController = require('../controller/Profile/profile')
@@ -332,6 +333,10 @@ router.post('/dashboard_manufacture',DashboardController.dashboard_manufacture)
 router.post('/ticket_summary',TicketDashboarController.Ticket_Summary)
 router.post('/ticket_priority',TicketDashboarController.Ticket_Priority)
 router.post('/ticket_issue_type',TicketDashboarController.Ticket_issue_type)
+
+router.post('/ReferanceNumber',VendorDashboardController.ReferanceNumber)
+router.post('/RecurringVendor',VendorDashboardController.RecurringVendor)
+router.post('/RecurringFrequency',VendorDashboardController.RecurringFrequency)
 
 
 router.post('/getuserdetails',UserprofileController.getUserdetails)
