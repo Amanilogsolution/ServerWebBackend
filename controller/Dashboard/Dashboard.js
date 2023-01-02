@@ -44,4 +44,27 @@ const dashboard_procedure = async(req,res) =>{
 
 }
 
-module.exports={dashboard_details,dashboard_procedure}
+const dashboard_location_name = async(req,res) =>{
+    const org = req.body.org;
+    let charts = []
+
+    try{
+        await sql.connect(sqlConfig)
+        const location = await sql.query(`select location_name from  IPERISCOPE.dbo.tbl_location_master `)
+        for(i=0;i<location.recordset.length;i++){
+            const datas = await sql.query(`select count(new_asset_type_id) as asset from  IPERISCOPE.dbo.tbl_new_assets where location='${location.recordset[i].location_name}'`)
+            charts.push({Location:location.recordset[i].location_name,Assets:datas.recordset[0].asset})
+            console.log({Location:location.recordset[i].location_name,Assets:datas.recordset[0].asset})
+        }
+   
+
+        res.send(charts)
+    }
+    catch(err){
+        console.log(err)
+    }
+
+
+}
+
+module.exports={dashboard_details,dashboard_procedure,dashboard_location_name}
