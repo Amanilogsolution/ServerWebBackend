@@ -337,6 +337,9 @@ router.post('/ticket_issue_type',TicketDashboarController.Ticket_issue_type)
 router.post('/ReferanceNumber',VendorDashboardController.ReferanceNumber)
 router.post('/RecurringVendor',VendorDashboardController.RecurringVendor)
 router.post('/RecurringFrequency',VendorDashboardController.RecurringFrequency)
+router.post('/TotalVendorContractDetails',VendorDashboardController.TotalVendorContract)
+
+
 
 
 router.post('/getuserdetails',UserprofileController.getUserdetails)
