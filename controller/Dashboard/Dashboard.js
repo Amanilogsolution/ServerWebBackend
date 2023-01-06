@@ -74,7 +74,7 @@ const dashboard_manufacture = async (req, res) => {
     const org = req.body.org;
     try {
         await sql.connect(sqlConfig)
-        const manufactures = await sql.query(`select count(manufacturer_id) as value,manufacturer_name from IPERISCOPE.dbo.tbl_manufacturer_master as tm left join IPERISCOPE.dbo.tbl_new_assets as t2 on tm.manufacturer_name  = manufacture GROUP by manufacturer_name order by value DESC `)
+        const manufactures = await sql.query(`select count(manufacturer_id) as value,manufacturer_name as name from IPERISCOPE.dbo.tbl_manufacturer_master as tm left join IPERISCOPE.dbo.tbl_new_assets as t2 on tm.manufacturer_name  = manufacture GROUP by manufacturer_name order by value DESC `)
         let data = manufactures.recordset
         data.sort((r1, r2) => r2.value - r1.value)
         data = data.filter((data, id) => id < 5)
