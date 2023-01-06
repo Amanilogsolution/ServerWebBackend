@@ -341,9 +341,9 @@ router.post('/RecurringFrequency',VendorDashboardController.RecurringFrequency)
 router.post('/TotalVendorContractDetails',VendorDashboardController.TotalVendorContract)
 
 router.post('/Invoice_Outstanding',InvoiceDashboardController.Invoice_Outstanding)
-router.post('/Invoice_Outstanding_value',InvoiceDashboardController.Invoice_Outstanding_value)
-
-
+router.post('/TotalOutstanding',InvoiceDashboardController.TotalOutstanding)
+router.post('/VendorInvoice',InvoiceDashboardController.VendorInvoice)
+router.post('/PaidInvoice',InvoiceDashboardController.PaidInvoice)
 
 
 

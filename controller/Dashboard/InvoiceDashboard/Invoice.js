@@ -11,69 +11,76 @@ const Invoice_Outstanding = async (req, res) => {
         const OutstandingAmount = await sql.query(`select SUM(convert(int,invoice_amt) ) as total from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true'`)
         const OutstandingVendor = await sql.query(`select DISTINCT(vendor) from IPERISCOPE.dbo.tbl_vendor_invoice where invoice_status ='true' `)
 
-            console.log(OutstandingVendor.recordset)
-        //     setTimeout(async()=>{
-            for (var val of OutstandingVendor.recordset) {
-                        console.log(val)
+        for (var val of OutstandingVendor.recordset) {
+            const values = await sql.query(`select SUM(convert(int,invoice_amt) ) as total from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true'and vendor='${val.vendor}'`)
+            data.push({ name: val.vendor, value: values.recordset[0].total })
+        }
 
-        //         // console.log(`select SUM(convert(int,invoice_amt) ) as total from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true'and vendor='${OutstandingVendor.recordset[i].vendor}'`)
-
-        const values = await sql.query(`select SUM(convert(int,invoice_amt) ) as total from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true'and vendor='${val.vendor}'`)
-        data.push({name:val.vendor,value:values.recordset[0].total})
-
-            }
-            console.log(data)
-
-
-
-        // },1000)
-        // setTimeout(()=>{
         res.status(200).json({
             Vendor: Vendor.recordset[0],
             OutstandingAmount: OutstandingAmount.recordset[0].total,
             OutstandingVendor: data,
-
         })
-        // },2000)
-
     }
     catch (err) {
         console.log(err)
     }
 }
-const Invoice_Outstanding_value = async (req, res) => {
+
+const TotalOutstanding = async(req,res) =>{
     const org = req.body.org;
-    const data = req.body.data;
-    const array = []
-
-    try {
+    const pageno = req.body.pageno;
+    const rowsperpage = req.body.rowsperpage
+    console.log(org,pageno,rowsperpage)
+    try{
         await sql.connect(sqlConfig)
-        // console.log(data.length)
-        const array = []
-        // setTimeout(async()=>{
-
-        for (var val of data) {
-            // console.log(val.vendor)
-        //  console.log(`select SUM(convert(int,invoice_amt) ) as total from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true'and vendor='${val.vendor}'`)
-
-
-            const values = await sql.query(`select SUM(convert(int,invoice_amt) ) as total from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true'and vendor='${val.vendor}'`)
-          
-            array.push({name:val.vendor,value:values.recordset[0].total})
-
-
-
-        }
-        console.log('Hlo',array)
-
-
-    // },1000)
+        const Outstanding = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true'  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' `)
+        res.send({data:Outstanding.recordset,TotalData:countData.recordset})
 
     }
-    catch (err) {
+    catch(err){
         console.log(err)
+  
+    }
+}
+
+const VendorInvoice = async(req,res) =>{
+    const org = req.body.org;
+    const pageno = req.body.pageno;
+    const rowsperpage = req.body.rowsperpage
+    console.log(org,pageno,rowsperpage)
+    try{
+        await sql.connect(sqlConfig)
+        const Outstanding = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock)  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock)  `)
+        res.send({data:Outstanding.recordset,TotalData:countData.recordset})
+
+    }
+    catch(err){
+        console.log(err)
+  
+    }
+}
+
+const PaidInvoice = async(req,res) =>{
+    const org = req.body.org;
+    const pageno = req.body.pageno;
+    const rowsperpage = req.body.rowsperpage
+    console.log(org,pageno,rowsperpage)
+    try{
+        await sql.connect(sqlConfig)
+        const Outstanding = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false'  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false' `)
+        res.send({data:Outstanding.recordset,TotalData:countData.recordset})
+
+    }
+    catch(err){
+        console.log(err)
+  
     }
 }
 
 
-module.exports = { Invoice_Outstanding, Invoice_Outstanding_value }
+
+module.exports = { Invoice_Outstanding,TotalOutstanding,VendorInvoice,PaidInvoice }
