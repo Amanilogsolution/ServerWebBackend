@@ -32,7 +32,7 @@ const OpenTotalTicket = async (req, res) => {
 }
 
 const InsertTicket = async (req, res) => {
-    const org = req.body.org;
+    const org = "IPERISCOPE";
     const emp_id = req.body.emp_id;
     const emp_name = req.body.emp_name;
     const asset_type = req.body.asset_type;
