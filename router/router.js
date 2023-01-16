@@ -339,13 +339,13 @@ router.post('/ReferanceNumber',VendorDashboardController.ReferanceNumber)
 router.post('/RecurringVendor',VendorDashboardController.RecurringVendor)
 router.post('/RecurringFrequency',VendorDashboardController.RecurringFrequency)
 router.post('/TotalVendorContractDetails',VendorDashboardController.TotalVendorContract)
+router.post('/FilterVendorContract',VendorDashboardController.FilterVendorContract)
+
 
 router.post('/Invoice_Outstanding',InvoiceDashboardController.Invoice_Outstanding)
 router.post('/TotalOutstanding',InvoiceDashboardController.TotalOutstanding)
 router.post('/VendorInvoice',InvoiceDashboardController.VendorInvoice)
 router.post('/PaidInvoice',InvoiceDashboardController.PaidInvoice)
-
-
 
 router.post('/getuserdetails',UserprofileController.getUserdetails)
 router.post('/updateuserdetails',UserprofileController.updateUserdetails)
