@@ -346,6 +346,8 @@ router.post('/Invoice_Outstanding',InvoiceDashboardController.Invoice_Outstandin
 router.post('/TotalOutstanding',InvoiceDashboardController.TotalOutstanding)
 router.post('/VendorInvoice',InvoiceDashboardController.VendorInvoice)
 router.post('/PaidInvoice',InvoiceDashboardController.PaidInvoice)
+router.post('/FilterInvoice',InvoiceDashboardController.FilterInvoice)
+
 
 router.post('/getuserdetails',UserprofileController.getUserdetails)
 router.post('/updateuserdetails',UserprofileController.updateUserdetails)

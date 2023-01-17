@@ -82,16 +82,15 @@ const PaidInvoice = async(req,res) =>{
 
 const FilterInvoice = async(req,res) =>{
     const org = req.body.org;
-    const type = req.body.type;
     const value = req.body.value;
     const pageno = req.body.pageno;
     const rowsperpage = req.body.rowsperpage
     try{
         await sql.connect(sqlConfig)
-        const Outstanding = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where ${type}='${value}'  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
-        const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where ${type}='${value}' `)
-        const PaidInv = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false' and ${type}='${value}'  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
-        const Paiddata = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false' and ${type}='${value}'  `)
+        const Outstanding = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' and ( vendor='${value}' or invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}')  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' and (invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}')  `)
+        const PaidInv = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false' and (vendor='${value}' or invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}' )  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        const Paiddata = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false' and (vendor='${value}' or invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}' )  `)
         res.send({data:Outstanding.recordset,TotalData:countData.recordset,PaidInv:PaidInv.recordset,Paiddata:Paiddata.recordset})
 
     }
