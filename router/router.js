@@ -2,24 +2,19 @@ const express = require('express');
 const router = express.Router();
 
 const LoginController = require('../controller/Login/Login')
-
 const AddressController = require('../controller/AddressMaster/AddressMaster')
-
 const MasterDeviceTypeController = require('../controller/Master/DeviceTypeMaster')
 const MasterDeviceGroupController = require('../controller/Master/DeviceGroupMaster')
 const MasterDeviceServiceController = require('../controller/Master/DeviceServicesMaster')
 const MasterOperatingSystemController = require('../controller/Master/OperatingSystemMaster')
 const MasterServiceComplianceController = require('../controller/Master/ServiceComplianceMaster')
-
 const DeviceTaskComplianceController = require('../controller/DeviceTaskCompliance/DeviceComp')
 const DevicesTaskesController = require('../controller/DeviceTaskCompliance/DeviceTaskes')
-
 const MasterAgentController = require('../controller/Master/AgentMaster')
 const DeviceController = require('../controller/Device/device')
 const MasterDeviceTaskControler = require('../controller/Master/DeviceTask')
 const SeriesController = require('../controller/Master/SeriesMaster')
 const countController = require('../controller/Master/Count')
-
 const OrganizationController = require('../controller/Drizzle/Master/organizationmaster')
 const LocationMasterController = require('../controller/Drizzle/Master/locationmaster')
 const EmployeeMasterController = require('../controller/Drizzle/Master/employeemaster')
@@ -43,15 +38,18 @@ const VendorInvoiceController = require('../controller/Drizzle/Main/VendorInvoic
 const NewAssetsController = require('../controller/Drizzle/Main/NewAssets')
 const AssetSubController = require('../controller/Drizzle/Main/SubAssets')
 const TicketsController = require('../controller/Drizzle/Main/Tickets')
-
 const DashboardController = require('../controller/Dashboard/Dashboard')
 const TicketDashboarController = require('../controller/Dashboard/Ticket Dashboard/Ticket')
 const VendorDashboardController = require('../controller/Dashboard/Vendor Dashboard/VendorDashboard')
 const InvoiceDashboardController = require('../controller/Dashboard/InvoiceDashboard/Invoice')
-
 const OrganisationController = require('../controller/Organisation/organistion')
 const UserprofileController = require('../controller/Profile/profile')
 const RolesMasterController = require('../controller/Drizzle/Role/RoleMaster')
+const ReportMasterController = require('../controller/Report/report')
+
+const FileUpload = require('../controller/FileUpload/fileupload')
+const Multer = require('../Middleware/multer')
+
 
 router.post('/login',LoginController.UserLogin)
 router.post('/ChangePassword',LoginController.ChangePassword)
@@ -63,8 +61,6 @@ router.post('/totalcity',AddressController.totalcity)
 // router.post('/UploadCountry',AddressController.UploadCountry)
 // router.post('/UploadState',AddressController.UploadState)
 // router.post('/UploadCity',AddressController.UploadCity)
-
-
 
 router.get('/totaldevicetypemaster',MasterDeviceTypeController.totaldevicetype)
 router.post('/adddevicetypemaster',MasterDeviceTypeController.adddevicetype)
@@ -92,7 +88,6 @@ router.post('/adddeviceservicemaster',MasterDeviceServiceController.adddeviceser
 router.post('/getdeviceservicemaster',MasterDeviceServiceController.getdeviceservice)
 router.post('/updatedeviceservicemaster',MasterDeviceServiceController.updatedeviceservice)
 router.post('/updatedeviceservicestatusmaster',MasterDeviceServiceController.updatedeviceservicestatus)
-
 router.get('/activedeviceservice',MasterDeviceServiceController.ActiveDeviceService)
 
 router.get('/totalservicecompliancemaster',MasterServiceComplianceController.totalservicecompliance)
@@ -159,8 +154,6 @@ router.post('/deleteLocation',LocationMasterController.deleteLocation)
 router.post('/updateLocation',LocationMasterController.updateLocation)
 router.post('/getalllocation',LocationMasterController.getAllLocation)
 
-
-
 router.post('/totalEmployee',EmployeeMasterController.totalEmployee)
 router.post('/insertEmployee',EmployeeMasterController.insertEmployee)
 router.post('/getEmployee',EmployeeMasterController.getEmployee)
@@ -168,7 +161,6 @@ router.post('/deleteEmployee',EmployeeMasterController.deleteEmployee)
 router.post('/updateEmployee',EmployeeMasterController.updateEmployee)
 router.post('/ActiveEmployee',EmployeeMasterController.ActiveEmployee)
 router.post('/EmployeeDetail',EmployeeMasterController.EmployeeDetail)
-
 
 router.post('/totalAssetType',AssetTypeMasterController.totalAssetType)
 router.post('/insertAssetType',AssetTypeMasterController.insertAssetType)
@@ -184,14 +176,12 @@ router.post('/deleteAssetStatus',AssetStatusMasterController.deleteAssetStatus)
 router.post('/updateAssetStatus',AssetStatusMasterController.updateAssetStatus)
 router.post('/ActiveAssetesStatus',AssetStatusMasterController.ActiveAssetesStatus)
 
-
 router.post('/totalManufacturer',ManufacturerMasterController.totalManufacturer)
 router.post('/insertManufacturer',ManufacturerMasterController.insertManufacturer)
 router.post('/getManufacturer',ManufacturerMasterController.getManufacturer)
 router.post('/deleteManufacturer',ManufacturerMasterController.deleteManufacturer)
 router.post('/updateManufacturer',ManufacturerMasterController.updateManufacturer)
 router.post('/ActiveManufacturer',ManufacturerMasterController.ActiveManufacturer)
-
 
 router.post('/totalSoftware',SoftwareMasterController.totalSoftware)
 router.post('/insertSoftware',SoftwareMasterController.insertSoftware)
@@ -207,7 +197,6 @@ router.post('/deleteIssueType',IssueTypeMasterController.deleteIssueType)
 router.post('/updateIssueType',IssueTypeMasterController.updateIssueType)
 router.post('/ActiveIssue',IssueTypeMasterController.ActiveIssue)
 
-
 router.post('/totalPurchasetype',PurchaseTypeMasterController.totalPurchasetype)
 router.post('/insertPurchasetype',PurchaseTypeMasterController.insertPurchasetype)
 router.post('/getPurchasetype',PurchaseTypeMasterController.getPurchasetype)
@@ -221,7 +210,6 @@ router.post('/getContracttype',ContractTypeMasterController.getContracttype)
 router.post('/deleteContracttype',ContractTypeMasterController.deleteContracttype)
 router.post('/updateContracttype',ContractTypeMasterController.updateContracttype)
 router.post('/getallcontracttype',ContractTypeMasterController.getAllContracttype)
-
 
 router.post('/totalPriority',PriorityMasterController.totalPriorityMaster)
 router.post('/insertPriority',PriorityMasterController.insertPriorityMaster)
@@ -237,7 +225,6 @@ router.post('/deleteTicketStatus',TicketStatusMasterController.deleteTicketStatu
 router.post('/updateTicketStatus',TicketStatusMasterController.updateTicketStatus)
 router.post('/ActiveTicketStatus',TicketStatusMasterController.ActiveTicketStatus)
 
-
 router.post('/totalBillingFrequency',BillingFrequencyMasterController.totalBillingFrequency)
 router.post('/insertBillingFrequency',BillingFrequencyMasterController.insertBillingFrequency)
 router.post('/getBillingFrequency',BillingFrequencyMasterController.getBillingFrequency)
@@ -252,14 +239,12 @@ router.post('/deleteVendorCategory',VendorCategoryMasterController.deleteVendorC
 router.post('/updateVendorCategory',VendorCategoryMasterController.updateVendorCategory)
 router.post('/getallvendorcategory',VendorCategoryMasterController.getAllVendorCategory)
 
-
 router.post('/totalVendorSubCategory',VendorSubCategoryMasterController.totalVendorSubCategory)
 router.post('/insertVendorSubCategory',VendorSubCategoryMasterController.insertVendorSubCategory)
 router.post('/getVendorSubCategory',VendorSubCategoryMasterController.getVendorSubCategory)
 router.post('/deleteVendorSubCategory',VendorSubCategoryMasterController.deleteVendorSubCategory)
 router.post('/updateVendorSubCategory',VendorSubCategoryMasterController.updateVendorSubCategory)
 router.post('/getvendorsubcategorybyvend',VendorSubCategoryMasterController.getVendorSubCategoryby)
-
 
 router.post('/totalServiceAction',ServiceActionTypeMaster.totalServiceAction)
 router.post('/insertServiceAction',ServiceActionTypeMaster.insertServiceAction)
@@ -281,7 +266,6 @@ router.post('/updateVendorCode',VendorCodeMasterController.updateVendorCode)
 router.post('/getallvendor',VendorCodeMasterController.GetAllVendor)
 router.post('/getvendordetails',VendorCodeMasterController.GetVendorDetails)
 
-
 router.post('/totalVendorContract',VendorContractMasterController.totalVendorContract)
 router.post('/insertVendorContract',VendorContractMasterController.insertVendorContract)
 router.post('/getVendorContract',VendorContractMasterController.getVendorContract)
@@ -289,7 +273,6 @@ router.post('/deleteVendorContract',VendorContractMasterController.deleteVendorC
 router.post('/updateVendorContract',VendorContractMasterController.updateVendorContract)
 router.post('/ActiveVendorContract',VendorContractMasterController.ActiveVendorContract)
 router.post('/VendorContractDetail',VendorContractMasterController.VendorContractDetail)
-
 
 router.post('/InsertVendorInvoice',VendorInvoiceController.InsertVendorInvoice)
 router.post('/PendingVendorInvoice',VendorInvoiceController.PendingVendorInvoice)
@@ -299,7 +282,6 @@ router.post('/UpdateVendorInvoice',VendorInvoiceController.UpdateVendorInvoice)
 router.post('/TotalVendorPayment',VendorInvoiceController.TotalVendorPayment)
 router.post('/GetVendorPayment',VendorInvoiceController.GetVendorPayment)
 router.post('/UpdateVendorPayment',VendorInvoiceController.UpdateVendorPayment)
-
 
 router.post('/TotalNewAssets',NewAssetsController.TotalNewAssets)
 router.post('/InsertNewAssets',NewAssetsController.InsertNewAssets)
@@ -312,7 +294,6 @@ router.post('/UpdateNewAssets',NewAssetsController.UpdateNewAssets)
 router.post('/insertassetssoftware',AssetSubController.InsertAssetsSoftware)
 router.post('/getnewassetssoftware',AssetSubController.GetNewAssetsSoftware)
 
-
 router.post('/InsertTicket',TicketsController.InsertTicket)
 router.post('/CountTickets',TicketsController.CountTickets)
 router.post('/TotalTicket',TicketsController.TotalTicket)
@@ -321,15 +302,11 @@ router.post('/getTickets',TicketsController.getTickets)
 router.post('/UpdateTicket',TicketsController.UpdateTicket)
 router.post('/OpenTotalTicket',TicketsController.OpenTotalTicket)
 
-
 router.post('/dashboard_details',DashboardController.dashboard_details)
 router.post('/dashboard_procedure',DashboardController.dashboard_procedure)
 router.post('/dashboard_location_name',DashboardController.dashboard_location_name)
 router.post('/dashboard_software',DashboardController.dashboard_software)
 router.post('/dashboard_manufacture',DashboardController.dashboard_manufacture)
-
-
-
 
 router.post('/ticket_summary',TicketDashboarController.Ticket_Summary)
 router.post('/ticket_priority',TicketDashboarController.Ticket_Priority)
@@ -341,19 +318,16 @@ router.post('/RecurringFrequency',VendorDashboardController.RecurringFrequency)
 router.post('/TotalVendorContractDetails',VendorDashboardController.TotalVendorContract)
 router.post('/FilterVendorContract',VendorDashboardController.FilterVendorContract)
 
-
 router.post('/Invoice_Outstanding',InvoiceDashboardController.Invoice_Outstanding)
 router.post('/TotalOutstanding',InvoiceDashboardController.TotalOutstanding)
 router.post('/VendorInvoice',InvoiceDashboardController.VendorInvoice)
 router.post('/PaidInvoice',InvoiceDashboardController.PaidInvoice)
 router.post('/FilterInvoice',InvoiceDashboardController.FilterInvoice)
 
-
 router.post('/getuserdetails',UserprofileController.getUserdetails)
 router.post('/updateuserdetails',UserprofileController.updateUserdetails)
 
 router.post('/addorganisation',OrganisationController.AddOrganisation)
-
 router.post('/getorganisation',OrganisationController.getOrganisation)
 router.post('/updateorganizationdetails',OrganisationController.updateOrganizationDetails)
 
@@ -361,6 +335,15 @@ router.post('/totalroles',RolesMasterController.totalRoles)
 router.post('/insertroles',RolesMasterController.insertRoles)
 router.post('/getrole',RolesMasterController.getRole)
 router.post('/updaterole',RolesMasterController.updateRole)
+
+router.post('/FileUpload',Multer,FileUpload)
+
+router.post('/ColumnsReport',ReportMasterController.ColumnsReport)
+router.post('/tableReports',ReportMasterController.TableReports)
+router.post('/GraphReport',ReportMasterController.GraphReport)
+
+
+
 
 
 
