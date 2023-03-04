@@ -29,7 +29,7 @@ const insertEmployee = async (req,res) =>{
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`insert into ${org}.dbo.tbl_employee_master (employee_id,employee_name,location ,employee_email,employee_number  ,company ,status,add_user_name,add_system_name,add_system_ip,add_date_time)
-        values('${employee_id}','${employee_name}','${location}','${employee_email}',${employee_number},'${company}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
+        values('${employee_id}','${employee_name}','${location}','${employee_email}','${employee_number}','${company}','Active','${user_id}','${os.hostname()}','${req.ip}',getdate())`)
         res.status(200).send("Added")
     }
     catch(err){
@@ -80,7 +80,7 @@ const updateEmployee = async (req,res) =>{
 
     try{
         await sql.connect(sqlConfig)
-        const result = await sql.query(`update ${org}.dbo.tbl_employee_master set employee_name='${employee_name}',location='${location}',employee_email='${employee_email}',employee_number= ${employee_number},company='${company}'
+        const result = await sql.query(`update ${org}.dbo.tbl_employee_master set employee_name='${employee_name}',location='${location}',employee_email='${employee_email}',employee_number= '${employee_number}',company='${company}'
         ,update_user_name ='${user_id}',update_system_name='${os.hostname()}',update_system_ip='${req.ip}',update_date_time=getdate() where sno = ${sno}`)
         res.status(200).send("Updated")
     }
