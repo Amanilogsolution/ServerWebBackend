@@ -162,8 +162,6 @@ const GetVendorPayment = async (req, res) => {
 
 const UpdateVendorPayment = async (req, res) => {
     const org = req.body.org;
-
-
     const paymentdetail = req.body.paymentdetail;
     const paymentamt = req.body.paymentamt;
     const paymentdate = req.body.paymentdate;
@@ -187,6 +185,29 @@ const UpdateVendorPayment = async (req, res) => {
     }
 }
 
+const UploadDocument = async (req, res) => {
+    const org = req.body.org;
+    const type = req.body.type;
+    const document = req.body.document;
+    const sno = req.body.sno;
+    console.log(org, type, document,sno)
+
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`update ${org}.dbo.tbl_vendor_invoice set ${type}='${document}' where sno=${sno}`)
+
+        if (result.rowsAffected[0] > 0) {
+            res.status(200).send('Data Updated')
+        }
+        else {
+            res.send('Error')
+        }
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
 
 
-module.exports = { InsertVendorInvoice, PendingVendorInvoice, UpdateVendorInvoice, GetVendorInvoice, UpdatePendingVendorInvoice, UpdatePendingVendorInvoice, TotalVendorPayment, GetVendorPayment, UpdateVendorPayment }
+
+module.exports = { InsertVendorInvoice, PendingVendorInvoice, UpdateVendorInvoice, GetVendorInvoice, UpdatePendingVendorInvoice, UpdatePendingVendorInvoice, TotalVendorPayment, GetVendorPayment, UpdateVendorPayment,UploadDocument }

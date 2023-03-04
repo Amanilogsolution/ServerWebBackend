@@ -282,6 +282,8 @@ router.post('/UpdateVendorInvoice',VendorInvoiceController.UpdateVendorInvoice)
 router.post('/TotalVendorPayment',VendorInvoiceController.TotalVendorPayment)
 router.post('/GetVendorPayment',VendorInvoiceController.GetVendorPayment)
 router.post('/UpdateVendorPayment',VendorInvoiceController.UpdateVendorPayment)
+router.post('/UploadInvoice',VendorInvoiceController.UploadDocument)
+
 
 router.post('/TotalNewAssets',NewAssetsController.TotalNewAssets)
 router.post('/InsertNewAssets',NewAssetsController.InsertNewAssets)
