@@ -47,6 +47,7 @@ try {
   });
 
       const Upload = `https://swimlocker.blob.core.windows.net/awlvendorportal/`+images[0];
+	console.log(Upload)
 
   res.status(200).send(Upload)
 
