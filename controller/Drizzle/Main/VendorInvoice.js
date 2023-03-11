@@ -41,7 +41,7 @@ const PendingVendorInvoice = async (req, res) => {
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select  * from ${org}.dbo.tbl_vendor_invoice  WHERE invoice_status ='true' `)
+        const result = await sql.query(`select  *,convert(varchar(15),invoice_date,105) as date from ${org}.dbo.tbl_vendor_invoice  WHERE invoice_status ='true' `)
         res.status(200).send(result.recordset)
     }
     catch (err) {
@@ -138,7 +138,7 @@ const TotalVendorPayment = async (req, res) => {
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select  * from ${org}.dbo.tbl_vendor_invoice  WHERE invoice_status ='false' `)
+        const result = await sql.query(`select  *,convert(varchar(15),payment_date,105) as date from ${org}.dbo.tbl_vendor_invoice  WHERE invoice_status ='false' `)
         res.status(200).send(result.recordset)
     }
     catch (err) {
