@@ -7,11 +7,9 @@ const Invoice_Outstanding = async (req, res) => {
     const data = []
     try {
         await sql.connect(sqlConfig)
-        const Vendor = await sql.query(`select count(vendor) as TotalVendor from IPERISCOPE.dbo.tbl_vendor_invoice `)
+        const Vendor = await sql.query(`select count(vendor) as TotalVendor from IPERISCOPE.dbo.tbl_vendor_invoice WHERE invoice_status ='true'`)
         const OutstandingAmount = await sql.query(`select SUM(convert(int,invoice_amt) ) as total from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true'`)
-        const OutstandingVendor = await sql.query(`select SUM(convert(int,invoice_amt) ) as total,vendor from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true' GROUP by vendor`)
-
-      
+        const OutstandingVendor = await sql.query(`select SUM(convert(int,invoice_amt) ) as total,vendor,Count(invoice_no) as countinvoice from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true' GROUP by vendor`)
 
         res.status(200).json({
             Vendor: Vendor.recordset[0],
@@ -66,7 +64,6 @@ const PaidInvoice = async(req,res) =>{
     const org = req.body.org;
     const pageno = req.body.pageno;
     const rowsperpage = req.body.rowsperpage
-    console.log(org,pageno,rowsperpage)
     try{
         await sql.connect(sqlConfig)
         const Outstanding = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false'  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
@@ -87,8 +84,8 @@ const FilterInvoice = async(req,res) =>{
     const rowsperpage = req.body.rowsperpage
     try{
         await sql.connect(sqlConfig)
-        const Outstanding = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' and ( vendor='${value}' or invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}')  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
-        const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' and (invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}')  `)
+        const Outstanding = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where ( vendor='${value}' or invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}')  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where  (invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}')  `)
         const PaidInv = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false' and (vendor='${value}' or invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}' )  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
         const Paiddata = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false' and (vendor='${value}' or invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}' )  `)
         res.send({data:Outstanding.recordset,TotalData:countData.recordset,PaidInv:PaidInv.recordset,Paiddata:Paiddata.recordset})
@@ -100,8 +97,22 @@ const FilterInvoice = async(req,res) =>{
     }
 }
 
+const Recurring_Pending_Invoice = async(req,res) =>{
+      const org = req.body.org;
+    try{
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`SELECT * from ${org}.dbo.tbl_vendor_contract_master where 
+        reference_no not in (select  reference_no from ${org}.dbo.tbl_vendor_invoice tvi where invoice_status='true' ) 
+        and type_of_contract = 'Recurring'`)
+        res.send(result.recordset)
+    }
+    catch(err){
+        console.log(err)
+    }
+}
 
 
 
 
-module.exports = { Invoice_Outstanding,TotalOutstanding,VendorInvoice,PaidInvoice,FilterInvoice }
+
+module.exports = { Invoice_Outstanding,TotalOutstanding,VendorInvoice,PaidInvoice,FilterInvoice,Recurring_Pending_Invoice }
