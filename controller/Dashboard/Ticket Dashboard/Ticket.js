@@ -10,6 +10,7 @@ const Ticket_Summary = async (req, res) =>{
         const TotalTicket = await sql.query(`select count(assign_ticket) as totalticket  from ${org}.dbo.tbl_ticket `)
         const TotalTicketClose = await sql.query(`select count(assign_ticket) as totalticketclose from ${org}.dbo.tbl_ticket  where ticket_status = 'Closed' `)
         const TotalTicketOpen = await sql.query(`select count(assign_ticket) as totalticketopen from ${org}.dbo.tbl_ticket  where ticket_status = 'Open'`)
+        const TotalTicketHold = await sql.query(`select count(assign_ticket) as totaltickethold from ${org}.dbo.tbl_ticket  where ticket_status = 'Hold'`)
         const MyTicket = await sql.query(`select count(assign_ticket) as myticket  from ${org}.dbo.tbl_ticket where add_user_name = '${userid}' `)
         const MyTicketClose = await sql.query(`select count(assign_ticket) as myticketclose  from ${org}.dbo.tbl_ticket  where ticket_status = 'Closed' and add_user_name = '${userid}' `)
         const MyTicketOpen = await sql.query(`select count(assign_ticket) as myticketopen  from ${org}.dbo.tbl_ticket where ticket_status = 'Open' and add_user_name = '${userid}'`)
@@ -18,6 +19,7 @@ const Ticket_Summary = async (req, res) =>{
             TotalTicket:TotalTicket.recordset[0],
             TotalTicketOpen:TotalTicketOpen.recordset[0],
             TotalTicketClose:TotalTicketClose.recordset[0],
+            TotalTicketHold:TotalTicketHold.recordset[0],
             MyTicket:MyTicket.recordset[0],
             MyTicketClose:MyTicketClose.recordset[0],
             MyTicketOpen:MyTicketOpen.recordset[0]
@@ -38,7 +40,6 @@ const Ticket_Priority = async (req, res) =>{
         const TotalNormalPriorityOpen = await sql.query(`select count(assign_ticket) as normalpriorityopen  from ${org}.dbo.tbl_ticket where priority = 'Normal' and ticket_status = 'Open'`)
         const TotalUrgentPriorityClose = await sql.query(`select count(assign_ticket) as urgentpriorityclose  from ${org}.dbo.tbl_ticket where priority = 'Urgent' and ticket_status = 'Closed'`)
         const TotalUrgentPriorityOpen = await sql.query(`select count(assign_ticket) as urgentpriorityopen  from ${org}.dbo.tbl_ticket where priority = 'Urgent' and ticket_status = 'Open'`)
-
 
         res.status(200).json({
             TotalLowPriorityClose:TotalLowPriorityClose.recordset[0].lowpriorityclose,
@@ -89,7 +90,6 @@ const Ticket_issue_type = async (req,res) =>{
             AllocationTicketOpen:AllocationTicketOpen.recordset[0].allocationticketopen,
             NewReqTicketClose:NewReqTicketClose.recordset[0].newreqticketclose,
             NewReqTicketOpen:NewReqTicketOpen.recordset[0].newreqticketopen,
-
   })
     }
     catch(err){
@@ -98,5 +98,32 @@ const Ticket_issue_type = async (req,res) =>{
 
 }
 
+const Filter_Ticket_Summary = async (req, res) =>{
+    const org = req.body.org;
+    const type = req.body.type;
+    const filterby = req.body.filterby;
+    try{
+        await sql.connect(sqlConfig)
+        if(filterby == "all"){
+            if(type=="all"){
+            const filterdata =  sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE order by assign_ticket DESC`)
+            res.status(200).json( filterdata.recordset)
+            }else if(type="Open"){
+                const filterdata =  sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status = 'Open' order by assign_ticket DESC`)
+            res.status(200).json(filterdata.recordset)  
+            }else if(type=="Hold"){
+                const filterdata =  sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status = 'Hold' order by assign_ticket DESC`)
+                res.status(200).json( filterdata.recordset)   
+            }else{
+                const filterdata =  sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status = 'Closed' order by assign_ticket DESC`)
+                res.status(200).json( filterdata.recordset)   
+            }
+        }   
+    }
+    catch(err){
+        console.log(err)
+    }
+}
 
-module.exports = {Ticket_Summary,Ticket_Priority,Ticket_issue_type}
+
+module.exports = {Ticket_Summary,Ticket_Priority,Ticket_issue_type,Filter_Ticket_Summary}

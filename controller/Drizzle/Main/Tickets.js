@@ -17,6 +17,19 @@ const TotalTicket = async (req, res) => {
         res.send(err)
     }
 }
+const TotalHoldTicket = async (req, res) => {
+    const org = req.body.org;
+    console.log(org)
+
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status = 'Hold' order by assign_ticket DESC`)
+        res.status(200).send(result.recordset)
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
 
 const OpenTotalTicket = async (req, res) => {
     const org = req.body.org;
@@ -169,4 +182,4 @@ update_user_name='${user_id}',update_system_name='${os.hostname()}',update_ip_ad
     }
 }
 
-module.exports = { TotalTicket, InsertTicket, CountTickets, DeleteTickets, getTickets, UpdateTicket,OpenTotalTicket }
+module.exports = { TotalTicket, InsertTicket, CountTickets, DeleteTickets, getTickets, UpdateTicket,OpenTotalTicket,TotalHoldTicket }

@@ -46,6 +46,7 @@ const OrganisationController = require('../controller/Organisation/organistion')
 const UserprofileController = require('../controller/Profile/profile')
 const RolesMasterController = require('../controller/Drizzle/Role/RoleMaster')
 const ReportMasterController = require('../controller/Report/report')
+const MailMasterController = require('../controller/Mail/mail')
 
 const FileUpload = require('../controller/FileUpload/fileupload')
 const Multer = require('../Middleware/multer')
@@ -303,6 +304,8 @@ router.post('/DeleteTickets',TicketsController.DeleteTickets)
 router.post('/getTickets',TicketsController.getTickets)
 router.post('/UpdateTicket',TicketsController.UpdateTicket)
 router.post('/OpenTotalTicket',TicketsController.OpenTotalTicket)
+router.post('/TotalHoldTicket',TicketsController.TotalHoldTicket)
+
 
 router.post('/dashboard_details',DashboardController.dashboard_details)
 router.post('/dashboard_procedure',DashboardController.dashboard_procedure)
@@ -313,6 +316,8 @@ router.post('/dashboard_manufacture',DashboardController.dashboard_manufacture)
 router.post('/ticket_summary',TicketDashboarController.Ticket_Summary)
 router.post('/ticket_priority',TicketDashboarController.Ticket_Priority)
 router.post('/ticket_issue_type',TicketDashboarController.Ticket_issue_type)
+router.post('/filter_ticket_summary',TicketDashboarController.Filter_Ticket_Summary)
+
 
 router.post('/ReferanceNumber',VendorDashboardController.ReferanceNumber)
 router.post('/RecurringVendor',VendorDashboardController.RecurringVendor)
@@ -325,6 +330,8 @@ router.post('/TotalOutstanding',InvoiceDashboardController.TotalOutstanding)
 router.post('/VendorInvoice',InvoiceDashboardController.VendorInvoice)
 router.post('/PaidInvoice',InvoiceDashboardController.PaidInvoice)
 router.post('/FilterInvoice',InvoiceDashboardController.FilterInvoice)
+router.post('/recurringpendinginvoice',InvoiceDashboardController.Recurring_Pending_Invoice)
+
 
 router.post('/getuserdetails',UserprofileController.getUserdetails)
 router.post('/updateuserdetails',UserprofileController.updateUserdetails)
@@ -344,11 +351,7 @@ router.post('/ColumnsReport',ReportMasterController.ColumnsReport)
 router.post('/tableReports',ReportMasterController.TableReports)
 router.post('/GraphReport',ReportMasterController.GraphReport)
 
-
-
-
-
+router.post('/Email',MailMasterController.Email)
 
 
 module.exports = router
-
