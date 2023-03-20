@@ -123,7 +123,7 @@ const GetNewAssetAssign = async (req, res) => {
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select asset_type,serial_no from ${org}.dbo.tbl_new_assets with (nolock) where
+        const result = await sql.query(`select asset_type,serial_no,manufacture from ${org}.dbo.tbl_new_assets with (nolock) where
         asset_assign_empid= '${asset_assign_empid}'
         `)
 

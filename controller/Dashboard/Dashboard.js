@@ -24,8 +24,6 @@ const dashboard_details = async (req, res) => {
 
 const dashboard_procedure = async (req, res) => {
     const type = req.body.type;
-    console.log(type)
-
     try {
         const pool = new sql.ConnectionPool(sqlConfig);
         await pool.connect();
@@ -43,12 +41,9 @@ const dashboard_procedure = async (req, res) => {
 
 const dashboard_location_name = async (req, res) => {
     const org = req.body.org;
-    // let charts = []
-
     try {
         await sql.connect(sqlConfig)
         const location = await sql.query(`select count(location_name) as asset,location_code from IPERISCOPE.dbo.tbl_location_master as t1 left join IPERISCOPE.dbo.tbl_new_assets as t2 on t1.location_name = t2.location GROUP  by location_code ORDER by asset DESC `)
-
         res.send(location.recordset)
     }
     catch (err) {
@@ -62,7 +57,6 @@ const dashboard_software = async (req, res) => {
         await sql.connect(sqlConfig)
         const software = await sql.query(`select ISNULL(COUNT(software), 0) AS software,software_name from IPERISCOPE.dbo.tbl_software_master as ts left join IPERISCOPE.dbo.tbl_asset_subtable as te on ts.software_name = te.software  GROUP by software_name `)
         res.send(software.recordset)
-
     }
     catch (err) {
         console.log(err)
@@ -87,4 +81,4 @@ const dashboard_manufacture = async (req, res) => {
 }
 
 
-module.exports = { dashboard_details, dashboard_procedure, dashboard_location_name, dashboard_software, dashboard_manufacture }
+module.exports = {dashboard_details,dashboard_procedure,dashboard_location_name,dashboard_software,dashboard_manufacture}

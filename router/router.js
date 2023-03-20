@@ -317,6 +317,8 @@ router.post('/ticket_summary',TicketDashboarController.Ticket_Summary)
 router.post('/ticket_priority',TicketDashboarController.Ticket_Priority)
 router.post('/ticket_issue_type',TicketDashboarController.Ticket_issue_type)
 router.post('/filter_ticket_summary',TicketDashboarController.Filter_Ticket_Summary)
+router.post('/filter_ticket_summary_count',TicketDashboarController.Filter_Ticket_Summary_Count)
+
 
 
 router.post('/ReferanceNumber',VendorDashboardController.ReferanceNumber)
@@ -331,6 +333,7 @@ router.post('/VendorInvoice',InvoiceDashboardController.VendorInvoice)
 router.post('/PaidInvoice',InvoiceDashboardController.PaidInvoice)
 router.post('/FilterInvoice',InvoiceDashboardController.FilterInvoice)
 router.post('/recurringpendinginvoice',InvoiceDashboardController.Recurring_Pending_Invoice)
+router.post('/outstandinginvoicefilter',InvoiceDashboardController.Outstanding_Invoice_filter)
 
 
 router.post('/getuserdetails',UserprofileController.getUserdetails)

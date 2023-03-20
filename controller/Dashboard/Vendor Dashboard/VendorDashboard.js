@@ -8,7 +8,6 @@ const ReferanceNumber = async(req,res) =>{
         await sql.connect(sqlConfig)
         const ReferanceNo = await sql.query(`select count(vendor_contract_id) as data from IPERISCOPE.dbo.tbl_vendor_contract_master where reference_no is not null`)
         res.send(ReferanceNo.recordset[0])
-
     }
     catch(err){
         console.log(err)
@@ -62,8 +61,7 @@ const RecurringFrequency = async(req,res) =>{
             "Quaterly":QuaterlyFreq.recordset[0].Quaterly,
             "Annualy":AnnualyFreq.recordset[0].Annually,
             "InvoiceReceived":InvoiceReceived.recordset[0].InvoiceRecived,
-        }
-        )
+        })
     }
     catch(err){
         console.log(err)
@@ -78,7 +76,7 @@ const FilterVendorContract = async(req,res) =>{
     const rowsperpage = req.body.rowsperpage
     try{
         await sql.connect(sqlConfig)
-        const Recurring = await sql.query(`select vendor,location,major_category,sub_category,customer_account_no,reference_no,help_desk_no,billling_freq from IPERISCOPE.dbo.tbl_vendor_contract_master with (nolock) where ${type}='${value}'  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        const Recurring = await sql.query(`select vendor,location,major_category,sub_category,customer_account_no,reference_no,help_desk_no,billling_freq from IPERISCOPE.dbo.tbl_vendor_contract_master with (nolock) where ${type}='${value}' order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
         const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_contract_master with (nolock) where ${type}='${value}'`)
         res.send({data:Recurring.recordset,TotalData:countData.recordset})
 
