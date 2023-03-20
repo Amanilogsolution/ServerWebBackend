@@ -48,7 +48,6 @@ const Ticket_Priority = async (req, res) =>{
             TotalNormalPriorityOpen:TotalNormalPriorityOpen.recordset[0].normalpriorityopen,
             TotalUrgentPriorityClose:TotalUrgentPriorityClose.recordset[0].urgentpriorityclose,
             TotalUrgentPriorityOpen:TotalUrgentPriorityOpen.recordset[0].urgentpriorityopen
-
         })
     }
     catch(err){
@@ -98,27 +97,61 @@ const Ticket_issue_type = async (req,res) =>{
 
 }
 
-const Filter_Ticket_Summary = async (req, res) =>{
+const Filter_Ticket_Summary_Count = async (req,res) => {
     const org = req.body.org;
     const type = req.body.type;
-    const filterby = req.body.filterby;
+    const value = req.body.value;
+    console.log(org, type, value)
     try{
         await sql.connect(sqlConfig)
-        if(filterby == "all"){
-            if(type=="all"){
-            const filterdata =  sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE order by assign_ticket DESC`)
+        if(type == "emp_name"){
+      
+            let TotalTicket = await sql.query(`select count(assign_ticket) as totalticket  from ${org}.dbo.tbl_ticket where ${type} ='${value}'`)
+            let TotalTicketClose = await sql.query(`select count(assign_ticket) as totalticketclose from ${org}.dbo.tbl_ticket  where ${type} ='${value}' and ticket_status = 'Closed'`)
+            let TotalTicketOpen = await sql.query(`select count(assign_ticket) as totalticketopen from ${org}.dbo.tbl_ticket where ${type} ='${value}' and   ticket_status = 'Open'`)
+            let TotalTicketHold = await sql.query(`select count(assign_ticket) as totaltickethold from ${org}.dbo.tbl_ticket where ${type} ='${value}' and   ticket_status = 'Hold'`)  
+            res.status(200).json({
+                TotalTicket:TotalTicket.recordset[0],
+                TotalTicketOpen:TotalTicketOpen.recordset[0],
+                TotalTicketClose:TotalTicketClose.recordset[0],
+                TotalTicketHold:TotalTicketHold.recordset[0]
+            }) 
+        } else if(type == "location") {
+            let TotalTicket = await sql.query(`select count(assign_ticket) as totalticket  from ${org}.dbo.tbl_ticket where ${type} ='${value}'`)
+            let TotalTicketClose = await sql.query(`select count(assign_ticket) as totalticketclose from ${org}.dbo.tbl_ticket  where ${type} ='${value}' and ticket_status = 'Closed'`)
+            let TotalTicketOpen = await sql.query(`select count(assign_ticket) as totalticketopen from ${org}.dbo.tbl_ticket where ${type} ='${value}' and   ticket_status = 'Open'`)
+            let TotalTicketHold = await sql.query(`select count(assign_ticket) as totaltickethold from ${org}.dbo.tbl_ticket where ${type} ='${value}' and   ticket_status = 'Hold'`)  
+            res.status(200).json({
+                TotalTicket:TotalTicket.recordset[0],
+                TotalTicketOpen:TotalTicketOpen.recordset[0],
+                TotalTicketClose:TotalTicketClose.recordset[0],
+                TotalTicketHold:TotalTicketHold.recordset[0]
+            }) 
+        }
+        
+    }
+    catch(err){
+        console.log(err)
+    }
+
+}
+
+const Filter_Ticket_Summary = async (req, res) =>{
+    const org = req.body.org;
+    const statustype = req.body.statustype;
+    const filterby = req.body.filterby;
+    const value = req.body.value;
+    console.log(org, statustype, filterby, value)
+    try{
+        await sql.connect(sqlConfig)
+            if(!statustype){
+            const filterdata = await  sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ${filterby}='${value}' order by assign_ticket DESC`)
             res.status(200).json( filterdata.recordset)
-            }else if(type="Open"){
-                const filterdata =  sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status = 'Open' order by assign_ticket DESC`)
-            res.status(200).json(filterdata.recordset)  
-            }else if(type=="Hold"){
-                const filterdata =  sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status = 'Hold' order by assign_ticket DESC`)
-                res.status(200).json( filterdata.recordset)   
             }else{
-                const filterdata =  sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status = 'Closed' order by assign_ticket DESC`)
-                res.status(200).json( filterdata.recordset)   
+                const filterdata = await sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status='${statustype}' and ${filterby}='${value}' order by assign_ticket DESC`)
+            res.status(200).json(filterdata.recordset)  
             }
-        }   
+        
     }
     catch(err){
         console.log(err)
@@ -126,4 +159,4 @@ const Filter_Ticket_Summary = async (req, res) =>{
 }
 
 
-module.exports = {Ticket_Summary,Ticket_Priority,Ticket_issue_type,Filter_Ticket_Summary}
+module.exports = {Ticket_Summary,Ticket_Priority,Ticket_issue_type,Filter_Ticket_Summary,Filter_Ticket_Summary_Count}
