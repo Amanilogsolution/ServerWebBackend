@@ -175,7 +175,7 @@ const UpdateVendorPayment = async (req, res) => {
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`UPDATE ${org}.dbo.tbl_vendor_invoice set payment_detail='${paymentdetail}',payment_amt='${paymentamt}',
-        payment_date='${paymentdate}',payment_remark='${remark}',uploadInvoice='${filedata}',approved_payment_amt='${ApprovedAmt}' where sno='${sno}' `)
+        payment_date='${paymentdate}',payment_remark='${remark}',uploadpayment='${filedata}',approved_payment_amt='${ApprovedAmt}' where sno='${sno}' `)
 
         if (result.rowsAffected[0] > 0) {
             res.status(200).send('Data Updated')
