@@ -175,8 +175,22 @@ const VendorContractDetail = async (req, res) => {
     }
 }
 
+const VendorContractonChange = async (req, res) => {
+    const org = req.body.org;
+    const value = req.body.value;
+
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_contract_master where vendor LIKE '${value}%' AND status='Active' `)
+        res.status(200).send(result.recordset)
+    }
+    catch (err) {
+       res.send(err)
+    }
+}
 
 
-module.exports = { totalVendorContract, insertVendorContract, getVendorContract, deleteVendorContract, updateVendorContract, ActiveVendorContract, VendorContractDetail }
+
+module.exports = { totalVendorContract, insertVendorContract, getVendorContract, deleteVendorContract, updateVendorContract, ActiveVendorContract, VendorContractDetail,VendorContractonChange }
 
 

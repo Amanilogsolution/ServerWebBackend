@@ -1,8 +1,49 @@
 const nodemailer = require('nodemailer');
 const ejs = require("ejs");
 const path = require("path");
+const XLSX = require("xlsx");
+
+const workSheetColumnName =[
+  "First Name",
+  "Last Name",
+  "Email Address",
+  "Gender"
+];
+const workSheetName = 'Users'
+const filepath = './Book1.xlsx'
+
+const UserList = [{
+  "fname":"Aman",
+  "lname":"Lohan",
+  "email":"abc@abc.com",
+  "gender":"MAle"
+},
+{
+  "fname":"Aman",
+  "lname":"Lohan",
+  "email":"abc@abc.com",
+  "gender":"MAle"
+}
+]
 
 
+const ExcelConvert = async(req,res)=>{
+  const data = UserList.map(user=>{
+    return [user.fname,user.lname,user.email,user.gender]
+  })
+
+  const workBook = XLSX.utils.book_new();
+  const workSheetData = [
+    workSheetColumnName,
+    ...data
+  ]
+  const workSheet = XLSX.utils.aoa_to_sheet(workSheetData);
+  XLSX.utils.book_append_sheet(workBook,workSheet,workSheetName);
+  XLSX.writeFile(workBook,path.resolve(filepath));
+  console.log('hello')
+
+  return true;
+}
 
 const Email = async(req,res)=>{
   const message = req.body.message;
@@ -19,7 +60,6 @@ const Email = async(req,res)=>{
 
   }
  
-
   try {
     let transporter =  nodemailer.createTransport({
       service: "gmail",
@@ -37,6 +77,13 @@ const Email = async(req,res)=>{
       // cc:['rituraj@awlindia.com'],
       subject: subject, // Subject line
       html: html, // html body
+      attachments:[
+        {
+        filename:'data.xlsx',
+        path:__dirname + '/data.xlsx'
+        }
+
+      ]
     })
     res.send(info)
 
@@ -47,4 +94,4 @@ const Email = async(req,res)=>{
   
 }
 
-module.exports = {Email}
+module.exports = {Email,ExcelConvert}

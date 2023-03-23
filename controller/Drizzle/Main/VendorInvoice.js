@@ -7,15 +7,16 @@ const InsertVendorInvoice = async (req, res) => {
     const data = req.body.data;
     const userid = req.body.userid;
     let successcount = 0;
+    console.log(data)
     try {
         await sql.connect(sqlConfig)
         for (let i = 0; i < data.length; i++) {
             const result = await sql.query(`insert into ${org}.dbo.tbl_vendor_invoice(vendor,account_no,invoice_no,invoice_amt,invoice_date,
                 invoice_duedate,invoice_subdate,remark,reference_no,printer_counter,invoice_status,add_user_name,add_system_name,
-                add_ip_address,add_date_time,status,vend_inv_uuid)
+                add_ip_address,add_date_time,status,vend_inv_uuid,uploadInvoice)
                 values ('${data[i].vendor}','${data[i].accountno}','${data[i].invno}',${data[i].invamt},'${data[i].invdate}',
                 '${data[i].invduedate}','${data[i].invsubdate}',
-                '${data[i].remark}','${data[i].refno}','${data[i].printercount}','true','${userid}','${os.hostname()}','${req.ip}',getDate(),'Active','')`)
+                '${data[i].remark}','${data[i].refno}','${data[i].printercount}','true','${userid}','${os.hostname()}','${req.ip}',getDate(),'Active','','${data[i].filedata}')`)
 
             if (result.rowsAffected > 0) {
                 successcount = successcount + 1
@@ -68,17 +69,17 @@ const GetVendorInvoice = async (req, res) => {
 
 const UpdateVendorInvoice = async (req, res) => {
     const org = req.body.org;
-
     const data = req.body.data;
     const userid = req.body.userid;
     let successcount = 0;
+    console.log(data);
 
     try {
         await sql.connect(sqlConfig)
         for (let i = 0; i < data.length; i++) {
             const result = await sql.query(`UPDATE ${org}.dbo.tbl_vendor_invoice set invoice_status='false',payment_detail='${data[i].paymentDetail}',payment_amt='${data[i].PaymentAmt}',
             payment_date='${data[i].Paymentdate}',payment_remark='${data[i].Remark}',update_user_name='${userid}',update_system_name ='${os.hostname()}',
-            update_ip_address ='${req.ip}',update_date_time=GETDATE() 
+            update_ip_address ='${req.ip}',update_date_time=GETDATE(),uploadpayment='${data[i].filedata}',approved_payment_amt='${data[i].ApprovedAmt}'
             where sno='${data[i].sno}'`)
 
             if (result.rowsAffected > 0) {
@@ -99,8 +100,6 @@ const UpdateVendorInvoice = async (req, res) => {
 
 const UpdatePendingVendorInvoice = async (req, res) => {
     const org = req.body.org;
-
-
     const vendor = req.body.vendor;
     const account_no = req.body.accountno;
     const invoice_no = req.body.invno;
@@ -112,6 +111,9 @@ const UpdatePendingVendorInvoice = async (req, res) => {
     const remark = req.body.remark;
     const printer_counter = req.body.printercount;
     const sno = req.body.sno;
+    const filedata = req.body.filedata;
+    const ApprovedAmt = req.body.ApprovedAmt;
+
 
     try {
         await sql.connect(sqlConfig)
@@ -119,7 +121,7 @@ const UpdatePendingVendorInvoice = async (req, res) => {
         const result = await sql.query(`UPDATE ${org}.dbo.tbl_vendor_invoice set 
             vendor='${vendor}',account_no='${account_no}',invoice_no='${invoice_no}',invoice_amt='${invoice_amt}',invoice_date='${invoice_date}',
                 invoice_duedate='${invoice_duedate}',invoice_subdate='${invoice_subdate}',remark='${remark}',reference_no='${reference_no}',
-                printer_counter='${printer_counter}' where sno='${sno}'`)
+                printer_counter='${printer_counter}',uploadInvoice='${filedata}',approved_payment_amt='${ApprovedAmt}' where sno='${sno}'`)
         if (result.rowsAffected[0] > 0) {
             res.status(200).send('Data Updated')
         }
@@ -167,11 +169,13 @@ const UpdateVendorPayment = async (req, res) => {
     const paymentdate = req.body.paymentdate;
     const remark = req.body.remark;
     const sno = req.body.sno;
+    const filedata = req.body.filedata;
+    const ApprovedAmt = req.body.ApprovedAmt;
 
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`UPDATE ${org}.dbo.tbl_vendor_invoice set payment_detail='${paymentdetail}',payment_amt='${paymentamt}',
-        payment_date='${paymentdate}',payment_remark='${remark}' where sno='${sno}' `)
+        payment_date='${paymentdate}',payment_remark='${remark}',uploadInvoice='${filedata}',approved_payment_amt='${ApprovedAmt}' where sno='${sno}' `)
 
         if (result.rowsAffected[0] > 0) {
             res.status(200).send('Data Updated')
@@ -207,7 +211,21 @@ const UploadDocument = async (req, res) => {
         res.send(err)
     }
 }
+const VendorInvoiceonChange = async (req, res) => {
+    const org = req.body.org;
+    const value = req.body.value;
+
+
+    try {
+        await sql.connect(sqlConfig)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_invoice where invoice_no LIKE '${value}%' AND invoice_status='true'`)
+        res.status(200).send(result.recordset)
+    }
+    catch (err) {
+        res.send(err)
+    }
+}
 
 
 
-module.exports = { InsertVendorInvoice, PendingVendorInvoice, UpdateVendorInvoice, GetVendorInvoice, UpdatePendingVendorInvoice, UpdatePendingVendorInvoice, TotalVendorPayment, GetVendorPayment, UpdateVendorPayment,UploadDocument }
+module.exports = { InsertVendorInvoice, PendingVendorInvoice, UpdateVendorInvoice, GetVendorInvoice, UpdatePendingVendorInvoice, UpdatePendingVendorInvoice, TotalVendorPayment, GetVendorPayment, UpdateVendorPayment,UploadDocument,VendorInvoiceonChange }
