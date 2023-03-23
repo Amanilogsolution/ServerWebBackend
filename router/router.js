@@ -274,6 +274,8 @@ router.post('/deleteVendorContract',VendorContractMasterController.deleteVendorC
 router.post('/updateVendorContract',VendorContractMasterController.updateVendorContract)
 router.post('/ActiveVendorContract',VendorContractMasterController.ActiveVendorContract)
 router.post('/VendorContractDetail',VendorContractMasterController.VendorContractDetail)
+router.post('/vendorcontractonchange',VendorContractMasterController.VendorContractonChange)
+
 
 router.post('/InsertVendorInvoice',VendorInvoiceController.InsertVendorInvoice)
 router.post('/PendingVendorInvoice',VendorInvoiceController.PendingVendorInvoice)
@@ -284,6 +286,7 @@ router.post('/TotalVendorPayment',VendorInvoiceController.TotalVendorPayment)
 router.post('/GetVendorPayment',VendorInvoiceController.GetVendorPayment)
 router.post('/UpdateVendorPayment',VendorInvoiceController.UpdateVendorPayment)
 router.post('/UploadInvoice',VendorInvoiceController.UploadDocument)
+router.post('/vendorinvoiceonchange',VendorInvoiceController.VendorInvoiceonChange)
 
 
 router.post('/TotalNewAssets',NewAssetsController.TotalNewAssets)
@@ -355,6 +358,8 @@ router.post('/tableReports',ReportMasterController.TableReports)
 router.post('/GraphReport',ReportMasterController.GraphReport)
 
 router.post('/Email',MailMasterController.Email)
+router.post('/excelconvert',MailMasterController.ExcelConvert)
+
 
 
 module.exports = router
