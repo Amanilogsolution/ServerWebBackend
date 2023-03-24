@@ -150,7 +150,7 @@ const ActiveVendorContract = async (req, res) => {
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`SELECT  sno,vendor_contract_id,vendor,reference_no  from 
+        const result = await sql.query(`SELECT  *  from 
         ${org}.dbo.tbl_vendor_contract_master tvcm   with (nolock)  WHERE status ='Active' order by vendor ASC `)
         res.status(200).send(result.recordset)
     }
