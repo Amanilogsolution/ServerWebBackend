@@ -2,34 +2,21 @@ const nodemailer = require('nodemailer');
 const ejs = require("ejs");
 const path = require("path");
 const XLSX = require("xlsx");
+const sql = require('mssql')
+const sqlConfig = require('../../Database/Config')
 
 const workSheetColumnName =[
-  "First Name",
-  "Last Name",
-  "Email Address",
-  "Gender"
+  "Employee Name",
+  "Asset Type",
+  "Email ",
+  "Status"
 ];
 const workSheetName = 'Users'
-const filepath = './Book1.xlsx'
+const filepath = __dirname + '/data.xlsx'
 
-const UserList = [{
-  "fname":"Aman",
-  "lname":"Lohan",
-  "email":"abc@abc.com",
-  "gender":"MAle"
-},
-{
-  "fname":"Aman",
-  "lname":"Lohan",
-  "email":"abc@abc.com",
-  "gender":"MAle"
-}
-]
-
-
-const ExcelConvert = async(req,res)=>{
-  const data = UserList.map(user=>{
-    return [user.fname,user.lname,user.email,user.gender]
+function aman(dataList){
+  const data = dataList.map(user=>{
+    return [user.emp_name,user.asset_type,user.email_id,user.ticket_status]
   })
 
   const workBook = XLSX.utils.book_new();
@@ -40,9 +27,20 @@ const ExcelConvert = async(req,res)=>{
   const workSheet = XLSX.utils.aoa_to_sheet(workSheetData);
   XLSX.utils.book_append_sheet(workBook,workSheet,workSheetName);
   XLSX.writeFile(workBook,path.resolve(filepath));
-  console.log('hello')
 
   return true;
+}
+
+const ExcelConvert = async(req,res)=>{
+  try{
+    await sql.connect(sqlConfig)
+    const result = await sql.query(`select *  from IPERISCOPE.dbo.tbl_ticket where add_user_name = 'yuvraj01'  `)
+    aman(result.recordset)
+  }
+  catch (err) {
+    console.log(err)
+}
+ 
 }
 
 const Email = async(req,res)=>{
@@ -73,17 +71,17 @@ const Email = async(req,res)=>{
 
     let info = await transporter.sendMail({
       from: 'drizzleiperiscope2023@gmail.com', // sender address
-      to: 'swishlohan420@gmail.com', // list of receivers
-      // cc:['rituraj@awlindia.com'],
+      to: `${message.mail}`, // list of receivers
+      cc:['support@ilogsolution.com','support@awlindia.com','swishlohan420@gmail.com'],
       subject: subject, // Subject line
       html: html, // html body
-      attachments:[
-        {
-        filename:'data.xlsx',
-        path:__dirname + '/data.xlsx'
-        }
+      // attachments:[
+      //   {
+      //   filename:'data.xlsx',
+      //   path:__dirname + '/data.xlsx'
+      //   }
 
-      ]
+      // ]
     })
     res.send(info)
 
