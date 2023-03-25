@@ -6,8 +6,16 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 const dotenv = require('dotenv')
 dotenv.config();
+var CronJob = require('cron').CronJob;
 
 const port = 2008;
+
+var job = new CronJob(
+  '0 31 17 * * 0-6',
+  function() {
+      console.log('You will see this message every second');
+  }
+);
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
