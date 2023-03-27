@@ -64,13 +64,13 @@ const Email = async(req,res)=>{
       host: "smtp.gmail.com",
       secure: false, 
       auth: {
-        user: 'drizzleiperiscope2023@gmail.com', // generated ethereal user
-        pass: 'elmqbqimstauhsik', // generated ethereal password
+        user: 'alerts@godrizzle.com', // generated ethereal user
+        pass: 'ktgouiibktkcyrki', // generated ethereal password
       },
     });
 
     let info = await transporter.sendMail({
-      from: 'drizzleiperiscope2023@gmail.com', // sender address
+      from: 'alerts@godrizzle.com', // sender address
       to: `${message.mail}`, // list of receivers
       cc:['support@ilogsolution.com','support@awlindia.com','swishlohan420@gmail.com'],
       subject: subject, // Subject line
