@@ -39,7 +39,6 @@ const InsertVendorInvoice = async (req, res) => {
 
 const PendingVendorInvoice = async (req, res) => {
     const org = req.body.org;
-
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`select  *,convert(varchar(15),invoice_date,105) as date from ${org}.dbo.tbl_vendor_invoice  WHERE invoice_status ='true' ORDER BY sno DESC  `)

@@ -358,7 +358,13 @@ router.post('/tableReports',ReportMasterController.TableReports)
 router.post('/GraphReport',ReportMasterController.GraphReport)
 
 router.post('/Email',MailMasterController.Email)
-router.post('/excelconvert',MailMasterController.ExcelConvert)
+router.post('/assetemail',MailMasterController.AssetEmail)
+router.post('/invoiceemail',MailMasterController.InvoiceEmail)
+router.post('/vendorpaymentemail',MailMasterController.VendorPaymentEmail)
+router.post('/vendorcreateemail',MailMasterController.VendorCreateEmail)
+router.post('/employeecreateemail',MailMasterController.EmployeeCreateEmail)
+router.post('/vendorcontractemail',MailMasterController.VendorContractEmail)
+
 
 
 
