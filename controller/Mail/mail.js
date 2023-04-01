@@ -72,7 +72,7 @@ const Email = async(req,res)=>{
     let info = await transporter.sendMail({
       from: 'alerts@godrizzle.com', // sender address
       to: `${message.mail}`, // list of receivers
-      cc:['support@ilogsolution.com','support@awlindia.com','swishlohan420@gmail.com'],
+      cc:['support@ilogsolution.com','support@awlindia.com'],
       subject: subject, // Subject line
       html: html, // html body
       // attachments:[

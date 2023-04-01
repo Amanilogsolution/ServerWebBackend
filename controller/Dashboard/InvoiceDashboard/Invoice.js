@@ -8,8 +8,8 @@ const Invoice_Outstanding = async (req, res) => {
     try {
         await sql.connect(sqlConfig)
         const Vendor = await sql.query(`select count(vendor) as TotalVendor from IPERISCOPE.dbo.tbl_vendor_invoice WHERE invoice_status ='true'`)
-        const OutstandingAmount = await sql.query(`select SUM(convert(int,invoice_amt) ) as total from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true'`)
-        const OutstandingVendor = await sql.query(`select SUM(convert(int,invoice_amt) ) as total,vendor,Count(invoice_no) as countinvoice from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true' GROUP by vendor`)
+        const OutstandingAmount = await sql.query(`select SUM(convert(float,invoice_amt) ) as total from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true'`)
+        const OutstandingVendor = await sql.query(`select SUM(convert(float,invoice_amt) ) as total,vendor,Count(invoice_no) as countinvoice from IPERISCOPE.dbo.tbl_vendor_invoice  WHERE invoice_status ='true' GROUP by vendor`)
 
         res.status(200).json({
             Vendor: Vendor.recordset[0],
