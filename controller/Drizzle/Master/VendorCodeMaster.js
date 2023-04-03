@@ -144,7 +144,6 @@ const GetAllVendor = async (req,res) =>{
 
 const GetVendorDetails = async (req,res) =>{
     const org = req.body.org;
-
     const vendor_name = req.body.vendor_name
     try{
         await sql.connect(sqlConfig)

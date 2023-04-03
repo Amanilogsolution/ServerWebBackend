@@ -122,4 +122,6 @@ const EmployeeDetail= async (req,res) =>{
 
 
 
+
+
 module.exports={totalEmployee,insertEmployee,getEmployee,deleteEmployee,updateEmployee,ActiveEmployee,EmployeeDetail}
