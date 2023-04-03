@@ -43,7 +43,7 @@ const dashboard_location_name = async (req, res) => {
     const org = req.body.org;
     try {
         await sql.connect(sqlConfig)
-        const location = await sql.query(`select count(new_asset_type_id) as asset,location  from IPERISCOPE.dbo.tbl_new_assets as t1 left join IPERISCOPE.dbo.tbl_location_master as t2 on t1.location = t2.location_name GROUP  by location ORDER by asset DESC`)
+        const location = await sql.query(`select count(new_asset_type_id) as asset,location as location_code from IPERISCOPE.dbo.tbl_new_assets as t1 left join IPERISCOPE.dbo.tbl_location_master as t2 on t1.location = t2.location_name GROUP  by location ORDER by asset DESC`)
         res.send(location.recordset)
     }
     catch (err) {
