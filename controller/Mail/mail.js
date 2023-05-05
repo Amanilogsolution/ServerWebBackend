@@ -21,8 +21,8 @@ const VendorContractEmail = async(req,res)=>{
 
     let info = await transporter.sendMail({
       from: 'alerts@godrizzle.com', // sender address
-      to: `swishlohan420@gmail.com`, // list of receivers
-      cc:['swishlohan420@gmail.com','rupeshlkr93@gmail.com'],
+      to: `support@awlindia.com`, // list of receivers
+      cc:['support@ilogsolution.com'],
       subject: subject, // Subject line
       html: html, // html body
      
@@ -55,8 +55,8 @@ const EmployeeCreateEmail = async(req,res)=>{
 
     let info = await transporter.sendMail({
       from: 'alerts@godrizzle.com', // sender address
-      to: `swishlohan420@gmail.com`, // list of receivers
-      cc:['swishlohan420@gmail.com','rupeshlkr93@gmail.com'],
+      to: `support@awlindia.com`, // list of receivers
+      cc:['support@ilogsolution.com'],
       subject: subject, // Subject line
       html: html, // html body
      
@@ -88,8 +88,8 @@ const VendorCreateEmail = async(req,res)=>{
 
     let info = await transporter.sendMail({
       from: 'alerts@godrizzle.com', // sender address
-      to: `swishlohan420@gmail.com`, // list of receivers
-      cc:['swishlohan420@gmail.com','rupeshlkr93@gmail.com'],
+      to: `support@awlindia.com`, // list of receivers
+      cc:['support@ilogsolution.com'],
       subject: subject, // Subject line
       html: html, // html body
      
