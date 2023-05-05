@@ -82,10 +82,10 @@ const DeleteNewAssets = async (req, res) => {
 const GetNewAssets = async (req, res) => {
     const sno = req.body.sno;
     const org = req.body.org;
-
+    console.log(`select *,convert(varchar(15),purchase_date,121) as Assetdate,convert(varchar(15),latest_inventory,121) as latest_inventorynew from ${org}.dbo.tbl_new_assets  where sno='${sno}'`)
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select *,convert(varchar(15),purchase_date,121) as Assetdate from ${org}.dbo.tbl_new_assets  where sno='${sno}'`)
+        const result = await sql.query(`select *,convert(varchar(15),purchase_date,121) as Assetdate,convert(varchar(15),latest_inventory,121) as latest_inventorynew from ${org}.dbo.tbl_new_assets  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch (err) {

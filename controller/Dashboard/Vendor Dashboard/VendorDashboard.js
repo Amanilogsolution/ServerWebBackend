@@ -39,11 +39,24 @@ const TotalVendorContract = async(req,res) =>{
         const Recurring = await sql.query(`select vendor,location,major_category,sub_category,customer_account_no,reference_no,help_desk_no,billling_freq from IPERISCOPE.dbo.tbl_vendor_contract_master with (nolock)  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
         const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_contract_master with (nolock)`)
         res.send({data:Recurring.recordset,TotalData:countData.recordset})
-
     }
     catch(err){
         console.log(err)
-  
+    }
+}
+
+const ExportTotalVendorContract = async(req,res) =>{
+    const org = req.body.org;
+    const pageno = req.body.pageno;
+    const rowsperpage = req.body.rowsperpage
+    try{
+        await sql.connect(sqlConfig)
+        const Recurring = await sql.query(`select vendor,location,major_category,sub_category,customer_account_no,reference_no,help_desk_no,billling_freq from IPERISCOPE.dbo.tbl_vendor_contract_master with (nolock)  order by sno ASC`)
+        // const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_contract_master with (nolock)`)
+        res.send({data:Recurring.recordset})
+    }
+    catch(err){
+        console.log(err)
     }
 }
 
@@ -87,4 +100,4 @@ const FilterVendorContract = async(req,res) =>{
     }
 }
 
-module.exports={ReferanceNumber,RecurringVendor,RecurringFrequency,TotalVendorContract,FilterVendorContract}
+module.exports={ReferanceNumber,RecurringVendor,RecurringFrequency,TotalVendorContract,FilterVendorContract,ExportTotalVendorContract}

@@ -40,16 +40,36 @@ const TotalOutstanding = async (req, res) => {
 const VendorInvoice = async (req, res) => {
     const org = req.body.org;
     const pageno = req.body.pageno;
-    const rowsperpage = req.body.rowsperpage
+    const rowsperpage = req.body.rowsperpage;
+    const vendorname = req.body.vendorname;
     try {
         await sql.connect(sqlConfig)
-        const Outstanding = await sql.query(`select *,convert(varchar(15),invoice_date,105) as date from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true'  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
-        const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' `)
+        if(vendorname == 'all'){
+        var Outstanding = await sql.query(`select *,convert(varchar(15),invoice_date,105) as date from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true'  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        var countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' `)
+    }
+    else{
+        var Outstanding = await sql.query(`select *,convert(varchar(15),invoice_date,105) as date from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' and vendor Like '${vendorname}%'  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        var countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' and vendor Like '${vendorname}%'`)
+    }
         res.send({ data: Outstanding.recordset, TotalData: countData.recordset })
     }
     catch (err) {
         console.log(err)
 
+    }
+}
+
+const ExportOutstandingInvoiceData = async (req, res) => {
+    const org = req.body.org;
+    try {
+        await sql.connect(sqlConfig)
+        const Outstanding = await sql.query(`select *,convert(varchar(15),invoice_date,105) as date from ${org}.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true'  order by sno ASC `)
+        // const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' `)
+        res.send({ data: Outstanding.recordset })
+    }
+    catch (err) {
+        console.log(err)
     }
 }
 
@@ -123,4 +143,4 @@ const Outstanding_Invoice_filter = async (req, res) => {
 }
 
 
-module.exports = { Invoice_Outstanding, TotalOutstanding, VendorInvoice, PaidInvoice, FilterInvoice, Recurring_Pending_Invoice, Outstanding_Invoice_filter }
+module.exports = { Invoice_Outstanding, TotalOutstanding, VendorInvoice, PaidInvoice, FilterInvoice, Recurring_Pending_Invoice, Outstanding_Invoice_filter,ExportOutstandingInvoiceData }
