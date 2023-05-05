@@ -66,7 +66,7 @@ const ExportOutstandingInvoiceData = async (req, res) => {
     const org = req.body.org;
     try {
         await sql.connect(sqlConfig)
-        const Outstanding = await sql.query(`select *,convert(varchar(15),invoice_date,105) as date from ${org}.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true'  order by sno ASC `)
+        const Outstanding = await sql.query(`select vendor,account_no,invoice_amt,convert(varchar(15),invoice_date,105) as invoice_date,convert(varchar(15),invoice_duedate,105) as invoice_duedate,convert(varchar(15),invoice_subdate,105) as invoice_subdate from ${org}.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true'  order by sno ASC `)
         // const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' `)
         res.send({ data: Outstanding.recordset })
     }
