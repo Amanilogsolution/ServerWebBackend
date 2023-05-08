@@ -4,7 +4,6 @@ const path = require("path");
 
 const VendorContractEmail = async(req,res)=>{
   const message = req.body.message;
-  
     subject = `New vendor contract (${message.referance_no}) for (${message.vendor_name}) is created.`
     var html = await ejs.renderFile(path.join(__dirname, `./Vendorcontracttemplate/vendorcontract.ejs`),message)
 
@@ -21,11 +20,10 @@ const VendorContractEmail = async(req,res)=>{
 
     let info = await transporter.sendMail({
       from: 'alerts@godrizzle.com', // sender address
-      to: `swishlohan420@gmail.com`, // list of receivers
-      cc:['swishlohan420@gmail.com','rupeshlkr93@gmail.com'],
+      to: `support@ilogsolution.com`, // list of receivers
+      cc:['support@awlindia.com'],
       subject: subject, // Subject line
       html: html, // html body
-     
     })
     res.send(info)
 
@@ -37,8 +35,6 @@ const VendorContractEmail = async(req,res)=>{
 
 const EmployeeCreateEmail = async(req,res)=>{
   const message = req.body.message;
-  
-
     subject = `New Employee (${message.employee_name}) is created.`
     var html = await ejs.renderFile(path.join(__dirname, `./Employeetemplate/employee.ejs`),message)
 
@@ -55,14 +51,13 @@ const EmployeeCreateEmail = async(req,res)=>{
 
     let info = await transporter.sendMail({
       from: 'alerts@godrizzle.com', // sender address
-      to: `swishlohan420@gmail.com`, // list of receivers
-      cc:['swishlohan420@gmail.com','rupeshlkr93@gmail.com'],
+      to: `support@ilogsolution.com`, // list of receivers
+      cc:['support@awlindia.com'],
       subject: subject, // Subject line
       html: html, // html body
      
     })
     res.send(info)
-
   }
   catch(err){
     console.log(err);
@@ -71,7 +66,6 @@ const EmployeeCreateEmail = async(req,res)=>{
 
 const VendorCreateEmail = async(req,res)=>{
   const message = req.body.message;
-
     subject = `New vendor (${message.vendor_name}) is created.`
     var html = await ejs.renderFile(path.join(__dirname, `./VendorCreatetemplate/vendor.ejs`),message)
 
@@ -88,8 +82,8 @@ const VendorCreateEmail = async(req,res)=>{
 
     let info = await transporter.sendMail({
       from: 'alerts@godrizzle.com', // sender address
-      to: `swishlohan420@gmail.com`, // list of receivers
-      cc:['swishlohan420@gmail.com','rupeshlkr93@gmail.com'],
+      to: `support@ilogsolution.com`, // list of receivers
+      cc:[' support@awlindia.com'],
       subject: subject, // Subject line
       html: html, // html body
      
@@ -121,8 +115,8 @@ const VendorPaymentEmail = async(req,res)=>{
 
     let info = await transporter.sendMail({
       from: 'alerts@godrizzle.com', // sender address
-      to: `swishlohan420@gmail.com`, // list of receivers
-      cc:['swishlohan420@gmail.com','rupeshlkr93@gmail.com'],
+      to: `${message.mailid}`, // list of receivers
+      cc:['support@awlindia.com','support@ilogsolution.com','finance@awlindia.com'],
       subject: subject, // Subject line
       html: html, // html body
      
@@ -153,14 +147,12 @@ const InvoiceEmail = async(req,res)=>{
 
     let info = await transporter.sendMail({
       from: 'alerts@godrizzle.com', // sender address
-      to: `swishlohan420@gmail.com`, // list of receivers
-      cc:['swishlohan420@gmail.com','rupeshlkr93@gmail.com'],
+      to: `finance@awlindia.com`, // list of receivers
+      cc:['support@awlindia.com','support@ilogsolution.com'],
       subject: subject, // Subject line
       html: html, // html body
-     
     })
     res.send(info)
-
   }
   catch(err){
     console.log(err);
@@ -190,13 +182,12 @@ const AssetEmail = async(req,res)=>{
 
     let info = await transporter.sendMail({
       from: 'alerts@godrizzle.com', // sender address
-      to: `swishlohan420@gmail.com`, // list of receivers
-      cc:['swishlohan420@gmail.com','rupeshlkr93@gmail.com'],
+      to: `${message.mailid}`, // list of receivers
+      cc:['support@awlindia.com','support@ilogsolution.com'],
       subject: subject, // Subject line
       html: html, // html body     
     })
     res.send(info)
-
   }
   catch(err){
     console.log(err);
@@ -215,7 +206,6 @@ const Email = async(req,res)=>{
   }else{
     subject = `Support request status changed to ${message.TicketStatus} for Ticket number ${message.TicketNumber} (${message.subject})`
     var html = await ejs.renderFile(path.join(__dirname, `./templates/Hold.ejs`),message)
-
   }
  
   try {
@@ -235,7 +225,6 @@ const Email = async(req,res)=>{
       cc:['support@ilogsolution.com','support@awlindia.com','swishlohan420@gmail.com'],
       subject: subject, // Subject line
       html: html, // html body
-     
     })
     res.send(info)
 
