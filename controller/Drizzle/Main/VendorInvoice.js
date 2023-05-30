@@ -217,7 +217,7 @@ const VendorInvoiceonChange = async (req, res) => {
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_invoice where invoice_no LIKE '${value}%' AND invoice_status='true'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_invoice where invoice_no LIKE '%${value}%' AND invoice_status='true'`)
         res.status(200).send(result.recordset)
     }
     catch (err) {
