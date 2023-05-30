@@ -4,10 +4,18 @@ const os = require('os')
 
 const TotalNewAssets = async (req, res) => {
     const org = req.body.org;
+    const type = req.body.type;
+    console.log(type)
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_new_assets with (nolock) order by asset_type ASC `)
-        res.status(200).send(result.recordset)
+        if(type.length>0){
+            const result = await sql.query(`select *,convert(varchar(15),purchase_date,121) as Assetdate from IPERISCOPE.dbo.tbl_new_assets with (nolock) where location = '${type}' order by asset_type ASC`)
+            res.status(200).send(result.recordset)
+        }else{
+            const result = await sql.query(`select *,convert(varchar(15),purchase_date,121) as Assetdate from ${org}.dbo.tbl_new_assets with (nolock) order by asset_type ASC `)
+            res.status(200).send(result.recordset)
+        }
+      
     }
     catch (err) {
         res.send(err)

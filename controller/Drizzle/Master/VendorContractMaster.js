@@ -177,11 +177,12 @@ const VendorContractDetail = async (req, res) => {
 
 const VendorContractonChange = async (req, res) => {
     const org = req.body.org;
-    const value = req.body.value;
+    let value = req.body.value;
+    let data = value.trim()
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_contract_master where vendor LIKE '${value}%' AND status='Active' `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_contract_master where vendor LIKE '${data}%' AND status='Active' `)
         res.status(200).send(result.recordset)
     }
     catch (err) {

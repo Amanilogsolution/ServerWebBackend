@@ -212,12 +212,13 @@ const UploadDocument = async (req, res) => {
 }
 const VendorInvoiceonChange = async (req, res) => {
     const org = req.body.org;
-    const value = req.body.value;
+    let value = req.body.value;
+    let data = value.trim()
 
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_invoice where invoice_no LIKE '${value}%' AND invoice_status='true'`)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_invoice where invoice_no LIKE '%${data}%' AND invoice_status='true'`)
         res.status(200).send(result.recordset)
     }
     catch (err) {
