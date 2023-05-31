@@ -177,7 +177,8 @@ const VendorContractDetail = async (req, res) => {
 
 const VendorContractonChange = async (req, res) => {
     const org = req.body.org;
-    const value = req.body.value;
+    let value = req.body.value;
+    let data = value.trim()
 
     try {
         await sql.connect(sqlConfig)

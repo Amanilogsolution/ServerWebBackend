@@ -28,7 +28,7 @@ const TotalOutstanding = async (req, res) => {
     const rowsperpage = req.body.rowsperpage
     try {
         await sql.connect(sqlConfig)
-        const Outstanding = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock)  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        const Outstanding = await sql.query(`select *,convert(varchar(15),invoice_date,105) as date from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock)  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
         const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock)  `)
         res.send({ data: Outstanding.recordset, TotalData: countData.recordset })
     }
@@ -79,7 +79,7 @@ const PaidInvoice = async (req, res) => {
     const rowsperpage = req.body.rowsperpage
     try {
         await sql.connect(sqlConfig)
-        const Outstanding = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false'  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        const Outstanding = await sql.query(`select *,convert(varchar(15),payment_date,105) as Payment_date from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false'  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
         const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false' `)
         res.send({ data: Outstanding.recordset, TotalData: countData.recordset })
     }
@@ -95,10 +95,10 @@ const FilterInvoice = async (req, res) => {
     const rowsperpage = req.body.rowsperpage
     try {
         await sql.connect(sqlConfig)
-        const Outstanding = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where ( vendor='${value}' or invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}')  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
-        const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where  (invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}')  `)
-        const PaidInv = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false' and (vendor='${value}' or invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}' )  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
-        const Paiddata = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false' and (vendor='${value}' or invoice_no='${value}' or reference_no='${value}' or invoice_amt='${value}' )  `)
+        const Outstanding = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where ( vendor LIKE '%${value}%' or invoice_no LIKE '%${value}%' or reference_no LIKE '%${value}%' or invoice_amt LIKE '%${value}%')  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where  (invoice_no LIKE '%${value}%' or reference_no LIKE '%${value}%' or invoice_amt LIKE '%${value}%')  `)
+        const PaidInv = await sql.query(`select * from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false' and (vendor LIKE '%${value}%' or invoice_no LIKE '%${value}%' or reference_no LIKE '%${value}%' or invoice_amt LIKE '%${value}%' )  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        const Paiddata = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='false' and (vendor LIKE '%${value}%' or invoice_no LIKE '%${value}%' or reference_no LIKE '%${value}%' or invoice_amt LIKE '%${value}%' )  `)
         res.send({ data: Outstanding.recordset, TotalData: countData.recordset, PaidInv: PaidInv.recordset, Paiddata: Paiddata.recordset })
     }
     catch (err) {
