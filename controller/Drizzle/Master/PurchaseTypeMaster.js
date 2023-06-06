@@ -17,7 +17,6 @@ const totalPurchasetype = async (req,res) =>{
 
 const insertPurchasetype = async (req,res) =>{
     const org = req.body.org;
-
     const purchase_id = req.body.purchase_id;
     const purchase_type= req.body.purchase_type;
     const purchase_description = req.body.purchase_description;
@@ -36,8 +35,8 @@ const insertPurchasetype = async (req,res) =>{
 
 const getPurchasetype = async (req,res) =>{
     const org = req.body.org;
+    const sno = req.body.sno
 
-    const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from ${org}.dbo.tbl_purchase_type_master  where sno='${sno}'`)
@@ -50,9 +49,9 @@ const getPurchasetype = async (req,res) =>{
 
 const deletePurchasetype = async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
-    const sno = req.body.sno;
+    const sno = req.body.sno
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update ${org}.dbo.tbl_purchase_type_master set status='${status}' where sno =${sno}`)
@@ -65,12 +64,10 @@ const deletePurchasetype = async (req,res) =>{
 
 const updatePurchasetype = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const purchase_type= req.body.purchase_type;
     const purchase_description = req.body.purchase_description;
     const user_id = req.body.user_id;
-    console.log(sno,purchase_type,purchase_description,user_id)
 
     try{
         await sql.connect(sqlConfig)

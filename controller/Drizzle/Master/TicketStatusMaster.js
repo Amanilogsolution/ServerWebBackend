@@ -11,13 +11,12 @@ const totalTicketStatus = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const insertTicketStatus = async (req,res) =>{
     const org = req.body.org;
-
     const ticket_id = req.body.ticket_id;
     const ticket_status= req.body.ticket_status;
     const ticket_description = req.body.ticket_description;
@@ -31,13 +30,12 @@ const insertTicketStatus = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const getTicketStatus  = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
@@ -45,13 +43,12 @@ const getTicketStatus  = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const deleteTicketStatus   = async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
     try{
@@ -60,13 +57,12 @@ const deleteTicketStatus   = async (req,res) =>{
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const updateTicketStatus  = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const ticket_status= req.body.ticket_status;
     const ticket_description = req.body.ticket_description;
@@ -79,7 +75,7 @@ const updateTicketStatus  = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 

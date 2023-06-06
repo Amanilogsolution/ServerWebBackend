@@ -11,13 +11,12 @@ const totalSoftware = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const insertSoftware = async (req,res) =>{
     const org = req.body.org;
-
     const software_id = req.body.software_id;
     const software_name= req.body.software_name;
     const software_description = req.body.software_description;
@@ -32,13 +31,12 @@ const insertSoftware = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const getSoftware = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
@@ -46,13 +44,12 @@ const getSoftware = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const deleteSoftware = async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
     try{
@@ -61,13 +58,12 @@ const deleteSoftware = async (req,res) =>{
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const updateSoftware = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const software_name= req.body.software_name;
     const software_description = req.body.software_description;
@@ -80,7 +76,7 @@ const updateSoftware = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 

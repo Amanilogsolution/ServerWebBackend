@@ -7,7 +7,6 @@ const InsertVendorInvoice = async (req, res) => {
     const data = req.body.data;
     const userid = req.body.userid;
     let successcount = 0;
-    console.log(data)
     try {
         await sql.connect(sqlConfig)
         for (let i = 0; i < data.length; i++) {
@@ -27,15 +26,11 @@ const InsertVendorInvoice = async (req, res) => {
             }
         }
         if (successcount > 0) res.status(200).send('Data Added')
-
     }
     catch (err) {
         res.send(err)
     }
 }
-
-
-
 
 const PendingVendorInvoice = async (req, res) => {
     const org = req.body.org;
@@ -65,14 +60,11 @@ const GetVendorInvoice = async (req, res) => {
     }
 }
 
-
 const UpdateVendorInvoice = async (req, res) => {
     const org = req.body.org;
     const data = req.body.data;
     const userid = req.body.userid;
     let successcount = 0;
-    console.log(data);
-
     try {
         await sql.connect(sqlConfig)
         for (let i = 0; i < data.length; i++) {
@@ -90,7 +82,6 @@ const UpdateVendorInvoice = async (req, res) => {
             }
         }
         if (successcount > 0) res.status(200).send('Data Updated')
-
     }
     catch (err) {
         res.send(err)
@@ -113,7 +104,6 @@ const UpdatePendingVendorInvoice = async (req, res) => {
     const filedata = req.body.filedata;
     const ApprovedAmt = req.body.ApprovedAmt;
 
-
     try {
         await sql.connect(sqlConfig)
 
@@ -127,7 +117,6 @@ const UpdatePendingVendorInvoice = async (req, res) => {
         else {
             res.send('Error')
         }
-
     }
     catch (err) {
         res.send(err)
@@ -136,7 +125,6 @@ const UpdatePendingVendorInvoice = async (req, res) => {
 
 const TotalVendorPayment = async (req, res) => {
     const org = req.body.org;
-
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`select  *,convert(varchar(15),payment_date,105) as date from ${org}.dbo.tbl_vendor_invoice  WHERE invoice_status ='false' `)
@@ -175,7 +163,6 @@ const UpdateVendorPayment = async (req, res) => {
         await sql.connect(sqlConfig)
         const result = await sql.query(`UPDATE ${org}.dbo.tbl_vendor_invoice set payment_detail='${paymentdetail}',payment_amt='${paymentamt}',
         payment_date='${paymentdate}',payment_remark='${remark}',uploadpayment='${filedata}',approved_payment_amt='${ApprovedAmt}' where sno='${sno}' `)
-
         if (result.rowsAffected[0] > 0) {
             res.status(200).send('Data Updated')
         }
@@ -193,12 +180,9 @@ const UploadDocument = async (req, res) => {
     const type = req.body.type;
     const document = req.body.document;
     const sno = req.body.sno;
-    console.log(org, type, document,sno)
-
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`update ${org}.dbo.tbl_vendor_invoice set ${type}='${document}' where sno=${sno}`)
-
         if (result.rowsAffected[0] > 0) {
             res.status(200).send('Data Updated')
         }
@@ -214,8 +198,6 @@ const VendorInvoiceonChange = async (req, res) => {
     const org = req.body.org;
     let value = req.body.value;
     let data = value.trim()
-
-
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_invoice where invoice_no LIKE '%${data}%' AND invoice_status='true'`)

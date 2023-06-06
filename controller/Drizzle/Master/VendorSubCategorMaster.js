@@ -11,13 +11,12 @@ const totalVendorSubCategory = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
 const insertVendorSubCategory = async (req,res) =>{
     const org = req.body.org;
-
     const vendor_sub_category_id = req.body.vendor_sub_category_id;
     const vendor_category= req.body.vendor_category;
     const vendor_sub_category = req.body.vendor_sub_category;
@@ -31,42 +30,41 @@ const insertVendorSubCategory = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
 const getVendorSubCategory  = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_sub_category_master  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
 const deleteVendorSubCategory   = async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update ${org}.dbo.tbl_vendor_sub_category_master set status='${status}' where sno =${sno}`)
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
 const updateVendorSubCategory  = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const vendor_category= req.body.vendor_category;
     const vendor_sub_category = req.body.vendor_sub_category;
@@ -80,12 +78,11 @@ const updateVendorSubCategory  = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 const getVendorSubCategoryby = async (req,res) =>{
     const org = req.body.org;
-
     const vendor_category = req.body.vendor_category
 
     try{
@@ -94,7 +91,7 @@ const getVendorSubCategoryby = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 
 }

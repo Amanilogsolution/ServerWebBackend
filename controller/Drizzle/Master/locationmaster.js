@@ -10,13 +10,12 @@ const totalLocation= async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const insertLocation = async (req,res) =>{
     const org = req.body.org;
-
     const location_id = req.body.location_id;
     const company_name= req.body.company_name;
     const location_code = req.body.location_code;
@@ -34,9 +33,6 @@ const insertLocation = async (req,res) =>{
     const location_longitude = req.body.location_longitude;
     const user_id = req.body.user_id;
     const location_country = req.body.location_country;
-    console.log(location_id,company_name,location_code,location_name,location_address_line1,location_address_line2,location_city,location_state,location_pin_code
-        ,location_gst,contact_person,contact_person_email,contact_person_number,location_latitude,location_longitude,user_id,location_country)
-      
 
     try{
         await sql.connect(sqlConfig)
@@ -45,7 +41,7 @@ const insertLocation = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
@@ -59,7 +55,7 @@ const getLocation= async (req,res) =>{
         res.status(200).send(result.recordset[0])
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
@@ -74,13 +70,12 @@ const deleteLocation= async (req,res) =>{
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const updateLocation = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const company_name= req.body.company_name;
     const location_code = req.body.location_code;
@@ -99,7 +94,6 @@ const updateLocation = async (req,res) =>{
     const user_id = req.body.user_id;
     const location_country = req.body.location_country;
 
-
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update ${org}.dbo.tbl_location_master set company_name='${company_name}',location_code='${location_code}',location_name='${location_name}',location_address_line1='${location_address_line1}',location_address_line2='${location_address_line2}',location_city='${location_city}'
@@ -107,7 +101,7 @@ const updateLocation = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
@@ -120,7 +114,7 @@ const getAllLocation = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 

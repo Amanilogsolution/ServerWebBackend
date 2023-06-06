@@ -11,18 +11,16 @@ const totalServiceAction = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const insertServiceAction = async (req,res) =>{
     const org = req.body.org;
-
     const service_action_id = req.body.service_action_id;
     const service_action_type= req.body.service_action_type;
     const service_action_type_description = req.body.service_action_type_description;
     const user_id = req.body.user_id;
-    console.log(service_action_id,service_action_type,service_action_type_description,user_id)
 
     try{
         await sql.connect(sqlConfig)
@@ -31,27 +29,26 @@ const insertServiceAction = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const getServiceAction = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from ${org}.dbo.tbl_service_action_type_master  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const deleteServiceAction = async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
     try{
@@ -60,13 +57,12 @@ const deleteServiceAction = async (req,res) =>{
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const updateServiceAction = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const service_action_type= req.body.service_action_type;
     const service_action_type_description = req.body.service_action_type_description;
@@ -79,7 +75,7 @@ const updateServiceAction = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 

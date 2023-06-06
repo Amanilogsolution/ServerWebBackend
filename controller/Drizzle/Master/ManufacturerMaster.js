@@ -11,7 +11,7 @@ const totalManufacturer = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+      res.send(err);
     }
 }
 
@@ -29,42 +29,41 @@ const insertManufacturer = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+      res.send(err);
     }
 }
 
 const getManufacturer = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from ${org}.dbo.tbl_manufacturer_master  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+      res.send(err);
     }
 }
 
 const deleteManufacturer = async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update ${org}.dbo.tbl_manufacturer_master set status='${status}' where sno =${sno}`)
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+      res.send(err);
     }
 }
 
 const updateManufacturer  = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const manufacturer_name= req.body.manufacturer_name;
     const manufacturer_description = req.body.manufacturer_description;
@@ -82,7 +81,7 @@ const updateManufacturer  = async (req,res) =>{
         }
     }
     catch(err){
-        console.log(err)
+      res.send(err);
     }
 }
 
@@ -92,10 +91,8 @@ const ActiveManufacturer = async (req,res) =>{
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from ${org}.dbo.tbl_manufacturer_master tmm WHERE status ='Active' order by manufacturer_name ASC `)
-        
         if(result){
             res.send(result.recordset)
-
         }else{
             res.send("Error")
         }

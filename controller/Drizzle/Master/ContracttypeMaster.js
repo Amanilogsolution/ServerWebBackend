@@ -11,13 +11,12 @@ const totalContracttype = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
 const insertContracttype = async (req,res) =>{
     const org = req.body.org;
-
     const contract_id = req.body.contract_id;
     const contract_type= req.body.contract_type;
     const contract_description = req.body.contract_description;
@@ -30,42 +29,41 @@ const insertContracttype = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
 const getContracttype = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from ${org}.dbo.tbl_contract_type_master  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
 const deleteContracttype = async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update ${org}.dbo.tbl_contract_type_master set status='${status}' where sno =${sno}`)
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
 const updateContracttype = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const contract_type= req.body.contract_type;
     const contract_description = req.body.contract_description;
@@ -78,7 +76,7 @@ const updateContracttype = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 const getAllContracttype = async (req,res) =>{
@@ -90,7 +88,7 @@ const getAllContracttype = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 
 }

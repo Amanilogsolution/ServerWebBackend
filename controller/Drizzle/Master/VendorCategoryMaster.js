@@ -11,13 +11,12 @@ const totalVendorCategory = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const insertVendorCategory = async (req,res) =>{
     const org = req.body.org;
-
     const vendor_category_id = req.body.vendor_category_id;
     const vendor_category= req.body.vendor_category;
     const vendor_category_description = req.body.vendor_category_description;
@@ -30,27 +29,25 @@ const insertVendorCategory = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const getVendorCategory  = async (req,res) =>{
     const org = req.body.org;
-
-    const sno = req.body.sno;
+    const sno = req.body.sno
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_category_master  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const deleteVendorCategory   = async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
     try{
@@ -59,13 +56,12 @@ const deleteVendorCategory   = async (req,res) =>{
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const updateVendorCategory  = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const vendor_category= req.body.vendor_category;
     const vendor_category_description = req.body.vendor_category_description;
@@ -78,7 +74,7 @@ const updateVendorCategory  = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
@@ -91,7 +87,7 @@ const getAllVendorCategory = async (req,res) => {
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 
 }

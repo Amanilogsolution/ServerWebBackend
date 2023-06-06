@@ -20,7 +20,7 @@ const Invoice_Outstanding = async (req, res) => {
         })
     }
     catch (err) {
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -35,7 +35,7 @@ const TotalOutstanding = async (req, res) => {
         res.send({ data: Outstanding.recordset, TotalData: countData.recordset })
     }
     catch (err) {
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -57,8 +57,7 @@ const VendorInvoice = async (req, res) => {
         res.send({ data: Outstanding.recordset, TotalData: countData.recordset })
     }
     catch (err) {
-        console.log(err)
-
+        res.send(err)
     }
 }
 
@@ -71,7 +70,7 @@ const ExportOutstandingInvoiceData = async (req, res) => {
         res.send({ data: Outstanding.recordset })
     }
     catch (err) {
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -86,7 +85,7 @@ const PaidInvoice = async (req, res) => {
         res.send({ data: Outstanding.recordset, TotalData: countData.recordset })
     }
     catch (err) {
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -104,7 +103,7 @@ const FilterInvoice = async (req, res) => {
         res.send({ data: Outstanding.recordset, TotalData: countData.recordset, PaidInv: PaidInv.recordset, Paiddata: Paiddata.recordset })
     }
     catch (err) {
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -118,7 +117,7 @@ const Recurring_Pending_Invoice = async (req, res) => {
         res.send(result.recordset)
     }
     catch (err) {
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -140,7 +139,7 @@ const Outstanding_Invoice_filter = async (req, res) => {
         }
     }
     catch (err) {
-        console.log(err)
+        res.send(err)
     }
 }
 

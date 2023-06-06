@@ -11,13 +11,12 @@ const totalServiceGroup = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const insertServiceGroup = async (req,res) =>{
     const org = req.body.org;
-
     const service_group_id = req.body.service_group_id;
     const service_group_type= req.body.service_group_type;
     const service_group_description = req.body.service_group_description;
@@ -30,13 +29,12 @@ const insertServiceGroup = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const getServiceGroup = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
@@ -44,13 +42,12 @@ const getServiceGroup = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const deleteServiceGroup = async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
     try{
@@ -59,13 +56,12 @@ const deleteServiceGroup = async (req,res) =>{
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 
 const updateServiceGroup = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const service_group_type= req.body.service_group_type;
     const service_group_description = req.body.service_group_description;
@@ -78,7 +74,7 @@ const updateServiceGroup = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err);
     }
 }
 

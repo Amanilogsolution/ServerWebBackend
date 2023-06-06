@@ -17,7 +17,6 @@ const totalPriorityMaster = async (req,res) =>{
 
 const insertPriorityMaster = async (req,res) =>{
     const org = req.body.org;
-
     const priority_id = req.body.priority_id;
     const priority_type= req.body.priority_type;
     const priority_description = req.body.priority_description;
@@ -36,8 +35,8 @@ const insertPriorityMaster = async (req,res) =>{
 
 const getPriorityMaster  = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from ${org}.dbo.tbl_priority_master  where sno='${sno}'`)
@@ -50,9 +49,9 @@ const getPriorityMaster  = async (req,res) =>{
 
 const deletePriorityMaster  = async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
-    const sno = req.body.sno;
+    const sno = req.body.sno
+    
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update ${org}.dbo.tbl_priority_master set status='${status}' where sno =${sno}`)
@@ -65,7 +64,6 @@ const deletePriorityMaster  = async (req,res) =>{
 
 const updatePriorityMaster = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const priority_type= req.body.priority_type;
     const priority_description = req.body.priority_description;

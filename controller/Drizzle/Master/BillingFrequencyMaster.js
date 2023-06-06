@@ -17,7 +17,6 @@ const totalBillingFrequency = async (req,res) =>{
 
 const insertBillingFrequency = async (req,res) =>{
     const org = req.body.org;
-
     const billing_freq_id = req.body.billing_freq_id;
     const billing_freq= req.body.billing_freq;
     const billing_freq_description = req.body.billing_freq_description;
@@ -36,8 +35,8 @@ const insertBillingFrequency = async (req,res) =>{
 
 const getBillingFrequency  = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
+    
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from ${org}.dbo.tbl_billing_freq_master  where sno='${sno}'`)
@@ -50,9 +49,9 @@ const getBillingFrequency  = async (req,res) =>{
 
 const deleteBillingFrequency   = async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update ${org}.dbo.tbl_billing_freq_master set status='${status}' where sno =${sno}`)
@@ -65,7 +64,6 @@ const deleteBillingFrequency   = async (req,res) =>{
 
 const updateBillingFrequency  = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const billing_freq= req.body.billing_freq;
     const billing_freq_description = req.body.billing_freq_description;

@@ -11,13 +11,12 @@ const totalEmployee = async (req,res) =>{
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
 const insertEmployee = async (req,res) =>{
     const org = req.body.org;
-
     const employee_id = req.body.employee_id;
     const employee_name= req.body.employee_name;
     const location = req.body.location;
@@ -33,43 +32,41 @@ const insertEmployee = async (req,res) =>{
         res.status(200).send("Added")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
 const getEmployee= async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from ${org}.dbo.tbl_employee_master  where sno='${sno}'`)
         res.status(200).send(result.recordset)
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
 const deleteEmployee= async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
-    console.log(status,sno)
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update ${org}.dbo.tbl_employee_master set status='${status}' where sno=${sno}`)
         res.status(200).send("updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
 const updateEmployee = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const employee_name= req.body.employee_name;
     const location = req.body.location;
@@ -85,7 +82,7 @@ const updateEmployee = async (req,res) =>{
         res.status(200).send("Updated")
     }
     catch(err){
-        console.log(err)
+        res.send(err)
     }
 }
 
@@ -105,7 +102,6 @@ const ActiveEmployee= async (req,res) =>{
 
 const EmployeeDetail= async (req,res) =>{
     const org = req.body.org;
-
     const empid = req.body.empid;
 
     try {

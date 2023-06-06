@@ -14,8 +14,7 @@ const TotalNewAssets = async (req, res) => {
         }else{
             const result = await sql.query(`select *,convert(varchar(15),purchase_date,121) as Assetdate from ${org}.dbo.tbl_new_assets with (nolock) order by asset_type ASC `)
             res.status(200).send(result.recordset)
-        }
-      
+        } 
     }
     catch (err) {
         res.send(err)
@@ -48,7 +47,6 @@ const InsertNewAssets = async (req, res) => {
     const remarks = req.body.remarks;
     const userid = req.body.userid;
 
-
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`insert into ${org}.dbo.tbl_new_assets (new_asset_type_id,asset_type,asset_tag,serial_no,location,manufacture,
@@ -59,7 +57,6 @@ const InsertNewAssets = async (req, res) => {
             '${asset_status}','${description}','${purchase_type}','${purchase_date}','${company}','${vendor}','${invoice_no}','${rent_per_month}',
             '${purchases_price}','${latest_inventory}','${asset_name}','${asset_assign}','${asset_assign_empid}','${remarks}','${userid}',
             '${os.hostname()}','${req.ip}',getDate(),'Active','')`)
-
         if (result.rowsAffected[0] > 0) {
             res.status(200).send('Data Added')
         }
@@ -74,7 +71,6 @@ const InsertNewAssets = async (req, res) => {
 
 const DeleteNewAssets = async (req, res) => {
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
     try {
@@ -90,7 +86,6 @@ const DeleteNewAssets = async (req, res) => {
 const GetNewAssets = async (req, res) => {
     const sno = req.body.sno;
     const org = req.body.org;
-    console.log(`select *,convert(varchar(15),purchase_date,121) as Assetdate,convert(varchar(15),latest_inventory,121) as latest_inventorynew from ${org}.dbo.tbl_new_assets  where sno='${sno}'`)
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`select *,convert(varchar(15),purchase_date,121) as Assetdate,convert(varchar(15),latest_inventory,121) as latest_inventorynew from ${org}.dbo.tbl_new_assets  where sno='${sno}'`)
@@ -104,12 +99,9 @@ const GetNewAssets = async (req, res) => {
 const CountNewAssets = async (req, res) => {
     const asset_type = req.body.asset_type;
     const org = req.body.org;
-
-
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`SELECT COUNT(sno) as count FROM ${org}.dbo.tbl_new_assets WHERE asset_type='${asset_type}'`)
-
         if (result.rowsAffected[0] > 0) {
             res.status(200).send(result.recordset[0])
         }
@@ -127,14 +119,9 @@ const CountNewAssets = async (req, res) => {
 const GetNewAssetAssign = async (req, res) => {
     const asset_assign_empid = req.body.asset_assign_empid;
     const org = req.body.org;
-
-
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select asset_type,serial_no,manufacture from ${org}.dbo.tbl_new_assets with (nolock) where
-        asset_assign_empid= '${asset_assign_empid}'
-        `)
-
+        const result = await sql.query(`select asset_type,serial_no,manufacture from ${org}.dbo.tbl_new_assets with (nolock) where asset_assign_empid= '${asset_assign_empid}'`)
         if (result) {
             res.status(200).send(result.recordset)
         }
@@ -150,45 +137,29 @@ const GetNewAssetAssign = async (req, res) => {
 
 const UpdateNewAssets = async (req, res) => {
     const org = req.body.org;
-
     const asset_type = req.body.asset_type;
     const asset_tag = req.body.assetetag;
     const serial_no = req.body.serialno;
     const location = req.body.location;
     const manufacture = req.body.manufacture;
-
     const software = req.body.software;
     const model = req.body.model;
     const asset_status = req.body.assetstatus;
     const description = req.body.description;
     const purchase_type = req.body.purchase_type;
     const purchase_date = req.body.purchasesdate;
-
     const company = req.body.company;
     const vendor = req.body.vendor;
     const invoice_no = req.body.invoiceno;
     const rent_per_month = req.body.rentpermonth;
     const purchases_price = req.body.purchaseprice;
     const latest_inventory = req.body.latestinventory;
-
     const asset_name = req.body.assetname;
     const asset_assign = req.body.assetassign;
     const asset_assign_empid = req.body.asset_assign_empid;
     const remarks = req.body.remark;
-
-
     const userid = req.body.userid;
     const sno = req.body.sno;
-
-    console.log(`
-    update IPERISCOPE.dbo.tbl_new_assets set 
-    asset_type='${asset_type}',asset_tag='${asset_tag}',serial_no='${serial_no}',location='${location}',manufacture='${manufacture}',
-         software='${software}',model='${model}',asset_status='${asset_status}',description='${description}',purchase_type='${purchase_type}',
-            purchase_date='${purchase_date}',company='${company}',vendor='${vendor}',invoice_no='${invoice_no}',
-         rent_per_month='${rent_per_month}',purchases_price='${purchases_price}',latest_inventory='${latest_inventory}',asset_name='${asset_name}',
-            asset_assign='${asset_assign}',asset_assign_empid='${asset_assign_empid}',remarks='${remarks}',update_user_name='${userid}',
-            update_system_name='${os.hostname()}',update_ip_address='${req.ip}',update_date_time=getDate() where sno='${sno}`)
-
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`
@@ -199,8 +170,6 @@ const UpdateNewAssets = async (req, res) => {
              rent_per_month='${rent_per_month}',purchases_price='${purchases_price}',latest_inventory='${latest_inventory}',asset_name='${asset_name}',
                 asset_assign='${asset_assign}',asset_assign_empid='${asset_assign_empid}',remarks='${remarks}',update_user_name='${userid}',
                 update_system_name='${os.hostname()}',update_ip_address='${req.ip}',update_date_time=getDate() where sno='${sno}'`)
-
-                console.log(result)
 
         if (result.rowsAffected[0] > 0) {
             res.status(200).send('Data Updated')

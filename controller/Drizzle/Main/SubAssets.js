@@ -13,7 +13,6 @@ const InsertAssetsSoftware = async (req, res) => {
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`insert into ${org}.dbo.tbl_asset_subtable (asset_id,asset_tag,software) values('${asset_id}','${asset_tag}','${software}')`)
-
         if (result.rowsAffected[0] > 0) {
             res.status(200).send('Data Added')
         }
@@ -29,7 +28,6 @@ const InsertAssetsSoftware = async (req, res) => {
 const GetNewAssetsSoftware = async (req, res) => {
     const asset_id = req.body.asset_id;
     const org = req.body.org;
-
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`select *  from ${org}.dbo.tbl_asset_subtable  where asset_id='${asset_id}'`)

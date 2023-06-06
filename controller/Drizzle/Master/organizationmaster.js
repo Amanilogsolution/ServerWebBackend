@@ -39,6 +39,7 @@ const insertOrganization = async (req,res) =>{
 
 const getOrganization= async (req,res) =>{
     const sno = req.body.sno;
+
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`select * from IPERISCOPE.dbo.tbl_organization_master tom where sno='${sno}'`)
@@ -52,6 +53,7 @@ const getOrganization= async (req,res) =>{
 const deleteOrganization= async (req,res) =>{
     const status = req.body.status;
     const sno = req.body.sno;
+    
     try{
         await sql.connect(sqlConfig)
         const result = await sql.query(`update IPERISCOPE.dbo.tbl_organization_master set status='${status}' where sno =${sno}`)

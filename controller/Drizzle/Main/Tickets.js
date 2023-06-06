@@ -6,7 +6,6 @@ const os = require('os')
 
 const TotalTicket = async (req, res) => {
     const org = req.body.org;
-    console.log(org)
 
     try {
         await sql.connect(sqlConfig)
@@ -19,8 +18,6 @@ const TotalTicket = async (req, res) => {
 }
 const TotalHoldTicket = async (req, res) => {
     const org = req.body.org;
-    console.log(org)
-
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status = 'Hold' order by assign_ticket DESC`)
@@ -33,7 +30,6 @@ const TotalHoldTicket = async (req, res) => {
 
 const OpenTotalTicket = async (req, res) => {
     const org = req.body.org;
-
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`select *,convert(varchar(15),ticket_date,105) as date from ${org}.dbo.tbl_ticket with (nolock) WHERE ticket_status = 'Open'`)
@@ -63,19 +59,24 @@ const InsertTicket = async (req, res) => {
     const user_id = req.body.user_id;
     const AssetTag = req.body.AssetTag;
     const AssetCondition= req.body.AssetCondition;
-    console.log(AssetTag,AssetCondition)
-
 
     try {
         await sql.connect(sqlConfig)
+        console.log("hloooo")
+        const Ticket = await sql.query(`SELECT COUNT(sno) as count FROM ${org}.dbo.tbl_ticket with (nolock) `)
+        let count = Ticket.recordset[0]["count"] +1 + ''
+
+        let val = 'Ticket' + '-' + count.padStart(5, '0') ;
+        // console.log(val)
+        // return
+
         const result = await sql.query(`
         insert into ${org}.dbo.tbl_ticket(emp_id,emp_name,asset_type,asset_serial,location,assign_ticket,
             type_of_issue,email_id,ticket_date,ticket_status,ticket_subject,priority,issue_discription,remarks,
             status,add_user_name,add_system_name,add_ip_address,add_date_time,asset_tag,asset_condition)
-            values ('${emp_id}','${emp_name}','${asset_type}','${asset_serial}','${location}','${assign_ticket}','${type_of_issue}',
+            values ('${emp_id}','${emp_name}','${asset_type}','${asset_serial}','${location}','${val}','${type_of_issue}',
             '${email_id}','${ticket_date}','${ticket_status}','${ticket_subject}','${priority}','${issue_discription}','${remarks}',
-            'Active','${user_id}','${os.hostname()}','${req.ip}',getdate(),'${AssetTag}','${AssetCondition}')
-        `)
+            'Active','${user_id}','${os.hostname()}','${req.ip}',getdate(),'${AssetTag}','${AssetCondition}')`)
         if (result.rowsAffected[0] > 0) {
             res.status(200).send('Data Added')
         }
@@ -92,11 +93,9 @@ const InsertTicket = async (req, res) => {
 
 const CountTickets = async (req, res) => {
     const org = req.body.org;
-
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`SELECT COUNT(sno) as count FROM ${org}.dbo.tbl_ticket with (nolock) `)
-
         if (result) {
             res.status(200).send(result.recordset)
         }
@@ -112,7 +111,6 @@ const CountTickets = async (req, res) => {
 
 const DeleteTickets = async (req, res) => {
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
     try {
@@ -128,7 +126,6 @@ const DeleteTickets = async (req, res) => {
 
 const getTickets = async (req, res) => {
     const org = req.body.org;
-
     const sno = req.body.sno;
     try {
         await sql.connect(sqlConfig)
@@ -159,7 +156,6 @@ const UpdateTicket = async (req, res) => {
     const remarks = req.body.remarks;
     const user_id = req.body.user_id;
     const sno = req.body.sno;
-
     try {
         await sql.connect(sqlConfig)
         const result = await sql.query(`
@@ -169,7 +165,6 @@ type_of_issue='${type_of_issue}',
 email_id='${email_id}',ticket_date='${ticket_date}',ticket_status='${ticket_status}',ticket_subject='${ticket_subject}',priority='${priority}',
 issue_discription='${issue_discription}',remarks='${remarks}',
 update_user_name='${user_id}',update_system_name='${os.hostname()}',update_ip_address='${req.ip}',update_date_time=getdate() where sno='${sno}'`)
-
         if (result.rowsAffected[0] > 0) {
             res.status(200).send('Data Updated')
         }

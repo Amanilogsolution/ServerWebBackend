@@ -17,7 +17,6 @@ const totalVendorCode = async (req,res) =>{
 
 const insertVendorCode = async (req,res) =>{
     const org = req.body.org;
-
     const vendor_code_id = req.body.vendor_code_id;
     const vendor_code= req.body.vendor_code;
     const vendor_name = req.body.vendor_name;
@@ -33,9 +32,7 @@ const insertVendorCode = async (req,res) =>{
     const company_pin_code = req.body.comp_pincode;
     const company_address_line1 = req.body.comp_addr1;
     const company_address_line2 = req.body.comp_addr2;
-   
     const venodr_portal = req.body.vendor_portal;
-   
     const contact_person_name = req.body.contact_person;
     const contact_person_phone = req.body.contact_no;
     const contact_person_email = req.body.contact_email;
@@ -61,7 +58,6 @@ const insertVendorCode = async (req,res) =>{
 
 const getVendorCode  = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
@@ -75,7 +71,6 @@ const getVendorCode  = async (req,res) =>{
 
 const deleteVendorCode   = async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
     try{
@@ -90,7 +85,6 @@ const deleteVendorCode   = async (req,res) =>{
 
 const updateVendorCode = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const vendor_code= req.body.vendor_code;
     const vendor_name = req.body.vendor_name;
@@ -110,7 +104,6 @@ const updateVendorCode = async (req,res) =>{
     const contact_person = req.body.contact_person;
     const contact_no  = req.body.contact_no;
     const contact_email  = req.body.contact_email;
-
     const user_id = req.body.user_id;
  
     try{

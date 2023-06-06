@@ -17,7 +17,6 @@ const totalAssetType = async (req,res) =>{
 
 const insertAssetType = async (req,res) =>{
     const org = req.body.org;
-
     const asset_type_id = req.body.asset_type_id;
     const asset_type= req.body.asset_type;
     const asset_description = req.body.asset_description;
@@ -41,7 +40,6 @@ const insertAssetType = async (req,res) =>{
 
 const getAssetType = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     try{
         await sql.connect(sqlConfig)
@@ -55,7 +53,6 @@ const getAssetType = async (req,res) =>{
 
 const deleteAssetType = async (req,res) =>{
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
     try{
@@ -70,7 +67,6 @@ const deleteAssetType = async (req,res) =>{
 
 const updateAssetType = async (req,res) =>{
     const org = req.body.org;
-
     const sno = req.body.sno;
     const asset_type= req.body.asset_type;
     const asset_description = req.body.asset_description;

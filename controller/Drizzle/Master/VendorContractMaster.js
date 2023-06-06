@@ -7,8 +7,7 @@ const totalVendorContract = async (req, res) => {
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_contract_master tvcm 
-        `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_contract_master tvcm `)
         res.status(200).send(result.recordset)
     }
     catch (err) {
@@ -18,7 +17,6 @@ const totalVendorContract = async (req, res) => {
 
 const insertVendorContract = async (req, res) => {
     const org = req.body.org;
-
     const vendor_contract_id = req.body.vendor_contract_id;
     const vendor = req.body.vendor;
     const type_of_contract = req.body.type_of_contract;
@@ -37,16 +35,12 @@ const insertVendorContract = async (req, res) => {
     const tds = req.body.tds;
     const link_id_no = req.body.link_id_no;
     const help_desk_no = req.body.help_desk_no;
-
     const userid = req.body.userid;
-
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`
-             insert into ${org}.dbo.tbl_vendor_contract_master
-     (vendor_contract_id,vendor,
-     type_of_contract,major_category,sub_category,
+        const result = await sql.query(`insert into ${org}.dbo.tbl_vendor_contract_master
+     (vendor_contract_id,vendor,type_of_contract,major_category,sub_category,
      location,company,customer_account_no,reference_no,contatct_plain_details,rate_per_month,
      contract_start_date,invoice_generation_date,billling_freq,payee_name,tds,link_id_no,help_desk_no,
      add_user_name,add_system_name,add_ip_address,add_date_time,status,vendor_contract_uuid)
@@ -71,7 +65,6 @@ const insertVendorContract = async (req, res) => {
 
 const getVendorContract = async (req, res) => {
     const org = req.body.org;
-
     const sno = req.body.sno;
     try {
         await sql.connect(sqlConfig)
@@ -85,7 +78,6 @@ const getVendorContract = async (req, res) => {
 
 const deleteVendorContract = async (req, res) => {
     const org = req.body.org;
-
     const status = req.body.status;
     const sno = req.body.sno;
     try {
@@ -100,7 +92,6 @@ const deleteVendorContract = async (req, res) => {
 
 const updateVendorContract = async (req, res) => {
     const org = req.body.org;
-
     const sno = req.body.sno;
     const vendor = req.body.vendor;
     const type_of_contract = req.body.type_of_contract;
@@ -119,7 +110,6 @@ const updateVendorContract = async (req, res) => {
     const tds = req.body.tds;
     const link_id_no = req.body.link_id_no;
     const help_desk_no = req.body.help_desk_no;
-
     const userid = req.body.userid;
 
     try {
@@ -161,7 +151,6 @@ const ActiveVendorContract = async (req, res) => {
 
 const VendorContractDetail = async (req, res) => {
     const org = req.body.org;
-
     const sno = req.body.sno;
 
     try {
@@ -182,7 +171,7 @@ const VendorContractonChange = async (req, res) => {
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_contract_master where vendor LIKE '${data}%' AND status='Active' `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_contract_master where vendor LIKE '%${data}%' or customer_account_no LIKE '%${data}%' or reference_no LIKE '%${data}%'  AND status='Active' `)
         res.status(200).send(result.recordset)
     }
     catch (err) {
