@@ -59,9 +59,7 @@ router.post('/insertuserlogin',LoginController.insertUserLogin)
 router.get('/totalcountry',AddressController.totalcountry)
 router.post('/totalstate',AddressController.totalstate)
 router.post('/totalcity',AddressController.totalcity)
-// router.post('/UploadCountry',AddressController.UploadCountry)
-// router.post('/UploadState',AddressController.UploadState)
-// router.post('/UploadCity',AddressController.UploadCity)
+
 
 router.get('/totaldevicetypemaster',MasterDeviceTypeController.totaldevicetype)
 router.post('/adddevicetypemaster',MasterDeviceTypeController.adddevicetype)

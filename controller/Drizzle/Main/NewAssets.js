@@ -5,14 +5,16 @@ const os = require('os')
 const TotalNewAssets = async (req, res) => {
     const org = req.body.org;
     const type = req.body.type;
-    console.log(type)
     try {
         await sql.connect(sqlConfig)
         if(type.length>0){
-            const result = await sql.query(`select *,convert(varchar(15),purchase_date,121) as Assetdate from IPERISCOPE.dbo.tbl_new_assets with (nolock) where location = '${type}' order by asset_type ASC`)
+            console.log(`hlo`)
+
+            const result = await sql.query(`select vendor,asset_tag,asset_name,serial_no,purchase_type,asset_type,asset_assign,location,asset_status,convert(varchar(15),purchase_date,121) as Assetdate from IPERISCOPE.dbo.tbl_new_assets with (nolock) where location = '${type}' order by asset_type ASC`)
             res.status(200).send(result.recordset)
         }else{
-            const result = await sql.query(`select *,convert(varchar(15),purchase_date,121) as Assetdate from ${org}.dbo.tbl_new_assets with (nolock) order by asset_type ASC `)
+            console.log(`select vendor,asset_tag,asset_name,serial_no,purchase_type,asset_type,asset_assign,location,asset_status,convert(varchar(15),purchase_date,121) as Assetdate from ${org}.dbo.tbl_new_assets with (nolock) order by asset_type ASC`)
+            const result = await sql.query(`select vendor,asset_tag,asset_name,serial_no,purchase_type,asset_type,asset_assign,location,asset_status,convert(varchar(15),purchase_date,121) as Assetdate from ${org}.dbo.tbl_new_assets with (nolock) order by asset_type ASC `)
             res.status(200).send(result.recordset)
         } 
     }

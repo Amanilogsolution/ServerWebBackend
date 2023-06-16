@@ -30,7 +30,7 @@ const TotalOutstanding = async (req, res) => {
     const rowsperpage = req.body.rowsperpage
     try {
         await sql.connect(sqlConfig)
-        const Outstanding = await sql.query(`select *,convert(varchar(15),invoice_date,105) as date from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock)  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        const Outstanding = await sql.query(`select *,convert(varchar(15),invoice_date,105) as date,convert(varchar(15),payment_date,105) as Payment_date from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock)  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
         const countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock)  `)
         res.send({ data: Outstanding.recordset, TotalData: countData.recordset })
     }
@@ -47,11 +47,11 @@ const VendorInvoice = async (req, res) => {
     try {
         await sql.connect(sqlConfig)
         if(vendorname == 'all'){
-        var Outstanding = await sql.query(`select *,convert(varchar(15),invoice_date,105) as date from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true'  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        var Outstanding = await sql.query(`select inv.*,convert(varchar(15),inv.invoice_date,105) as date ,cont.company  from IPERISCOPE.dbo.tbl_vendor_invoice as inv left Join IPERISCOPE.dbo.tbl_vendor_contract_master as cont on inv.reference_no=cont.reference_no where inv.invoice_status ='true' order by inv.sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
         var countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' `)
     }
     else{
-        var Outstanding = await sql.query(`select *,convert(varchar(15),invoice_date,105) as date from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' and vendor Like '${vendorname}%'  order by sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
+        var Outstanding = await sql.query(`select inv.*,convert(varchar(15),inv.invoice_date,105) as date ,cont.company  from IPERISCOPE.dbo.tbl_vendor_invoice as inv left Join IPERISCOPE.dbo.tbl_vendor_contract_master as cont on inv.reference_no=cont.reference_no where inv.invoice_status ='true' and inv.vendor Like '${vendorname}%' order by inv.sno ASC OFFSET (${pageno}-1)*${rowsperpage} rows FETCH next ${rowsperpage} rows only`)
         var countData = await sql.query(`select count(*) as Totaldata from IPERISCOPE.dbo.tbl_vendor_invoice with (nolock) where invoice_status ='true' and vendor Like '${vendorname}%'`)
     }
         res.send({ data: Outstanding.recordset, TotalData: countData.recordset })
@@ -91,7 +91,8 @@ const PaidInvoice = async (req, res) => {
 
 const FilterInvoice = async (req, res) => {
     const org = req.body.org;
-    const value = req.body.value;
+    const values = req.body.value;
+    const value = values.trim();
     const pageno = req.body.pageno;
     const rowsperpage = req.body.rowsperpage
     try {
@@ -109,12 +110,30 @@ const FilterInvoice = async (req, res) => {
 
 const Recurring_Pending_Invoice = async (req, res) => {
     const org = req.body.org;
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    let startdate = `${year}-${month}-01`
+    let currentdate = `${year}-${month}-${day}`
+
+    console.log(startdate,currentdate)
+
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`SELECT * from ${org}.dbo.tbl_vendor_contract_master where 
-        reference_no not in (select  reference_no from ${org}.dbo.tbl_vendor_invoice tvi where invoice_status='true' ) 
-        and type_of_contract = 'Recurring'`)
-        res.send(result.recordset)
+        const result = await sql.query(`SELECT * from IPERISCOPE.dbo.tbl_vendor_contract_master where 
+        reference_no  in (select  reference_no from IPERISCOPE.dbo.tbl_vendor_invoice tvi where  convert(date,invoice_date) between '${startdate}' and '${currentdate}') 
+        and type_of_contract = 'Recurring' and billling_freq='Monthly'`)
+
+        const pendingresult = await sql.query(`SELECT * from IPERISCOPE.dbo.tbl_vendor_contract_master where 
+        reference_no not in (select  reference_no from IPERISCOPE.dbo.tbl_vendor_invoice tvi where  convert(date,invoice_date) between '${startdate}' and '${currentdate}') 
+        and type_of_contract = 'Recurring' and billling_freq='Monthly'`)
+        res.status(200).json({
+           result :  result.recordset,
+           pendingresult : pendingresult.recordset
+        }
+            )
     }
     catch (err) {
         res.send(err)
