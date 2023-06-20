@@ -182,7 +182,7 @@ const VendorContractonChange = async (req, res) => {
 
     try {
         await sql.connect(sqlConfig)
-        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_contract_master where vendor LIKE '%${value}%' AND status='Active' `)
+        const result = await sql.query(`select * from ${org}.dbo.tbl_vendor_contract_master where vendor LIKE '%${data}%' or customer_account_no LIKE '%${data}%' or reference_no LIKE '%${data}%'  AND status='Active' `)
         res.status(200).send(result.recordset)
     }
     catch (err) {
